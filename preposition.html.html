@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>전치사 핵심 정리: 상태와 동작</title>
+    <style>
+        :root {
+            --primary-color: #2563eb;
+            --secondary-color: #1e40af;
+            --bg-color: #f3f4f6;
+            --card-bg: #ffffff;
+            --text-color: #1f2937;
+            --accent-state: #059669; /* Green for State */
+            --accent-motion: #dc2626; /* Red for Motion */
+        }
+
+        body {
+            font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            text-align: center;
+            color: var(--secondary-color);
+            margin-bottom: 30px;
+        }
+
+        /* Tabs */
+        .tabs {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .tab-btn {
+            padding: 12px 24px;
+            border: none;
+            background-color: #e5e7eb;
+            cursor: pointer;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .tab-btn.active {
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .tab-btn[data-tab="state"].active { background-color: var(--accent-state); }
+        .tab-btn[data-tab="motion"].active { background-color: var(--accent-motion); }
+        .tab-btn[data-tab="compare"].active { background-color: var(--secondary-color); }
+
+        /* Content Areas */
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .tab-content.active {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        /* Specific style for Comparison tab */
+        #compare.tab-content.active {
+            display: flex;
+            flex-direction: column;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Cards */
+        .card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            border-left: 5px solid #ccc;
+            transition: transform 0.2s;
+        }
+
+        .card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .state-card { border-left-color: var(--accent-state); }
+        .motion-card { border-left-color: var(--accent-motion); }
+        
+        .prep-word {
+            font-size: 1.8rem;
+            font-weight: 800;
+            margin-bottom: 5px;
+            display: block;
+        }
+
+        .state-card .prep-word { color: var(--accent-state); }
+        .motion-card .prep-word { color: var(--accent-motion); }
+
+        .meaning {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #374151;
+            margin-bottom: 10px;
+            display: block;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 8px;
+        }
+
+        .desc {
+            font-size: 0.95rem;
+            color: #6b7280;
+        }
+
+        /* Comparison Styles */
+        .compare-block {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        .compare-title {
+            font-size: 1.4rem;
+            font-weight: bold;
+            color: var(--secondary-color);
+            margin-bottom: 15px;
+            border-bottom: 2px solid #e5e7eb;
+            padding-bottom: 10px;
+        }
+
+        .compare-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        
+        .compare-triple {
+            grid-template-columns: 1fr 1fr 1fr;
+        }
+
+        .compare-item {
+            background: #f9fafb;
+            padding: 15px;
+            border-radius: 8px;
+        }
+
+        .compare-item strong {
+            display: block;
+            font-size: 1.2rem;
+            color: #111;
+            margin-bottom: 5px;
+        }
+
+        @media (max-width: 768px) {
+            .compare-grid, .compare-triple {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>English Prepositions Master</h1>
+
+    <div class="tabs">
+        <button class="tab-btn active" data-tab="state" onclick="openTab('state')">1. 정지·상태 (State)</button>
+        <button class="tab-btn" data-tab="motion" onclick="openTab('motion')">2. 이동·동작 (Motion)</button>
+        <button class="tab-btn" data-tab="compare" onclick="openTab('compare')">3. 혼동하기 쉬운 전치사 비교</button>
+    </div>
+
+    <div id="state" class="tab-content active">
+        <div class="card state-card"><span class="prep-word">at</span><span class="meaning">있다 ~한 지점에</span><span class="desc">특정한 지점(Point)을 콕 집어 말할 때</span></div>
+        <div class="card state-card"><span class="prep-word">on</span><span class="meaning">있다 ~위에 붙어</span><span class="desc">표면(Surface)에 접촉해 있는 상태</span></div>
+        <div class="card state-card"><span class="prep-word">in</span><span class="meaning">있다 ~안에</span><span class="desc">경계가 있는 3차원 공간(Volume) 내부</span></div>
+        <div class="card state-card"><span class="prep-word">above</span><span class="meaning">있다 ~보다 위에</span><span class="desc">표면에 닿지 않고 공중에 떠 있는 상대적 높이</span></div>
+        <div class="card state-card"><span class="prep-word">below</span><span class="meaning">있다 ~보다 아래에</span><span class="desc">기준보다 수치나 높이가 낮은 상태 (above의 반대)</span></div>
+        <div class="card state-card"><span class="prep-word">under</span><span class="meaning">있다 ~바로 밑에 (덮여서)</span><span class="desc">수직 아래에 위치하며 대상을 덮거나 가리는 느낌</span></div>
+        <div class="card state-card"><span class="prep-word">behind</span><span class="meaning">있다 ~뒤에</span><span class="desc">대상에 가려져 안 보이거나 뒤따르는 위치</span></div>
+        <div class="card state-card"><span class="prep-word">in front of</span><span class="meaning">있다 ~앞에</span><span class="desc">대상의 정면이나 앞서 나와 있는 위치</span></div>
+        <div class="card state-card"><span class="prep-word">beside</span><span class="meaning">있다 ~옆에</span><span class="desc">대상의 측면(Side)에 나란히 위치</span></div>
+        <div class="card state-card"><span class="prep-word">by</span><span class="meaning">있다 ~옆에 (영향권 내)</span><span class="desc">손을 뻗으면 닿을 듯한 가까운 영역</span></div>
+        <div class="card state-card"><span class="prep-word">near</span><span class="meaning">있다 ~근처에</span><span class="desc">물리적 거리가 멀지 않음</span></div>
+        <div class="card state-card"><span class="prep-word">between</span><span class="meaning">있다 ~사이에 (둘)</span><span class="desc">뚜렷하게 구별되는 두 대상의 중간 지점</span></div>
+        <div class="card state-card"><span class="prep-word">among</span><span class="meaning">있다 ~사이에 (셋 이상)</span><span class="desc">무리나 군중 속에 섞여 있는 상태</span></div>
+        <div class="card state-card"><span class="prep-word">within</span><span class="meaning">있다 ~이내에</span><span class="desc">특정 범위나 한계선을 벗어나지 않음</span></div>
+        <div class="card state-card"><span class="prep-word">inside</span><span class="meaning">있다 ~안쪽에</span><span class="desc">겉과 대비되는 깊은 내부 공간 강조</span></div>
+        <div class="card state-card"><span class="prep-word">outside</span><span class="meaning">있다 ~바깥쪽에</span><span class="desc">경계선이나 닫힌 공간의 외부</span></div>
+        <div class="card state-card"><span class="prep-word">beneath</span><span class="meaning">있다 ~바로 밑에</span><span class="desc">영향력 아래 덮여 있거나 바닥에 밀착됨</span></div>
+        <div class="card state-card"><span class="prep-word">underneath</span><span class="meaning">있다 ~의 밑면에 (숨겨져)</span><span class="desc">가장 아래쪽 바닥면과 닿을 듯 가깝거나 숨겨짐</span></div>
+        <div class="card state-card"><span class="prep-word">opposite</span><span class="meaning">있다 ~의 맞은편에</span><span class="desc">서로 정면으로 마주 보고 있는 위치</span></div>
+        <div class="card state-card"><span class="prep-word">beyond</span><span class="meaning">있다 ~저 너머에</span><span class="desc">경계를 지나 훨씬 더 멀리 떨어진 곳</span></div>
+        <div class="card state-card"><span class="prep-word">amid</span><span class="meaning">있다 ~의 한복판에</span><span class="desc">어수선하거나 가득 찬 상황 속에 휩싸임</span></div>
+        <div class="card state-card"><span class="prep-word">atop</span><span class="meaning">있다 ~의 맨 꼭대기에</span><span class="desc">가장 높은 정상 지점에 우뚝 서 있음</span></div>
+        <div class="card state-card"><span class="prep-word">alongside</span><span class="meaning">있다 ~와 나란히</span><span class="desc">긴 대상을 따라 평행하게 위치함</span></div>
+        <div class="card state-card"><span class="prep-word">aboard</span><span class="meaning">있다 ~에 탑승하여</span><span class="desc">배, 비행기 등 큰 탈것의 판자(board) 위에 있음</span></div>
+        <div class="card state-card"><span class="prep-word">with</span><span class="meaning">있다 ~와 함께</span><span class="desc">분리되지 않고 동반하거나 소유한 상태</span></div>
+    </div>
+
+    <div id="motion" class="tab-content">
+        <div class="card motion-card"><span class="prep-word">to</span><span class="meaning">도달하다 ~에</span><span class="desc">이동의 최종 목적지에 도착함 (결과)</span></div>
+        <div class="card motion-card"><span class="prep-word">from</span><span class="meaning">출발하다 ~로부터</span><span class="desc">이동이 시작되는 기점/출처</span></div>
+        <div class="card motion-card"><span class="prep-word">into</span><span class="meaning">들어가다 ~안으로</span><span class="desc">밖에서 안쪽 깊숙한 곳으로 뚫고 들어감</span></div>
+        <div class="card motion-card"><span class="prep-word">out of</span><span class="meaning">나가다 ~밖으로</span><span class="desc">안에 있던 것이 경계를 뚫고 나옴</span></div>
+        <div class="card motion-card"><span class="prep-word">onto</span><span class="meaning">올라가다 ~위로</span><span class="desc">아래에서 점프하거나 이동하여 표면 위로 착지</span></div>
+        <div class="card motion-card"><span class="prep-word">toward</span><span class="meaning">향하다 ~쪽으로</span><span class="desc">목적지가 아닌 이동의 '방향성' 강조</span></div>
+        <div class="card motion-card"><span class="prep-word">away from</span><span class="meaning">멀어지다 ~로부터</span><span class="desc">기준점에서 물리적 거리가 벌어지도록 이동</span></div>
+        <div class="card motion-card"><span class="prep-word">through</span><span class="meaning">통과하다 ~을</span><span class="desc">입체적 공간을 관통하여 지나감</span></div>
+        <div class="card motion-card"><span class="prep-word">across</span><span class="meaning">가로지르다 ~을</span><span class="desc">평면 공간을 횡단하여 건너감</span></div>
+        <div class="card motion-card"><span class="prep-word">along</span><span class="meaning">따라가다 ~을</span><span class="desc">긴 선의 흐름과 나란히 이동</span></div>
+        <div class="card motion-card"><span class="prep-word">past</span><span class="meaning">지나치다 ~을</span><span class="desc">멈추지 않고 대상의 옆을 스쳐 지나감</span></div>
+        <div class="card motion-card"><span class="prep-word">over</span><span class="meaning">넘어가다 ~을</span><span class="desc">장애물을 건드리지 않고 포물선을 그리며 넘음</span></div>
+        <div class="card motion-card"><span class="prep-word">up</span><span class="meaning">올라가다 ~위로</span><span class="desc">낮은 곳에서 높은 곳으로 상승 이동</span></div>
+        <div class="card motion-card"><span class="prep-word">down</span><span class="meaning">내려가다 ~아래로</span><span class="desc">높은 곳에서 낮은 곳으로 하강 이동</span></div>
+        <div class="card motion-card"><span class="prep-word">off</span><span class="meaning">떨어지다 ~에서</span><span class="desc">붙어 있던 표면에서 분리되어 이탈함</span></div>
+        <div class="card motion-card"><span class="prep-word">around</span><span class="meaning">돌다 ~주위를</span><span class="desc">가장자리를 따라 둥글게 회전하거나 우회함</span></div>
+        <div class="card motion-card"><span class="prep-word">via</span><span class="meaning">경유하다 ~을</span><span class="desc">최종 목적지로 가기 위해 중간 지점을 거침</span></div>
+        <div class="card motion-card"><span class="prep-word">throughout</span><span class="meaning">훑고 지나가다 ~전역을</span><span class="desc">공간 구석구석 빠짐없이 퍼지거나 이동</span></div>
+        <div class="card motion-card"><span class="prep-word">for</span><span class="meaning">향해 떠나다 ~로</span><span class="desc">목적지를 향해 출발함 (의도/방향)</span></div>
+        <div class="card motion-card"><span class="prep-word">against</span><span class="meaning">부딪치다 ~에</span><span class="desc">다가오는 힘이나 물체와 정면으로 충돌/저항</span></div>
+        <div class="card motion-card"><span class="prep-word">after</span><span class="meaning">쫓아가다 ~를</span><span class="desc">앞서가는 대상을 뒤따라 이동 (추격)</span></div>
+        <div class="card motion-card"><span class="prep-word">up to</span><span class="meaning">차오르다 ~까지</span><span class="desc">수위나 움직임이 특정 지점에 도달함</span></div>
+        <div class="card motion-card"><span class="prep-word">round</span><span class="meaning">돌다 ~를 (코너)</span><span class="desc">모퉁이나 곡선 구간을 끼고 도는 회전 동작</span></div>
+        <div class="card motion-card"><span class="prep-word">back</span><span class="meaning">돌아가다 (제자리로)</span><span class="desc">원래 있던 곳으로 되돌아가는 회귀</span></div>
+    </div>
+
+    <div id="compare" class="tab-content">
+        
+        <div class="compare-block">
+            <div class="compare-title">at vs on vs in (점, 면, 공간의 차이)</div>
+            <div class="compare-grid compare-triple">
+                <div class="compare-item">
+                    <strong>at</strong>
+                    <span>있다 ~한 지점에 (Point)</span>
+                    <p class="desc">지도의 한 점처럼 콕 집어 말함</p>
+                </div>
+                <div class="compare-item">
+                    <strong>on</strong>
+                    <span>있다 ~위에 붙어 (Surface)</span>
+                    <p class="desc">표면에 접촉해 있는 상태</p>
+                </div>
+                <div class="compare-item">
+                    <strong>in</strong>
+                    <span>있다 ~안에 (Volume)</span>
+                    <p class="desc">3차원 공간 속에 푹 들어가 있음</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="compare-block">
+            <div class="compare-title">near vs by (거리감의 차이)</div>
+            <div class="compare-grid">
+                <div class="compare-item">
+                    <strong>near</strong>
+                    <span>있다 ~근처에</span>
+                    <p class="desc">물리적 거리가 멀지 않음 (붙어있지 않아도 됨)</p>
+                </div>
+                <div class="compare-item">
+                    <strong>by</strong>
+                    <span>있다 ~옆에 (영향권)</span>
+                    <p class="desc">손 뻗으면 닿을 듯한 바로 옆</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="compare-block">
+            <div class="compare-title">above vs over (높이의 차이)</div>
+            <div class="compare-grid">
+                <div class="compare-item">
+                    <strong>above</strong>
+                    <span>있다 ~보다 위에</span>
+                    <p class="desc">단지 기준보다 높이가 높음 (상대적 높이)</p>
+                </div>
+                <div class="compare-item">
+                    <strong>over</strong>
+                    <span>있다 ~위를 덮어 / 넘어가다</span>
+                    <p class="desc">수직 상방에서 덮거나, 가로질러 넘어가는 움직임</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="compare-block">
+            <div class="compare-title">beyond vs behind (위치와 한계)</div>
+            <div class="compare-grid">
+                <div class="compare-item">
+                    <strong>beyond</strong>
+                    <span>있다 ~저 너머에</span>
+                    <p class="desc">물리적 한계나 경계선을 지나 훨씬 먼 곳</p>
+                </div>
+                <div class="compare-item">
+                    <strong>behind</strong>
+                    <span>있다 ~뒤에</span>
+                    <p class="desc">앞쪽에서 보면 가려지는 바로 뒷공간</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="compare-block">
+            <div class="compare-title">below vs under vs beneath (아래의 깊이)</div>
+            <div class="compare-grid compare-triple">
+                <div class="compare-item">
+                    <strong>below</strong>
+                    <span>있다 ~보다 아래에</span>
+                    <p class="desc">서로 닿지 않고 수치/레벨이 낮음 (above 반대)</p>
+                </div>
+                <div class="compare-item">
+                    <strong>under</strong>
+                    <span>있다 ~밑에</span>
+                    <p class="desc">수직 아래에 있어 영향/지배를 받음 (over 반대)</p>
+                </div>
+                <div class="compare-item">
+                    <strong>beneath</strong>
+                    <span>있다 ~바로 밑면에</span>
+                    <p class="desc">바닥에 깔려 있거나 밀착되어 숨겨짐</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="compare-block">
+            <div class="compare-title">to vs for (도착 vs 방향)</div>
+            <div class="compare-grid">
+                <div class="compare-item">
+                    <strong>to</strong>
+                    <span>도달하다 ~에 (결과)</span>
+                    <p class="desc">목적지에 도착했음을 강조</p>
+                </div>
+                <div class="compare-item">
+                    <strong>for</strong>
+                    <span>향해 떠나다 ~로 (의도)</span>
+                    <p class="desc">목표를 향해 출발함 (도착 여부는 모름)</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="compare-block">
+            <div class="compare-title">on vs onto (상태 vs 동작)</div>
+            <div class="compare-grid">
+                <div class="compare-item">
+                    <strong>on</strong>
+                    <span>있다 ~위에 붙어</span>
+                    <p class="desc">이미 위에 있는 정지 상태</p>
+                </div>
+                <div class="compare-item">
+                    <strong>onto</strong>
+                    <span>올라가다 ~위로</span>
+                    <p class="desc">움직여서 표면 위로 올라가는 동작</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="compare-block">
+            <div class="compare-title">in vs into (상태 vs 동작)</div>
+            <div class="compare-grid">
+                <div class="compare-item">
+                    <strong>in</strong>
+                    <span>있다 ~안에</span>
+                    <p class="desc">이미 내부에 머무는 정지 상태</p>
+                </div>
+                <div class="compare-item">
+                    <strong>into</strong>
+                    <span>들어가다 ~안으로</span>
+                    <p class="desc">밖에서 안으로 뚫고 들어가는 동작</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="compare-block">
+            <div class="compare-title">out of vs from (이탈 vs 기점)</div>
+            <div class="compare-grid">
+                <div class="compare-item">
+                    <strong>out (of)</strong>
+                    <span>나가다 ~밖으로</span>
+                    <p class="desc">갇힌 내부 공간에서의 탈출</p>
+                </div>
+                <div class="compare-item">
+                    <strong>from</strong>
+                    <span>출발하다 ~로부터</span>
+                    <p class="desc">이동이 시작된 단순 기점/출처</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="compare-block">
+            <div class="compare-title">through vs throughout (관통 vs 전역)</div>
+            <div class="compare-grid">
+                <div class="compare-item">
+                    <strong>through</strong>
+                    <span>통과하다 ~을</span>
+                    <p class="desc">입구에서 출구로 뚫고 지나가는 선형 이동</p>
+                </div>
+                <div class="compare-item">
+                    <strong>throughout</strong>
+                    <span>훑고 지나가다 ~전역을</span>
+                    <p class="desc">전체 공간에 빠짐없이 확산됨</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="compare-block">
+            <div class="compare-title">off vs from (분리 vs 기점)</div>
+            <div class="compare-grid">
+                <div class="compare-item">
+                    <strong>off</strong>
+                    <span>떨어지다 ~에서</span>
+                    <p class="desc">붙어 있던 표면에서 떨어져 나가는 접촉 해제</p>
+                </div>
+                <div class="compare-item">
+                    <strong>from</strong>
+                    <span>출발하다 ~로부터</span>
+                    <p class="desc">단순히 어디서 왔는지 출처를 밝힘</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+    function openTab(tabName) {
+        // Hide all elements with class="tab-content" by default */
+        var i, tabcontent, tablinks;
+        tabcontent = document.getElementsByClassName("tab-content");
+        for (i = 0; i < tabcontent.length; i++) {
+            tabcontent[i].classList.remove("active");
+        }
+
+        // Remove the background color of all tablinks/buttons
+        tablinks = document.getElementsByClassName("tab-btn");
+        for (i = 0; i < tablinks.length; i++) {
+            tablinks[i].classList.remove("active");
+        }
+
+        // Show the specific tab content
+        document.getElementById(tabName).classList.add("active");
+
+        // Add the specific color to the button used to open the tab
+        document.querySelector(`button[data-tab="${tabName}"]`).classList.add("active");
+    }
+</script>
+
+</body>
+</html>
