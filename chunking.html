@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Global Tech Solutions Hiring Announcement - 이은식어학원</title>
+    <style>
+        /* [Design Theme] Modern & Clean */
+        :root {
+            --primary-color: #003366; /* Deep Blue: 이은식어학원 시그니처 */
+            --accent-color: #e6f0fa; /* Light Blue for backgrounds */
+            --text-color: #333333; /* Charcoal Grey */
+            --bg-color: #f4f7f6; /* Modern Light Gray Background */
+            --card-bg: #ffffff;
+            --marker-color: #ff5252; /* Points for grammar markers */
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Pretendard', 'Noto Sans KR', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            /* [Security] Drag & Select Prevention */
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        /* [Header] */
+        header {
+            background-color: var(--card-bg);
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            border-bottom: 3px solid var(--primary-color);
+        }
+
+        header h1 {
+            font-size: 1.5rem;
+            color: var(--primary-color);
+            margin-bottom: 5px;
+            font-weight: 700;
+        }
+
+        header p {
+            font-size: 0.9rem;
+            color: #666;
+            font-weight: 500;
+        }
+
+        /* [Main Layout] */
+        main {
+            flex: 1;
+            max-width: 800px;
+            width: 100%;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* [Card Style] */
+        .card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            transition: transform 0.2s;
+        }
+
+        .card-title {
+            font-size: 1.1rem;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            font-weight: 700;
+            border-left: 4px solid var(--primary-color);
+            padding-left: 10px;
+        }
+
+        /* [Content: Vocabulary] */
+        .vocab-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            font-size: 0.95rem;
+        }
+
+        .vocab-item {
+            background-color: var(--accent-color);
+            color: var(--primary-color);
+            padding: 5px 10px;
+            border-radius: 6px;
+        }
+
+        /* [Content: Sentence Analysis] */
+        .sentence-container {
+            margin-bottom: 20px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 20px;
+        }
+
+        .sentence-container:last-child {
+            border-bottom: none;
+        }
+
+        .en-text {
+            font-size: 1.05rem;
+            font-weight: 600;
+            color: #222;
+            margin-bottom: 10px;
+        }
+
+        /* [Interactive: Toggle Button] */
+        .toggle-btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: background 0.3s;
+            outline: none;
+            display: inline-flex;
+            align-items: center;
+        }
+
+        .toggle-btn:hover {
+            background-color: #002244;
+        }
+
+        .toggle-btn::after {
+            content: '▼';
+            font-size: 0.7rem;
+            margin-left: 6px;
+        }
+
+        .toggle-btn.active::after {
+            content: '▲';
+        }
+
+        /* [Hidden Analysis Area] */
+        .analysis-box {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease-out, opacity 0.4s;
+            opacity: 0;
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            margin-top: 10px;
+        }
+
+        .analysis-box.show {
+            opacity: 1;
+            /* Max-height is set via JS for dynamic content */
+        }
+
+        .analysis-content {
+            padding: 15px;
+            font-size: 0.95rem;
+            color: #444;
+            line-height: 1.7;
+        }
+
+        /* [Grammar Markers Styling] */
+        .marker-slash { color: var(--marker-color); font-weight: bold; margin: 0 2px; }
+        .marker-bracket { color: #007bff; font-weight: bold; }
+        .marker-trans { color: #555; display: block; margin-top: 5px; font-style: normal; }
+        .grammar-note { font-size: 0.85rem; color: #888; margin-top: 4px; display: block; }
+
+        /* [Footer] */
+        footer {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 20px;
+            font-size: 0.85rem;
+            margin-top: auto;
+        }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            header h1 { font-size: 1.2rem; }
+            .card { padding: 15px; }
+            .en-text { font-size: 1rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Global Tech Solutions Hiring Announcement</h1>
+        <p>이은식어학원</p>
+    </header>
+
+    <main>
+        <div class="card">
+            <div class="card-title">원문 전체 보기</div>
+            <p style="white-space: pre-line;">
+                Global Tech Solutions is currently seeking a passionate graphic designer. We are a leading company in the tech industry. We want a person who loves creative challenges. Our goal is to make the world better through design.
+                The new designer will join our marketing team. You will create visual content for social media. We find this role essential for our brand identity. Also, you will design brochures and logos used for our campaigns. We expect the candidate to be proactive.
+                Applicants must have a bachelor’s degree in design. We prefer candidates having experience in digital art. You should be proficient in Adobe Creative Suite. Excellent communication skills are also necessary.
+                Interested candidates should send a resume and a portfolio. Please visit our website created for job applications. We will contact people selected for an interview. The deadline is next Friday.
+            </p>
+        </div>
+
+        <div class="card">
+            <div class="card-title">Essential Vocabulary</div>
+            <div class="vocab-list">
+                <span class="vocab-item">▪ passionate 열정적인</span>
+                <span class="vocab-item">▪ industry 산업</span>
+                <span class="vocab-item">▪ challenge 도전</span>
+                <span class="vocab-item">▪ essential 필수적인</span>
+                <span class="vocab-item">▪ brand identity 브랜드 정체성</span>
+                <span class="vocab-item">▪ brochure 안내 책자</span>
+                <span class="vocab-item">▪ proactive 주도적인</span>
+                <span class="vocab-item">▪ bachelor’s degree 학사 학위</span>
+                <span class="vocab-item">▪ prefer 선호하다</span>
+                <span class="vocab-item">▪ candidate 후보자</span>
+                <span class="vocab-item">▪ proficient 능숙한</span>
+                <span class="vocab-item">▪ resume 이력서</span>
+                <span class="vocab-item">▪ portfolio 포트폴리오</span>
+                <span class="vocab-item">▪ deadline 마감 기한</span>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-title">문장별 상세 분석 (직독직해)</div>
+            
+            <div class="sentence-container">
+                <div class="en-text">1. Global Tech Solutions is currently seeking a passionate graphic designer.</div>
+                <button class="toggle-btn" onclick="toggleAnswer(this)">해설 보기</button>
+                <div class="analysis-box">
+                    <div class="analysis-content">
+                        <strong>분석:</strong> Global Tech Solutions is currently seeking <span class="marker-slash">/</span> a passionate graphic designer.<br>
+                        <span class="marker-trans"><strong>해석:</strong> Global Tech Solutions는 현재 찾고 있다 <span class="marker-slash">/</span> 열정적인 그래픽 디자이너를.</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="sentence-container">
+                <div class="en-text">2. We are a leading company in the tech industry.</div>
+                <button class="toggle-btn" onclick="toggleAnswer(this)">해설 보기</button>
+                <div class="analysis-box">
+                    <div class="analysis-content">
+                        <strong>분석:</strong> We are a leading company <span class="marker-slash">/</span> in the tech industry.<br>
+                        <span class="marker-trans"><strong>해석:</strong> 우리는 선도하는 기업이다 <span class="marker-slash">/</span> 기술 산업에서.</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="sentence-container">
+                <div class="en-text">3. We want a person who loves creative challenges.</div>
+                <button class="toggle-btn" onclick="toggleAnswer(this)">해설 보기</button>
+                <div class="analysis-box">
+                    <div class="analysis-content">
+                        <strong>분석:</strong> We want a person <span class="marker-slash">/</span> who <span class="marker-slash">/</span> loves creative challenges.<br>
+                        <span class="marker-trans"><strong>해석:</strong> 우리는 사람을 원한다 <span class="marker-slash">/</span> <strong>근데 그 사람은</strong> <span class="marker-slash">/</span> 창의적인 도전을 사랑한다.</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="sentence-container">
+                <div class="en-text">4. Our goal is to make the world better through design.</div>
+                <button class="toggle-btn" onclick="toggleAnswer(this)">해설 보기</button>
+                <div class="analysis-box">
+                    <div class="analysis-content">
+                        <strong>분석:</strong> Our goal is to make <span class="marker-bracket">[the world better]</span> <span class="marker-slash">/</span> through design.<br>
+                        <span class="marker-trans"><strong>해석:</strong> 우리의 목표는 <span class="marker-bracket">[세상이 더 좋아지게]</span> 만드는 것이다 <span class="marker-slash">/</span> 디자인을 통해.</span>
+                        <span class="grammar-note">* 5형식 구조: 목적어와 보어의 주술 관계</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="sentence-container">
+                <div class="en-text">5. The new designer will join our marketing team.</div>
+                <button class="toggle-btn" onclick="toggleAnswer(this)">해설 보기</button>
+                <div class="analysis-box">
+                    <div class="analysis-content">
+                        <strong>분석:</strong> The new designer will join <span class="marker-slash">/</span> our marketing team.<br>
+                        <span class="marker-trans"><strong>해석:</strong> 새로운 디자이너는 합류할 것이다 <span class="marker-slash">/</span> 우리의 마케팅 팀에.</span>
+                    </div>
+                </div>
+            </div>
+
+             <div class="sentence-container">
+                <div class="en-text">6. You will create visual content for social media.</div>
+                <button class="toggle-btn" onclick="toggleAnswer(this)">해설 보기</button>
+                <div class="analysis-box">
+                    <div class="analysis-content">
+                        <strong>분석:</strong> You will create visual content <span class="marker-slash">/</span> for social media.<br>
+                        <span class="marker-trans"><strong>해석:</strong> 당신은 시각적 콘텐츠를 만들 것이다 <span class="marker-slash">/</span> 소셜 미디어를 위해.</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="sentence-container">
+                <div class="en-text">7. We find this role essential for our brand identity.</div>
+                <button class="toggle-btn" onclick="toggleAnswer(this)">해설 보기</button>
+                <div class="analysis-box">
+                    <div class="analysis-content">
+                        <strong>분석:</strong> We find <span class="marker-bracket">[this role essential]</span> <span class="marker-slash">/</span> for our brand identity.<br>
+                        <span class="marker-trans"><strong>해석:</strong> 우리는 <span class="marker-bracket">[이 역할이 필수적이라고]</span> 생각한다 <span class="marker-slash">/</span> 우리의 브랜드 정체성을 위해.</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="sentence-container">
+                <div class="en-text">8. Also, you will design brochures and logos used for our campaigns.</div>
+                <button class="toggle-btn" onclick="toggleAnswer(this)">해설 보기</button>
+                <div class="analysis-box">
+                    <div class="analysis-content">
+                        <strong>분석:</strong> Also, you will design brochures and logos <span class="marker-slash">/</span> used for our campaigns.<br>
+                        <span class="marker-trans"><strong>해석:</strong> 또한, 당신은 안내 책자와 로고를 디자인할 것이다 <span class="marker-slash">/</span> <strong>(그것들은)</strong> 우리의 캠페인을 위해 사용된다.</span>
+                        <span class="grammar-note">* used: 명사(brochures and logos)와 수동 관계</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="sentence-container">
+                <div class="en-text">9. We expect the candidate to be proactive.</div>
+                <button class="toggle-btn" onclick="toggleAnswer(this)">해설 보기</button>
+                <div class="analysis-box">
+                    <div class="analysis-content">
+                        <strong>분석:</strong> We expect <span class="marker-bracket">[the candidate to be proactive]</span>.<br>
+                        <span class="marker-trans"><strong>해석:</strong> 우리는 <span class="marker-bracket">[후보자가 주도적이기를]</span> 기대한다.</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="sentence-container">
+                <div class="en-text">10. Applicants must have a bachelor’s degree in design.</div>
+                <button class="toggle-btn" onclick="toggleAnswer(this)">해설 보기</button>
+                <div class="analysis-box">
+                    <div class="analysis-content">
+                        <strong>분석:</strong> Applicants must have a bachelor’s degree <span class="marker-slash">/</span> in design.<br>
+                        <span class="marker-trans"><strong>해석:</strong> 지원자들은 학사 학위를 가져야 한다 <span class="marker-slash">/</span> 디자인 분야에서.</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="sentence-container">
+                <div class="en-text">11. We prefer candidates having experience in digital art.</div>
+                <button class="toggle-btn" onclick="toggleAnswer(this)">해설 보기</button>
+                <div class="analysis-box">
+                    <div class="analysis-content">
+                        <strong>분석:</strong> We prefer candidates <span class="marker-slash">/</span> having experience in digital art.<br>
+                        <span class="marker-trans"><strong>해석:</strong> 우리는 후보자들을 선호한다 <span class="marker-slash">/</span> <strong>(그들은)</strong> 디지털 아트에 경험을 가지고 있다.</span>
+                        <span class="grammar-note">* having: 명사(candidates)와 능동 관계</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="sentence-container">
+                <div class="en-text">12. You should be proficient in Adobe Creative Suite.</div>
+                <button class="toggle-btn" onclick="toggleAnswer(this)">해설 보기</button>
+                <div class="analysis-box">
+                    <div class="analysis-content">
+                        <strong>분석:</strong> You should be proficient <span class="marker-slash">/</span> in Adobe Creative Suite.<br>
+                        <span class="marker-trans"><strong>해석:</strong> 당신은 능숙해야 한다 <span class="marker-slash">/</span> Adobe Creative Suite에.</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="sentence-container">
+                <div class="en-text">13. Excellent communication skills are also necessary.</div>
+                <button class="toggle-btn" onclick="toggleAnswer(this)">해설 보기</button>
+                <div class="analysis-box">
+                    <div class="analysis-content">
+                        <strong>분석:</strong> Excellent communication skills are also necessary.<br>
+                        <span class="marker-trans"><strong>해석:</strong> 뛰어난 의사소통 기술도 또한 필수적이다.</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="sentence-container">
+                <div class="en-text">14. Interested candidates should send a resume and a portfolio.</div>
+                <button class="toggle-btn" onclick="toggleAnswer(this)">해설 보기</button>
+                <div class="analysis-box">
+                    <div class="analysis-content">
+                        <strong>분석:</strong> Interested candidates should send a resume and a portfolio.<br>
+                        <span class="marker-trans"><strong>해석:</strong> 관심 있는 후보자들은 이력서와 포트폴리오를 보내야 한다.</span>
+                    </div>
+                </div>
+            </div>
+
+             <div class="sentence-container">
+                <div class="en-text">15. Please visit our website created for job applications.</div>
+                <button class="toggle-btn" onclick="toggleAnswer(this)">해설 보기</button>
+                <div class="analysis-box">
+                    <div class="analysis-content">
+                        <strong>분석:</strong> Please visit our website <span class="marker-slash">/</span> created for job applications.<br>
+                        <span class="marker-trans"><strong>해석:</strong> 우리의 웹사이트를 방문해라 <span class="marker-slash">/</span> <strong>(그것은)</strong> 입사 지원을 위해 만들어졌다.</span>
+                        <span class="grammar-note">* created: 명사(website)와 수동 관계</span>
+                    </div>
+                </div>
+            </div>
+
+             <div class="sentence-container">
+                <div class="en-text">16. We will contact people selected for an interview.</div>
+                <button class="toggle-btn" onclick="toggleAnswer(this)">해설 보기</button>
+                <div class="analysis-box">
+                    <div class="analysis-content">
+                        <strong>분석:</strong> We will contact people <span class="marker-slash">/</span> selected for an interview.<br>
+                        <span class="marker-trans"><strong>해석:</strong> 우리는 사람들에게 연락할 것이다 <span class="marker-slash">/</span> <strong>(그들은)</strong> 인터뷰를 위해 선택되었다.</span>
+                        <span class="grammar-note">* selected: 명사(people)와 수동 관계</span>
+                    </div>
+                </div>
+            </div>
+
+             <div class="sentence-container">
+                <div class="en-text">17. The deadline is next Friday.</div>
+                <button class="toggle-btn" onclick="toggleAnswer(this)">해설 보기</button>
+                <div class="analysis-box">
+                    <div class="analysis-content">
+                        <strong>분석:</strong> The deadline is next Friday.<br>
+                        <span class="marker-trans"><strong>해석:</strong> 마감 기한은 다음 주 금요일이다.</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <footer>
+        영어는 기다림과 채움의 감각으로 - 이은식어학원
+    </footer>
+
+    <script>
+        // [Security] Prevent Right Click, Copy, Drag
+        document.addEventListener('contextmenu', event => event.preventDefault());
+        document.addEventListener('selectstart', event => event.preventDefault());
+        document.addEventListener('dragstart', event => event.preventDefault());
+        document.addEventListener('keydown', event => {
+            if (event.ctrlKey && (event.key === 'c' || event.key === 'C')) {
+                event.preventDefault();
+            }
+        });
+
+        // [Interactive] Toggle Accordion
+        function toggleAnswer(btn) {
+            const content = btn.nextElementSibling;
+            btn.classList.toggle('active');
+            
+            if (content.style.maxHeight) {
+                content.style.maxHeight = null;
+                btn.textContent = '해설 보기';
+            } else {
+                content.style.maxHeight = content.scrollHeight + "px";
+                btn.textContent = '해설 접기';
+            }
+        }
+    </script>
+</body>
+</html>
