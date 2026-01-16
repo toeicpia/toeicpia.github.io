@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>이은식어학원 - Interactive Reader</title>
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --accent: #3498db;
+            --bg: #f8f9fa;
+            --text: #333;
+            --light-gray: #e0e0e0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+
+        /* 0. 필수 상단 표기 */
+        h1 {
+            text-align: center;
+            color: var(--primary);
+            margin: 20px 0;
+            font-size: 1.2rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            padding-bottom: 250px; /* 하단 바 가림 방지 */
+        }
+
+        /* 컨트롤 패널 */
+        .controls {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+            margin-bottom: 30px;
+            position: sticky;
+            top: 10px;
+            z-index: 100;
+        }
+
+        .btn-pill {
+            background: white;
+            border: 2px solid var(--light-gray);
+            border-radius: 50px;
+            padding: 8px 16px;
+            font-size: 0.9rem;
+            color: var(--text);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .btn-pill.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        /* 텍스트 영역 */
+        #content-area {
+            font-size: 1.5rem;
+            line-height: 2.2;
+            word-break: keep-all;
+        }
+
+        .sentence {
+            margin-bottom: 1.5rem;
+            display: inline-block; /* 문단 흐름 유지 */
+        }
+
+        .chunk {
+            display: inline-block;
+            margin-right: 5px;
+            opacity: 0; /* 기본 숨김 */
+            transition: opacity 0.3s ease;
+            position: relative;
+            cursor: pointer;
+        }
+        
+        /* 퀴즈 모드: 가림막 */
+        .chunk.quiz-mode {
+            background-color: black;
+            color: black;
+            border-radius: 4px;
+            opacity: 1 !important; /* 박스는 보여야 함 */
+        }
+        .chunk.quiz-mode.revealed {
+            background-color: transparent;
+            color: var(--text);
+            opacity: 1;
+        }
+
+        .chunk.revealed {
+            opacity: 1;
+        }
+
+        /* 스피드 리딩용 클래스 */
+        .chunk.flash-active {
+            opacity: 1 !important;
+            background-color: #fff3cd; /* 강조색 */
+        }
+        .chunk.flash-hidden {
+            opacity: 0 !important;
+        }
+
+        /* 하단 고정 바 */
+        .bottom-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: white;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+            padding: 15px 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-sizing: border-box;
+            z-index: 1000;
+        }
+
+        .nav-btn {
+            height: 55px; /* min-height 50px 보장 */
+            border: none;
+            border-radius: 12px;
+            font-weight: bold;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .btn-back {
+            width: 20%;
+            background-color: #f1f3f5;
+            color: var(--primary);
+        }
+
+        .btn-next {
+            width: 25%;
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .trans-box {
+            width: 53%; /* 55%에서 여백 고려 미세 조정 */
+            min-height: 55px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            font-size: 0.95rem;
+            color: #555;
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 5px;
+            word-break: keep-all;
+            border: 1px solid #eee;
+        }
+
+        @media (max-width: 600px) {
+            h1 { font-size: 1rem; }
+            #content-area { font-size: 1.2rem; }
+            .btn-pill { font-size: 0.8rem; padding: 6px 12px; }
+        }
+    </style>
+</head>
+<body>
+
+    <h1>영어는 기다림과 채움의 감각으로 -이은식어학원</h1>
+
+    <div class="container">
+        <div class="controls">
+            <button class="btn-pill active" id="btn-short" onclick="setMode('short')">✂️ 짧은 호흡</button>
+            <button class="btn-pill" id="btn-long" onclick="setMode('long')">🌊 긴 호흡</button>
+            <button class="btn-pill" id="btn-quiz" onclick="toggleQuiz()">🔒 Quiz</button>
+            <button class="btn-pill" id="btn-speed" onclick="startSpeedRead()">⚡ Speed Read</button>
+            <button class="btn-pill" onclick="speakCurrent()">🔊 듣기</button>
+            <button class="btn-pill" onclick="revealAll()">👀 전체 보기</button>
+        </div>
+
+        <div id="content-area"></div>
+    </div>
+
+    <div class="bottom-bar">
+        <button class="nav-btn btn-back" onclick="prevChunk()">◀ Back</button>
+        <div class="trans-box" id="trans-display">해석이 여기에 표시됩니다.</div>
+        <button class="nav-btn btn-next" onclick="nextChunk()">Next ▶</button>
+    </div>
+
+    <script>
+        // 데이터: [영어, 한국어(직독직해)]
+        const rawData = [
+            {
+                short: [
+                    ["Global Tech Solutions is", "Global Tech Solutions는 이다"],
+                    ["currently seeking", "현재 찾고 있는 중"],
+                    ["a passionate graphic designer.", "열정적인 그래픽 디자이너를."]
+                ],
+                long: [
+                    ["Global Tech Solutions is currently seeking", "Global Tech Solutions는 현재 찾고 있다"],
+                    ["a passionate graphic designer.", "열정적인 그래픽 디자이너를."]
+                ]
+            },
+            {
+                short: [
+                    ["We are", "우리는 이다"],
+                    ["a leading company", "선도하는 회사"],
+                    ["in the tech industry.", "기술 산업에서."]
+                ],
+                long: [
+                    ["We are a leading company", "우리는 선도하는 회사이다"],
+                    ["in the tech industry.", "기술 산업에서."]
+                ]
+            },
+            {
+                short: [
+                    ["We want", "우리는 원한다"],
+                    ["a person", "한 사람을"],
+                    ["who loves", "사랑하는 (누구냐면)"],
+                    ["creative challenges.", "창의적인 도전들을."]
+                ],
+                long: [
+                    ["We want a person", "우리는 사람을 원한다"],
+                    ["who loves creative challenges.", "창의적인 도전을 사랑하는."]
+                ]
+            },
+            {
+                short: [
+                    ["Our goal is", "우리의 목표는 이다"],
+                    ["to make", "만드는 것"],
+                    ["the world better", "세상을 더 낫게"],
+                    ["through design.", "디자인을 통해."]
+                ],
+                long: [
+                    ["Our goal is to make the world better", "우리의 목표는 세상을 더 낫게 만드는 것이다"],
+                    ["through design.", "디자인을 통해."]
+                ]
+            },
+            {
+                short: [
+                    ["The new designer", "새로운 디자이너는"],
+                    ["will join", "합류할 것이다"],
+                    ["our marketing team.", "우리 마케팅 팀에."]
+                ],
+                long: [
+                    ["The new designer will join", "새로운 디자이너는 합류할 것이다"],
+                    ["our marketing team.", "우리 마케팅 팀에."]
+                ]
+            },
+            {
+                short: [
+                    ["You will create", "당신은 만들 것이다"],
+                    ["visual content", "시각적 콘텐츠를"],
+                    ["for social media.", "소셜 미디어를 위해."]
+                ],
+                long: [
+                    ["You will create visual content", "당신은 시각적 콘텐츠를 만들 것이다"],
+                    ["for social media.", "소셜 미디어를 위해."]
+                ]
+            },
+            {
+                short: [
+                    ["We find", "우리는 생각한다"],
+                    ["this role essential", "이 역할이 필수적이라고"],
+                    ["for our brand identity.", "우리의 브랜드 정체성을 위해."]
+                ],
+                long: [
+                    ["We find this role essential", "우리는 이 역할이 필수적이라 생각한다"],
+                    ["for our brand identity.", "우리의 브랜드 정체성을 위해."]
+                ]
+            },
+            {
+                short: [
+                    ["Also,", "또한,"],
+                    ["you will design", "당신은 디자인할 것이다"],
+                    ["brochures and logos", "브로셔와 로고들을"],
+                    ["used", "사용되는"],
+                    ["for our campaigns.", "우리 캠페인을 위해."]
+                ],
+                long: [
+                    ["Also, you will design brochures and logos", "또한, 당신은 브로셔와 로고를 디자인할 것이다"],
+                    ["used for our campaigns.", "우리 캠페인에 사용되는."]
+                ]
+            },
+            {
+                short: [
+                    ["We expect", "우리는 기대한다"],
+                    ["the candidate", "지원자가"],
+                    ["to be proactive.", "주도적이기를."]
+                ],
+                long: [
+                    ["We expect", "우리는 기대한다"],
+                    ["the candidate to be proactive.", "지원자가 주도적이기를."]
+                ]
+            },
+            {
+                short: [
+                    ["Applicants", "지원자들은"],
+                    ["must have", "가져야만 한다"],
+                    ["a bachelor’s degree", "학사 학위를"],
+                    ["in design.", "디자인 분야에서."]
+                ],
+                long: [
+                    ["Applicants must have a bachelor’s degree", "지원자들은 학사 학위를 가져야 한다"],
+                    ["in design.", "디자인 분야에서."]
+                ]
+            },
+            {
+                short: [
+                    ["We prefer", "우리는 선호한다"],
+                    ["candidates", "지원자들을"],
+                    ["having experience", "경험을 가진"],
+                    ["in digital art.", "디지털 아트에서."]
+                ],
+                long: [
+                    ["We prefer candidates having experience", "우리는 경험 있는 지원자를 선호한다"],
+                    ["in digital art.", "디지털 아트에서."]
+                ]
+            },
+            {
+                short: [
+                    ["You", "당신은"],
+                    ["should be proficient", "능숙해야 한다"],
+                    ["in Adobe Creative Suite.", "Adobe Creative Suite에."]
+                ],
+                long: [
+                    ["You should be proficient", "당신은 능숙해야 한다"],
+                    ["in Adobe Creative Suite.", "Adobe Creative Suite에."]
+                ]
+            },
+            {
+                short: [
+                    ["Excellent communication skills", "뛰어난 의사소통 능력은"],
+                    ["are", "이다"],
+                    ["also necessary.", "또한 필수적인."]
+                ],
+                long: [
+                    ["Excellent communication skills are also necessary.", "뛰어난 의사소통 능력은 또한 필수적이다."]
+                ]
+            },
+            {
+                short: [
+                    ["Interested candidates", "관심 있는 지원자들은"],
+                    ["should send", "보내야 한다"],
+                    ["a resume", "이력서 하나를"],
+                    ["and a portfolio.", "그리고 포트폴리오 하나를."]
+                ],
+                long: [
+                    ["Interested candidates should send", "관심 있는 지원자들은 보내야 한다"],
+                    ["a resume and a portfolio.", "이력서와 포트폴리오를."]
+                ]
+            },
+            {
+                short: [
+                    ["Please visit", "방문해 달라"],
+                    ["our website", "우리 웹사이트를"],
+                    ["created", "만들어진"],
+                    ["for job applications.", "입사 지원을 위해."]
+                ],
+                long: [
+                    ["Please visit our website", "우리 웹사이트를 방문해 달라"],
+                    ["created for job applications.", "입사 지원을 위해 만들어진."]
+                ]
+            },
+            {
+                short: [
+                    ["We will contact", "우리는 연락할 것이다"],
+                    ["people", "사람들에게"],
+                    ["selected", "선택된"],
+                    ["for an interview.", "면접을 위해."]
+                ],
+                long: [
+                    ["We will contact people", "우리는 사람들에게 연락할 것이다"],
+                    ["selected for an interview.", "면접을 위해 선택된."]
+                ]
+            },
+            {
+                short: [
+                    ["The deadline", "마감일은"],
+                    ["is", "이다"],
+                    ["next Friday.", "다음 주 금요일."]
+                ],
+                long: [
+                    ["The deadline is next Friday.", "마감일은 다음 주 금요일이다."]
+                ]
+            }
+        ];
+
+        let currentMode = 'short';
+        let chunks = []; // 현재 모드의 모든 청크 요소(DOM) 저장
+        let flatData = []; // 현재 모드의 모든 데이터(텍스트, 해석) 평탄화 저장
+        let currentIndex = -1;
+        let isQuizMode = false;
+        let isSpeedReading = false;
+        let speedInterval;
+
+        const contentArea = document.getElementById('content-area');
+        const transDisplay = document.getElementById('trans-display');
+        const btnShort = document.getElementById('btn-short');
+        const btnLong = document.getElementById('btn-long');
+        const btnQuiz = document.getElementById('btn-quiz');
+
+        function setMode(mode) {
+            currentMode = mode;
+            btnShort.classList.toggle('active', mode === 'short');
+            btnLong.classList.toggle('active', mode === 'long');
+            renderText();
+        }
+
+        function toggleQuiz() {
+            isQuizMode = !isQuizMode;
+            btnQuiz.classList.toggle('active', isQuizMode);
+            renderText(); // 퀴즈 모드 적용하여 다시 렌더링
+        }
+
+        function renderText() {
+            // 초기화
+            contentArea.innerHTML = '';
+            chunks = [];
+            flatData = [];
+            currentIndex = -1;
+            transDisplay.innerText = "Start 버튼을 누르거나 키보드 화살표(▶)를 사용하세요.";
+            stopSpeedRead();
+
+            rawData.forEach(sentenceObj => {
+                const sentenceDiv = document.createElement('div');
+                sentenceDiv.className = 'sentence';
+                
+                const sentenceData = sentenceObj[currentMode];
+                
+                sentenceData.forEach(chunkData => {
+                    const span = document.createElement('span');
+                    span.className = 'chunk';
+                    span.innerText = chunkData[0] + " "; // 영어 텍스트
+                    
+                    if (isQuizMode) span.classList.add('quiz-mode');
+
+                    sentenceDiv.appendChild(span);
+                    chunks.push(span);
+                    flatData.push({ en: chunkData[0], ko: chunkData[1] });
+                });
+
+                contentArea.appendChild(sentenceDiv);
+            });
+        }
+
+        function nextChunk() {
+            if (isSpeedReading) return; // 스피드 리딩 중에는 수동 조작 방지
+            if (currentIndex < chunks.length - 1) {
+                currentIndex++;
+                updateChunkState();
+            }
+        }
+
+        function prevChunk() {
+            if (isSpeedReading) return;
+            if (currentIndex >= 0) {
+                const currentChunk = chunks[currentIndex];
+                currentChunk.classList.remove('revealed');
+                if(isQuizMode) currentChunk.classList.remove('revealed'); // 퀴즈 모드 복구
+                
+                currentIndex--;
+                if (currentIndex >= 0) {
+                    transDisplay.innerText = flatData[currentIndex].ko;
+                } else {
+                    transDisplay.innerText = "첫 문장입니다.";
+                }
+            }
+        }
+
+        function updateChunkState() {
+            const currentChunk = chunks[currentIndex];
+            currentChunk.classList.add('revealed');
+            
+            // 텍스트 박스 업데이트
+            transDisplay.innerText = flatData[currentIndex].ko;
+
+            // 스크롤 자동 이동 (화면 아래로 내려갈 경우)
+            const rect = currentChunk.getBoundingClientRect();
+            if (rect.bottom > window.innerHeight - 80) {
+                window.scrollBy({ top: 100, behavior: 'smooth' });
+            }
+        }
+
+        function revealAll() {
+            stopSpeedRead();
+            chunks.forEach(chunk => chunk.classList.add('revealed'));
+            currentIndex = chunks.length - 1;
+            transDisplay.innerText = "전체 문장이 공개되었습니다.";
+        }
+
+        function speakCurrent() {
+            if (currentIndex >= 0 && currentIndex < flatData.length) {
+                const text = flatData[currentIndex].en;
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.lang = 'en-US';
+                utterance.rate = 1.0;
+                window.speechSynthesis.speak(utterance);
+            } else {
+                transDisplay.innerText = "먼저 텍스트를 선택(Next)해주세요.";
+            }
+        }
+
+        // --- 스피드 리딩 로직 ---
+        function startSpeedRead() {
+            if (isSpeedReading) {
+                stopSpeedRead();
+                return;
+            }
+            isSpeedReading = true;
+            document.getElementById('btn-speed').classList.add('active');
+            
+            // 처음부터 다시 시작
+            chunks.forEach(c => {
+                c.classList.remove('revealed', 'flash-active', 'flash-hidden');
+                c.style.opacity = '0';
+            });
+            currentIndex = -1;
+            
+            processSpeedChunk();
+        }
+
+        function stopSpeedRead() {
+            isSpeedReading = false;
+            clearTimeout(speedInterval);
+            document.getElementById('btn-speed').classList.remove('active');
+            // 상태 복구: 현재까지 진행된 것만 보이게 하거나, 다 숨기거나 선택 가능. 
+            // 여기서는 스피드 리딩 종료 시 마지막 상태 유지.
+        }
+
+        function processSpeedChunk() {
+            if (!isSpeedReading) return;
+
+            // 이전 청크 숨기기 (직독직해 강제)
+            if (currentIndex >= 0) {
+                chunks[currentIndex].classList.remove('flash-active');
+                chunks[currentIndex].classList.add('flash-hidden');
+            }
+
+            currentIndex++;
+            
+            if (currentIndex >= chunks.length) {
+                stopSpeedRead();
+                transDisplay.innerText = "Speed Read 완료.";
+                // 다시 다 보여주기 (옵션)
+                chunks.forEach(c => {
+                    c.classList.remove('flash-hidden');
+                    c.classList.add('revealed');
+                });
+                return;
+            }
+
+            const currentChunk = chunks[currentIndex];
+            const currentData = flatData[currentIndex];
+
+            // 현재 청크 보이기
+            currentChunk.classList.add('flash-active');
+            transDisplay.innerText = currentData.ko;
+
+            // 단어 길이에 비례한 시간 계산 (최소 500ms, 글자당 50ms 추가)
+            const delay = 500 + (currentData.en.length * 50);
+
+            speedInterval = setTimeout(processSpeedChunk, delay);
+        }
+
+        // 키보드 이벤트
+        document.addEventListener('keydown', (e) => {
+            if (e.code === 'ArrowRight') nextChunk();
+            if (e.code === 'ArrowLeft') prevChunk();
+            if (e.code === 'Space') speakCurrent();
+        });
+
+        // 초기 실행
+        renderText();
+
+    </script>
+</body>
+</html>
