@@ -3,292 +3,424 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>이은식어학원 - 목적어 따기 훈련 (Simul. 2)</title>
+    <title>이은식어학원 :: 필수 동사 6선 (Active Recall)</title>
     <style>
-        /* Ver.1과 동일한 디자인 시스템 유지 */
+        /* * 이은식어학원 UI Design System (v2.0) */
         :root {
             --primary-color: #003366; /* Deep Blue */
+            --secondary-color: #004d99; /* Lighter Blue */
             --text-color: #333333;
-            --bg-color: #f4f6f8;
+            --bg-color: #f4f6f9;
             --white: #ffffff;
-            --gray-light: #e0e0e0;
-            --badge-n: #6c757d;
-            --badge-clause: #007bff;
-            --badge-phrase: #28a745;
+            --badge-n: #7f8c8d;       /* Noun - Gray */
+            --badge-clause: #2980b9;  /* Clause - Blue */
+            --badge-phrase: #27ae60;  /* Phrase - Green */
+            --badge-alert: #c0392b;   /* Caution - Red */
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
+
         body {
-            font-family: 'Pretendard', -apple-system, sans-serif;
+            font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
             background-color: var(--bg-color);
             color: var(--text-color);
             line-height: 1.6;
-            -webkit-user-select: none; user-select: none;
+            user-select: none; /* 보안 */
+            -webkit-user-select: none;
         }
 
+        /* Header */
         header {
-            background-color: var(--primary-color);
-            color: var(--white);
-            padding: 1.5rem 1rem;
+            background-color: var(--white);
+            border-bottom: 3px solid var(--primary-color);
+            padding: 1.5rem 0;
             text-align: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
         }
-        header h1 { font-size: 1.5rem; font-weight: 700; }
-        header p { font-size: 0.9rem; opacity: 0.9; margin-top: 0.5rem; }
 
+        h1 { color: var(--primary-color); font-size: 1.8rem; font-weight: 800; }
+        .subtitle { font-size: 0.9rem; color: #666; margin-top: 5px; }
+
+        /* Container */
         .container {
             max-width: 1200px;
             margin: 2rem auto;
-            padding: 0 1rem;
+            padding: 0 20px;
+        }
+
+        /* Grid - 3 columns for 6 words */
+        .card-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
             gap: 1.5rem;
         }
 
-        .card {
+        /* Card */
+        .verb-card {
             background: var(--white);
             border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
             overflow: hidden;
-            border-top: 5px solid var(--primary-color);
+            border: 1px solid rgba(0,0,0,0.05);
             transition: transform 0.2s ease;
         }
-        .card:hover { transform: translateY(-3px); }
+        .verb-card:hover { transform: translateY(-5px); box-shadow: 0 8px 25px rgba(0,0,0,0.1); }
 
-        .card-header { padding: 1.5rem; border-bottom: 1px solid var(--gray-light); background-color: #fafafa; }
-        .verb-title { font-size: 1.8rem; font-weight: 800; color: var(--primary-color); }
-        .verb-meaning { font-size: 1rem; color: #666; font-weight: 500; }
-
-        .example-list { list-style: none; }
-        .example-item { border-bottom: 1px solid #f0f0f0; }
-        .example-item:last-child { border-bottom: none; }
-
-        .question-row {
-            padding: 1rem 1.5rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            cursor: pointer;
-            transition: background-color 0.2s;
+        .card-header {
+            background-color: var(--primary-color);
+            color: var(--white);
+            padding: 1.2rem;
+            text-align: center;
+            position: relative;
         }
-        .question-row:hover { background-color: #f8f9fa; }
+        .verb-word { font-size: 1.8rem; font-weight: 700; display: block; }
+        .verb-meaning { font-size: 0.95rem; opacity: 0.9; font-weight: 300; margin-top: 0.3rem; }
 
+        .card-body { padding: 1.2rem; }
+
+        /* Items */
+        .training-item {
+            margin-bottom: 0.8rem;
+            border-bottom: 1px solid #f0f0f0;
+            padding-bottom: 0.8rem;
+        }
+        .training-item:last-child { border-bottom: none; margin-bottom: 0; }
+
+        .item-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        /* Badges */
         .badge {
-            font-size: 0.75rem; font-weight: 700; padding: 0.3rem 0.6rem;
-            border-radius: 20px; color: white; min-width: 60px; text-align: center;
+            font-size: 0.7rem;
+            font-weight: 700;
+            padding: 3px 8px;
+            border-radius: 4px;
+            color: white;
+            min-width: 55px;
+            text-align: center;
+            margin-right: 8px;
         }
         .badge.n { background-color: var(--badge-n); }
-        .badge.clause { background-color: var(--badge-clause); }
-        .badge.phrase { background-color: var(--badge-phrase); }
+        .badge.c { background-color: var(--badge-clause); }
+        .badge.p { background-color: var(--badge-phrase); }
+        .badge.alert { background-color: var(--badge-alert); } /* For tricky grammar */
 
-        .toggle-hint { font-size: 0.9rem; color: var(--primary-color); font-weight: 600; }
-        .toggle-icon { margin-left: 0.5rem; transition: transform 0.3s ease; }
-
-        .answer-area {
-            max-height: 0; overflow: hidden; background-color: #f1f7ff;
-            transition: max-height 0.4s ease-out;
+        /* Button */
+        .check-btn {
+            background: #fff;
+            border: 1px solid #ddd;
+            padding: 4px 10px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            color: #555;
+            transition: 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 4px;
         }
-        .answer-content { padding: 1rem 1.5rem; border-top: 1px dashed #d0d0d0; }
-        .korean-hint { font-size: 0.95rem; color: #555; margin-bottom: 0.5rem; font-weight: 500; }
-        .english-answer { font-size: 1.1rem; color: var(--primary-color); font-weight: 700; }
+        .check-btn:hover {
+            background-color: var(--secondary-color);
+            color: white;
+            border-color: var(--secondary-color);
+        }
+        .check-btn::after { content: '▼'; font-size: 0.6rem; }
+        .check-btn.active::after { content: '▲'; }
 
-        .example-item.active .answer-area { max-height: 150px; }
-        .example-item.active .toggle-icon { transform: rotate(180deg); }
+        /* Answers */
+        .answer-area {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s cubic-bezier(0, 1, 0, 1);
+            background-color: #f8fbff;
+            border-radius: 4px;
+            margin-top: 8px;
+        }
+        .answer-content {
+            padding: 10px;
+            border-left: 3px solid var(--secondary-color);
+        }
+        .kor-hint { display: block; color: #666; font-size: 0.85rem; margin-bottom: 2px; }
+        .eng-answer { display: block; font-weight: 600; font-size: 1rem; color: var(--primary-color); }
 
-        footer { text-align: center; padding: 2rem; color: #888; font-size: 0.85rem; margin-top: 2rem; border-top: 1px solid #e0e0e0; }
+        footer {
+            text-align: center;
+            padding: 2rem 0;
+            color: #999;
+            font-size: 0.85rem;
+            margin-top: 2rem;
+            border-top: 1px solid #eee;
+        }
     </style>
 </head>
 <body oncontextmenu="return false" ondragstart="return false" onselectstart="return false">
 
     <header>
         <h1>이은식어학원</h1>
-        <p>Active Recall Training: Ver.2 (Logic Focus)</p>
+        <div class="subtitle">필수 타동사 6선 :: 논리적 확장 훈련</div>
     </header>
 
     <div class="container">
+        <div class="card-grid">
 
-        <div class="card">
-            <div class="card-header">
-                <div class="verb-title">suggest</div>
-                <div class="verb-meaning">제안하다, 시사하다</div>
+            <div class="verb-card">
+                <div class="card-header">
+                    <span class="verb-word">1. hope</span>
+                    <div class="verb-meaning">희망하다 (O to V 불가)</div>
+                </div>
+                <div class="card-body">
+                    <div class="training-item">
+                        <div class="item-top">
+                            <span class="badge n">N</span>
+                            <button class="check-btn" onclick="toggleAnswer(this)">기적을</button>
+                        </div>
+                        <div class="answer-area"><div class="answer-content">
+                            <span class="kor-hint">기적을</span>
+                            <span class="eng-answer">a miracle</span>
+                        </div></div>
+                    </div>
+                    <div class="training-item">
+                        <div class="item-top">
+                            <span class="badge c">Clause</span>
+                            <button class="check-btn" onclick="toggleAnswer(this)">네가 곧 낫기를 (that)</button>
+                        </div>
+                        <div class="answer-area"><div class="answer-content">
+                            <span class="kor-hint">네가 곧 낫기를</span>
+                            <span class="eng-answer">that you get better soon</span>
+                        </div></div>
+                    </div>
+                    <div class="training-item">
+                        <div class="item-top">
+                            <span class="badge p">Phrase</span>
+                            <button class="check-btn" onclick="toggleAnswer(this)">너를 다시 보기를 (to V)</button>
+                        </div>
+                        <div class="answer-area"><div class="answer-content">
+                            <span class="kor-hint">너를 다시 보기를 (주어=나)</span>
+                            <span class="eng-answer">to see you again</span>
+                        </div></div>
+                    </div>
+                </div>
             </div>
-            <ul class="example-list">
-                <li class="example-item">
-                    <div class="question-row" onclick="toggleAnswer(this)">
-                        <span class="badge n">N</span>
-                        <div class="toggle-hint">예시 확인하기 <span class="toggle-icon">▼</span></div>
-                    </div>
-                    <div class="answer-area">
-                        <div class="answer-content">
-                            <div class="korean-hint">새로운 해결책을</div>
-                            <div class="english-answer">a new solution</div>
-                        </div>
-                    </div>
-                </li>
-                <li class="example-item">
-                    <div class="question-row" onclick="toggleAnswer(this)">
-                        <span class="badge n">N</span>
-                        <div class="toggle-hint">예시 확인하기 <span class="toggle-icon">▼</span></div>
-                    </div>
-                    <div class="answer-area">
-                        <div class="answer-content">
-                            <div class="korean-hint">그의 사임을 (동명사 아님에 주의)</div>
-                            <div class="english-answer">his resignation</div>
-                        </div>
-                    </div>
-                </li>
-                <li class="example-item">
-                    <div class="question-row" onclick="toggleAnswer(this)">
-                        <span class="badge clause">Clause</span>
-                        <div class="toggle-hint">예시 확인하기 <span class="toggle-icon">▼</span></div>
-                    </div>
-                    <div class="answer-area">
-                        <div class="answer-content">
-                            <div class="korean-hint">그녀가 그 제안을 받아들여야 한다고 (should 생략)</div>
-                            <div class="english-answer">that she (should) accept the offer</div>
-                        </div>
-                    </div>
-                </li>
-                <li class="example-item">
-                    <div class="question-row" onclick="toggleAnswer(this)">
-                        <span class="badge clause">Clause</span>
-                        <div class="toggle-hint">예시 확인하기 <span class="toggle-icon">▼</span></div>
-                    </div>
-                    <div class="answer-area">
-                        <div class="answer-content">
-                            <div class="korean-hint">그 데이터가 ~라는 사실을 시사한다고</div>
-                            <div class="english-answer">that the data indicates...</div>
-                        </div>
-                    </div>
-                </li>
-            </ul>
-        </div>
 
-        <div class="card">
-            <div class="card-header">
-                <div class="verb-title">remember</div>
-                <div class="verb-meaning">기억하다 (미래/과거 구분)</div>
+            <div class="verb-card">
+                <div class="card-header">
+                    <span class="verb-word">2. avoid</span>
+                    <div class="verb-meaning">피하다 (ing만 가능)</div>
+                </div>
+                <div class="card-body">
+                    <div class="training-item">
+                        <div class="item-top">
+                            <span class="badge n">N</span>
+                            <button class="check-btn" onclick="toggleAnswer(this)">교통 체증을</button>
+                        </div>
+                        <div class="answer-area"><div class="answer-content">
+                            <span class="kor-hint">심한 교통 체증을</span>
+                            <span class="eng-answer">heavy traffic</span>
+                        </div></div>
+                    </div>
+                    <div class="training-item">
+                        <div class="item-top">
+                            <span class="badge p">Phrase</span>
+                            <button class="check-btn" onclick="toggleAnswer(this)">그를 만나는 것을 (ing)</button>
+                        </div>
+                        <div class="answer-area"><div class="answer-content">
+                            <span class="kor-hint">그를 만나는 것을</span>
+                            <span class="eng-answer">meeting him</span>
+                        </div></div>
+                    </div>
+                    <div class="training-item">
+                        <div class="item-top">
+                            <span class="badge p">Phrase</span>
+                            <button class="check-btn" onclick="toggleAnswer(this)">실수하는 것을 (ing)</button>
+                        </div>
+                        <div class="answer-area"><div class="answer-content">
+                            <span class="kor-hint">실수하는 것을</span>
+                            <span class="eng-answer">making mistakes</span>
+                        </div></div>
+                    </div>
+                </div>
             </div>
-            <ul class="example-list">
-                <li class="example-item">
-                    <div class="question-row" onclick="toggleAnswer(this)">
-                        <span class="badge n">N</span>
-                        <div class="toggle-hint">예시 확인하기 <span class="toggle-icon">▼</span></div>
-                    </div>
-                    <div class="answer-area">
-                        <div class="answer-content">
-                            <div class="korean-hint">내 이름을</div>
-                            <div class="english-answer">my name</div>
-                        </div>
-                    </div>
-                </li>
-                <li class="example-item">
-                    <div class="question-row" onclick="toggleAnswer(this)">
-                        <span class="badge phrase">Phrase</span>
-                        <div class="toggle-hint">예시 확인하기 <span class="toggle-icon">▼</span></div>
-                    </div>
-                    <div class="answer-area">
-                        <div class="answer-content">
-                            <div class="korean-hint">(앞으로) 문을 잠가야 할 것을 (미래/의무)</div>
-                            <div class="english-answer">to lock the door</div>
-                        </div>
-                    </div>
-                </li>
-                <li class="example-item">
-                    <div class="question-row" onclick="toggleAnswer(this)">
-                        <span class="badge phrase">Phrase</span>
-                        <div class="toggle-hint">예시 확인하기 <span class="toggle-icon">▼</span></div>
-                    </div>
-                    <div class="answer-area">
-                        <div class="answer-content">
-                            <div class="korean-hint">(과거에) 문을 잠갔던 것을 (과거/기억)</div>
-                            <div class="english-answer">locking the door</div>
-                        </div>
-                    </div>
-                </li>
-                <li class="example-item">
-                    <div class="question-row" onclick="toggleAnswer(this)">
-                        <span class="badge clause">Clause</span>
-                        <div class="toggle-hint">예시 확인하기 <span class="toggle-icon">▼</span></div>
-                    </div>
-                    <div class="answer-area">
-                        <div class="answer-content">
-                            <div class="korean-hint">내가 그를 만난 적이 있다는 것을</div>
-                            <div class="english-answer">that I have met him</div>
-                        </div>
-                    </div>
-                </li>
-            </ul>
-        </div>
 
-        <div class="card">
-            <div class="card-header">
-                <div class="verb-title">decide</div>
-                <div class="verb-meaning">결정하다, 결심하다</div>
+            <div class="verb-card">
+                <div class="card-header">
+                    <span class="verb-word">3. remember</span>
+                    <div class="verb-meaning">기억하다</div>
+                </div>
+                <div class="card-body">
+                    <div class="training-item">
+                        <div class="item-top">
+                            <span class="badge n">N</span>
+                            <button class="check-btn" onclick="toggleAnswer(this)">그의 이름을</button>
+                        </div>
+                        <div class="answer-area"><div class="answer-content">
+                            <span class="kor-hint">그의 이름을</span>
+                            <span class="eng-answer">his name</span>
+                        </div></div>
+                    </div>
+                    <div class="training-item">
+                        <div class="item-top">
+                            <span class="badge alert">To V</span>
+                            <button class="check-btn" onclick="toggleAnswer(this)">(미래) 문 잠글 것을</button>
+                        </div>
+                        <div class="answer-area"><div class="answer-content">
+                            <span class="kor-hint">문 잠가야 할 것을 (미래/의무)</span>
+                            <span class="eng-answer">to lock the door</span>
+                        </div></div>
+                    </div>
+                    <div class="training-item">
+                        <div class="item-top">
+                            <span class="badge alert">V-ing</span>
+                            <button class="check-btn" onclick="toggleAnswer(this)">(과거) 문 잠갔던 것을</button>
+                        </div>
+                        <div class="answer-area"><div class="answer-content">
+                            <span class="kor-hint">문 잠갔던 사실을 (과거/기억)</span>
+                            <span class="eng-answer">locking the door</span>
+                        </div></div>
+                    </div>
+                </div>
             </div>
-            <ul class="example-list">
-                <li class="example-item">
-                    <div class="question-row" onclick="toggleAnswer(this)">
-                        <span class="badge n">N</span>
-                        <div class="toggle-hint">예시 확인하기 <span class="toggle-icon">▼</span></div>
-                    </div>
-                    <div class="answer-area">
-                        <div class="answer-content">
-                            <div class="korean-hint">날짜와 장소를</div>
-                            <div class="english-answer">the date and place</div>
-                        </div>
-                    </div>
-                </li>
-                <li class="example-item">
-                    <div class="question-row" onclick="toggleAnswer(this)">
-                        <span class="badge phrase">Phrase</span>
-                        <div class="toggle-hint">예시 확인하기 <span class="toggle-icon">▼</span></div>
-                    </div>
-                    <div class="answer-area">
-                        <div class="answer-content">
-                            <div class="korean-hint">유학을 가기로 (To V)</div>
-                            <div class="english-answer">to study abroad</div>
-                        </div>
-                    </div>
-                </li>
-                <li class="example-item">
-                    <div class="question-row" onclick="toggleAnswer(this)">
-                        <span class="badge clause">Clause</span>
-                        <div class="toggle-hint">예시 확인하기 <span class="toggle-icon">▼</span></div>
-                    </div>
-                    <div class="answer-area">
-                        <div class="answer-content">
-                            <div class="korean-hint">우리가 어디로 가야 할지를 (Wh S V)</div>
-                            <div class="english-answer">where we should go</div>
-                        </div>
-                    </div>
-                </li>
-                <li class="example-item">
-                    <div class="question-row" onclick="toggleAnswer(this)">
-                        <span class="badge phrase">Phrase</span>
-                        <div class="toggle-hint">예시 확인하기 <span class="toggle-icon">▼</span></div>
-                    </div>
-                    <div class="answer-area">
-                        <div class="answer-content">
-                            <div class="korean-hint">어디로 가야 할지를 (Wh to)</div>
-                            <div class="english-answer">where to go</div>
-                        </div>
-                    </div>
-                </li>
-            </ul>
-        </div>
 
+            <div class="verb-card">
+                <div class="card-header">
+                    <span class="verb-word">4. suggest</span>
+                    <div class="verb-meaning">제안하다 (to V 불가)</div>
+                </div>
+                <div class="card-body">
+                    <div class="training-item">
+                        <div class="item-top">
+                            <span class="badge n">N</span>
+                            <button class="check-btn" onclick="toggleAnswer(this)">새로운 방법을</button>
+                        </div>
+                        <div class="answer-area"><div class="answer-content">
+                            <span class="kor-hint">새로운 방법을</span>
+                            <span class="eng-answer">a new method</span>
+                        </div></div>
+                    </div>
+                    <div class="training-item">
+                        <div class="item-top">
+                            <span class="badge p">Phrase</span>
+                            <button class="check-btn" onclick="toggleAnswer(this)">잠시 쉴 것을 (ing)</button>
+                        </div>
+                        <div class="answer-area"><div class="answer-content">
+                            <span class="kor-hint">잠시 휴식을 취하는 것을</span>
+                            <span class="eng-answer">taking a break</span>
+                        </div></div>
+                    </div>
+                    <div class="training-item">
+                        <div class="item-top">
+                            <span class="badge c">Clause</span>
+                            <button class="check-btn" onclick="toggleAnswer(this)">우리가 시작해야 한다고</button>
+                        </div>
+                        <div class="answer-area"><div class="answer-content">
+                            <span class="kor-hint">우리가 지금 시작해야 한다고 (당위성 should 생략)</span>
+                            <span class="eng-answer">that we (should) start now</span>
+                        </div></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="verb-card">
+                <div class="card-header">
+                    <span class="verb-word">5. explain</span>
+                    <div class="verb-meaning">설명하다 (사람 앞에 to 필수)</div>
+                </div>
+                <div class="card-body">
+                    <div class="training-item">
+                        <div class="item-top">
+                            <span class="badge n">N</span>
+                            <button class="check-btn" onclick="toggleAnswer(this)">그 규칙을</button>
+                        </div>
+                        <div class="answer-area"><div class="answer-content">
+                            <span class="kor-hint">그 규칙을 (나에게: to me)</span>
+                            <span class="eng-answer">the rule (to me)</span>
+                        </div></div>
+                    </div>
+                    <div class="training-item">
+                        <div class="item-top">
+                            <span class="badge c">Clause</span>
+                            <button class="check-btn" onclick="toggleAnswer(this)">왜 그가 늦었는지 (Wh S V)</button>
+                        </div>
+                        <div class="answer-area"><div class="answer-content">
+                            <span class="kor-hint">왜 그가 늦었는지를</span>
+                            <span class="eng-answer">why he was late</span>
+                        </div></div>
+                    </div>
+                    <div class="training-item">
+                        <div class="item-top">
+                            <span class="badge p">Phrase</span>
+                            <button class="check-btn" onclick="toggleAnswer(this)">사용하는 법을 (Wh to V)</button>
+                        </div>
+                        <div class="answer-area"><div class="answer-content">
+                            <span class="kor-hint">이것을 어떻게 사용하는지를</span>
+                            <span class="eng-answer">how to use this</span>
+                        </div></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="verb-card">
+                <div class="card-header">
+                    <span class="verb-word">6. promise</span>
+                    <div class="verb-meaning">약속하다</div>
+                </div>
+                <div class="card-body">
+                    <div class="training-item">
+                        <div class="item-top">
+                            <span class="badge n">N</span>
+                            <button class="check-btn" onclick="toggleAnswer(this)">보상을</button>
+                        </div>
+                        <div class="answer-area"><div class="answer-content">
+                            <span class="kor-hint">보상을 (그녀에게: her a reward)</span>
+                            <span class="eng-answer">a reward</span>
+                        </div></div>
+                    </div>
+                    <div class="training-item">
+                        <div class="item-top">
+                            <span class="badge p">Phrase</span>
+                            <button class="check-btn" onclick="toggleAnswer(this)">말하지 않기로 (not to V)</button>
+                        </div>
+                        <div class="answer-area"><div class="answer-content">
+                            <span class="kor-hint">아무에게도 말하지 않기로</span>
+                            <span class="eng-answer">not to tell anyone</span>
+                        </div></div>
+                    </div>
+                    <div class="training-item">
+                        <div class="item-top">
+                            <span class="badge c">Clause</span>
+                            <button class="check-btn" onclick="toggleAnswer(this)">내가 돌아올 것을 (that)</button>
+                        </div>
+                        <div class="answer-area"><div class="answer-content">
+                            <span class="kor-hint">내가 곧 돌아올 것을</span>
+                            <span class="eng-answer">that I will return soon</span>
+                        </div></div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
     </div>
 
     <footer>
-        <p>영어는 기다림과 채움의 감각으로 - 이은식어학원</p>
+        <p>"영어는 기다림과 채움의 감각으로"</p>
+        <p><strong>이은식어학원</strong></p>
     </footer>
 
     <script>
-        function toggleAnswer(element) {
-            const item = element.parentElement;
-            item.classList.toggle('active');
+        function toggleAnswer(btn) {
+            btn.classList.toggle('active');
+            const answerArea = btn.parentElement.nextElementSibling;
+            if (answerArea.style.maxHeight) {
+                answerArea.style.maxHeight = null;
+            } else {
+                answerArea.style.maxHeight = answerArea.scrollHeight + "px";
+            }
         }
-        document.addEventListener('contextmenu', event => event.preventDefault());
     </script>
 </body>
 </html>
