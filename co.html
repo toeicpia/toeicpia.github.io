@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>이은식어학원 학습자료</title>
+    <style>
+        /* Google Fonts - Pretendard/Inter Alternative */
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap');
+
+        :root {
+            --primary-color: #003366; /* Deep Blue */
+            --text-color: #333333; /* Charcoal Grey */
+            --bg-color: #f4f6f8; /* Light Grey Background */
+            --card-bg: #ffffff;
+            --accent-color: #e3f2fd;
+            --border-radius: 12px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            -webkit-user-select: none; /* Chrome, Safari, Opera */
+            -moz-user-select: none; /* Firefox */
+            -ms-user-select: none; /* IE 10+ */
+            user-select: none; /* Standard syntax */
+        }
+
+        /* Header */
+        header {
+            background-color: var(--card-bg);
+            padding: 2rem 1rem;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            margin-bottom: 2rem;
+        }
+
+        header h1 {
+            font-size: 1.8rem;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+        }
+
+        header p {
+            font-size: 1rem;
+            color: #666;
+            font-weight: 500;
+        }
+
+        /* Main Container */
+        main {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 1rem 4rem 1rem;
+        }
+
+        /* Card Style */
+        .card {
+            background-color: var(--card-bg);
+            border-radius: var(--border-radius);
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.03);
+            border: 1px solid #eee;
+        }
+
+        .section-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            border-bottom: 2px solid var(--accent-color);
+            padding-bottom: 0.5rem;
+            display: inline-block;
+        }
+
+        /* Vocabulary */
+        .vocab-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            font-size: 0.95rem;
+        }
+
+        .vocab-item {
+            background-color: var(--accent-color);
+            color: var(--primary-color);
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-weight: 500;
+        }
+
+        /* Question & Passage */
+        .passage-text {
+            font-size: 1.05rem;
+            margin-bottom: 1.5rem;
+            text-align: justify;
+        }
+
+        .options {
+            list-style: none;
+            padding-left: 0.5rem;
+        }
+
+        .options li {
+            margin-bottom: 0.5rem;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+
+        .options li:hover {
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+
+        /* Interactive Toggle Section */
+        .toggle-btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 30px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            transition: background-color 0.3s ease, transform 0.2s;
+            margin-bottom: 1rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .toggle-btn:hover {
+            background-color: #002244;
+            transform: translateY(-2px);
+        }
+
+        .hidden-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.6s ease-out;
+            opacity: 0;
+        }
+
+        .hidden-content.active {
+            max-height: 2000px; /* 충분히 큰 값 설정 */
+            opacity: 1;
+            transition: max-height 0.8s ease-in, opacity 0.5s ease-in;
+        }
+
+        /* Analysis Styling (Lee Eun-sik Style) */
+        .analysis-box {
+            background-color: #fafafa;
+            border-left: 4px solid var(--primary-color);
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .eng-sentence {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #222;
+        }
+
+        .kor-trans {
+            color: #555;
+            margin-bottom: 0.8rem;
+            font-size: 0.95rem;
+        }
+
+        .point-note {
+            font-size: 0.9rem;
+            color: var(--primary-color);
+            background-color: var(--accent-color);
+            padding: 8px;
+            border-radius: 6px;
+            display: inline-block;
+        }
+
+        /* Answer Section (Top) */
+        .answer-badge {
+            display: inline-block;
+            background-color: #333;
+            color: #fff;
+            padding: 5px 15px;
+            border-radius: 4px;
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+
+        /* Syntax Highlight Styles */
+        .syntax-slash { color: #ff5722; font-weight: bold; margin: 0 2px; } /* / 표시 */
+        .syntax-bracket { color: #008000; font-weight: bold; } /* [ ] 표시 */
+        .syntax-conn { color: #9c27b0; font-weight: bold; text-decoration: underline; } /* 접속사 등 */
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 2rem;
+            background-color: var(--primary-color);
+            color: rgba(255,255,255,0.8);
+            font-size: 0.9rem;
+            margin-top: auto;
+        }
+
+        @media (max-width: 600px) {
+            header h1 { font-size: 1.5rem; }
+            .card { padding: 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Practice Question</h1>
+        <p>이은식어학원</p>
+    </header>
+
+    <main>
+        <section class="card">
+            <button class="toggle-btn" onclick="toggleSection('answer-section')">
+                <span>👁️ 정답 확인하기</span>
+            </button>
+            <div id="answer-section" class="hidden-content">
+                <div class="answer-badge">정답: (B)</div>
+                <p><strong>해설:</strong> 글은 비판적 사고가 현대 사회에서 정보의 진위를 가리고 객관적인 판단을 돕는 필수적인 능력임을 강조하고 있습니다.</p>
+            </div>
+        </section>
+
+        <section class="card">
+            <h2 class="section-title">Essential Vocabulary</h2>
+            <div class="vocab-list">
+                <span class="vocab-item">▪ distinguish 구별하다</span>
+                <span class="vocab-item">▪ reliable 신뢰할 수 있는</span>
+                <span class="vocab-item">▪ essential 필수적인</span>
+                <span class="vocab-item">▪ evaluate 평가하다</span>
+                <span class="vocab-item">▪ bias 편견</span>
+                <span class="vocab-item">▪ perspective 관점</span>
+            </div>
+        </section>
+
+        <section class="card">
+            <h2 class="section-title">Question</h2>
+            <p><strong>Q1. 다음 글의 주제로 가장 적절한 것은?</strong></p>
+            <br>
+            <div class="passage-text">
+                In an era of information overload, the ability to distinguish reliable sources from fake news is essential. Critical thinking allows us to evaluate arguments objectively without bias. Many educators consider critical thinking a vital skill for modern students. It is not just about criticizing others, but about understanding diverse perspectives.
+            </div>
+            <ul class="options">
+                <li>(A) The history of fake news</li>
+                <li>(B) The necessity of critical thinking in the modern age</li>
+                <li>(C) How to criticize arguments effectively</li>
+                <li>(D) Diverse perspectives in education</li>
+            </ul>
+        </section>
+
+        <section class="card">
+            <button class="toggle-btn" onclick="toggleSection('analysis-section')">
+                <span>📖 상세 해설 및 구문 분석 보기</span>
+            </button>
+            <div id="analysis-section" class="hidden-content">
+                
+                <div class="analysis-box">
+                    <p class="eng-sentence">1. In an era <span class="syntax-slash">/</span> of information overload, <span class="syntax-slash">/</span> the ability <span class="syntax-slash">/</span> to distinguish <span class="syntax-slash">/</span> reliable sources <span class="syntax-slash">/</span> from fake news <span class="syntax-slash">/</span> is <span class="syntax-slash">/</span> essential.</p>
+                    <p class="kor-trans">시대에 <span class="syntax-slash">/</span> 정보 과부하의, <span class="syntax-slash">/</span> 능력은 <span class="syntax-slash">/</span> 구별하는 <span class="syntax-slash">/</span> 신뢰할 수 있는 출처들을 <span class="syntax-slash">/</span> 가짜 뉴스로부터 <span class="syntax-slash">/</span> 이다 <span class="syntax-slash">/</span> 필수적인</p>
+                    <span class="point-note">Point: distinguish A from B (A를 B와 구별하다)</span>
+                </div>
+
+                <div class="analysis-box">
+                    <p class="eng-sentence">2. Critical thinking <span class="syntax-slash">/</span> allows <span class="syntax-slash">/</span> <span class="syntax-bracket">[</span> us to evaluate <span class="syntax-slash">/</span> arguments <span class="syntax-bracket">]</span> <span class="syntax-slash">/</span> objectively <span class="syntax-slash">/</span> without bias.</p>
+                    <p class="kor-trans">비판적 사고는 <span class="syntax-slash">/</span> 허락한다 <span class="syntax-slash">/</span> <span class="syntax-bracket">[</span> 우리가 평가하도록 <span class="syntax-slash">/</span> 주장들을 <span class="syntax-bracket">]</span> <span class="syntax-slash">/</span> 객관적으로 <span class="syntax-slash">/</span> 편견 없이</p>
+                    <span class="point-note">Point: 5형식 [ 목적어 + 목적격보어(to V) ]. 주어-술어처럼 해석.</span>
+                </div>
+
+                <div class="analysis-box">
+                    <p class="eng-sentence">3. Many educators <span class="syntax-slash">/</span> consider <span class="syntax-slash">/</span> <span class="syntax-bracket">[</span> critical thinking a vital skill <span class="syntax-bracket">]</span> <span class="syntax-slash">/</span> for modern students.</p>
+                    <p class="kor-trans">많은 교육자들은 <span class="syntax-slash">/</span> 여긴다 <span class="syntax-slash">/</span> <span class="syntax-bracket">[</span> 비판적 사고가 필수적인 기술이라고 <span class="syntax-bracket">]</span> <span class="syntax-slash">/</span> 현대의 학생들을 위해</p>
+                    <span class="point-note">Point: 5형식 [ 명사 + 명사 ]. 'A가 B라고' 해석.</span>
+                </div>
+
+                <div class="analysis-box">
+                    <p class="eng-sentence">4. It <span class="syntax-slash">/</span> is <span class="syntax-slash">/</span> not just about criticizing <span class="syntax-slash">/</span> others, <span class="syntax-slash">/</span> but about understanding <span class="syntax-slash">/</span> diverse perspectives.</p>
+                    <p class="kor-trans">그것은 <span class="syntax-slash">/</span> 이다 <span class="syntax-slash">/</span> 단지 비판하는 것에 관한 것이 아닌 <span class="syntax-slash">/</span> 타인들을, <span class="syntax-slash">/</span> 그러나 이해하는 것에 관한 것이다 <span class="syntax-slash">/</span> 다양한 관점들을</p>
+                    <span class="point-note">Point: not A but B. 'be + 전치사'는 '~이다 전치사어'로 해석.</span>
+                </div>
+
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>영어는 기다림과 채움의 감각으로 - 이은식어학원</p>
+    </footer>
+
+    <script>
+        // 토글 기능 구현
+        function toggleSection(id) {
+            const section = document.getElementById(id);
+            section.classList.toggle('active');
+        }
+
+        // 보안 기능: 우클릭 차단
+        document.addEventListener('contextmenu', function(e) {
+            e.preventDefault();
+        });
+
+        // 보안 기능: 키보드 단축키 차단 (Ctrl+C, Ctrl+U 등)
+        document.onkeydown = function(e) {
+            if (e.ctrlKey && 
+                (e.keyCode === 67 || 
+                 e.keyCode === 86 || 
+                 e.keyCode === 85 || 
+                 e.keyCode === 117)) {
+                return false;
+            } else {
+                return true;
+            }
+        };
+    </script>
+</body>
+</html>
