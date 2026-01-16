@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>English Prepositions Master (Integrated Ver) - 이은식어학원</title>
+    <style>
+        /* [기본 테마 및 변수] */
+        :root {
+            --primary-color: #1a237e; /* Deep Blue */
+            --secondary-color: #3949ab;
+            --accent-green: #00897b;
+            --accent-red: #d32f2f;
+            --accent-blue: #1976d2;
+            --bg-color: #f5f7fa;
+            --card-bg: #ffffff;
+            --text-main: #333;
+            --text-sub: #666;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.6;
+            word-break: keep-all;
+            user-select: none; /* 드래그 방지 */
+        }
+
+        /* [헤더 영역] */
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 2rem 1rem 1rem;
+            text-align: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+        }
+
+        header h1 { font-size: 1.8rem; font-weight: 800; margin-bottom: 0.5rem; }
+        header p { font-size: 1rem; opacity: 0.9; margin-bottom: 1.5rem; }
+
+        /* [모드 스위치 버튼 영역] */
+        .mode-switcher {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            background: rgba(255, 255, 255, 0.15);
+            padding: 10px;
+            border-radius: 50px;
+            width: fit-content;
+            margin: 0 auto;
+        }
+
+        .mode-btn {
+            background: transparent;
+            border: 2px solid rgba(255,255,255,0.5);
+            color: rgba(255,255,255,0.8);
+            padding: 8px 20px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: 700;
+            transition: all 0.3s ease;
+        }
+
+        .mode-btn.active {
+            background: white;
+            color: var(--primary-color);
+            border-color: white;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        }
+
+        /* [탭 네비게이션] */
+        .tabs {
+            display: flex; justify-content: center; gap: 8px; padding: 20px 10px;
+            position: sticky; top: 0; z-index: 100;
+            background: rgba(245, 247, 250, 0.95);
+            backdrop-filter: blur(5px);
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+        .tab-btn {
+            background: white; border: 1px solid #ddd; padding: 10px 16px;
+            border-radius: 50px; cursor: pointer; color: #666; font-weight: 600;
+            font-size: 0.9rem; transition: all 0.2s;
+        }
+        .tab-btn.active { color: white; border-color: transparent; transform: translateY(-2px); box-shadow: 0 4px 8px rgba(0,0,0,0.15); }
+        .tab-btn[data-tab="state"].active { background-color: var(--accent-green); }
+        .tab-btn[data-tab="motion"].active { background-color: var(--accent-red); }
+        .tab-btn[data-tab="compare"].active { background-color: var(--accent-blue); }
+
+        /* [메인 컨텐츠 레이아웃] */
+        main { max-width: 1200px; margin: 0 auto; padding: 20px; }
+        .content-section { display: none; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; }
+        .content-section.active { display: grid; }
+
+        /* [카드 스타일 공통] */
+        .card {
+            background: var(--card-bg); border-radius: 16px; padding: 24px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+            border: 1px solid rgba(0,0,0,0.03);
+            border-left: 6px solid transparent;
+            display: flex; flex-direction: column; 
+            transition: transform 0.2s;
+            position: relative;
+            min-height: 200px;
+        }
+        .card:hover { transform: translateY(-4px); box-shadow: 0 10px 20px rgba(0,0,0,0.08); }
+        .state-card { border-left-color: var(--accent-green); }
+        .motion-card { border-left-color: var(--accent-red); }
+        .compare-card { border-left-color: var(--accent-blue); }
+
+        /* [카드 내부 요소] */
+        .question-area { margin-bottom: 15px; }
+        
+        .main-title {
+            font-size: 1.6rem; font-weight: 800; color: #222; margin-bottom: 8px;
+            display: flex; align-items: center; gap: 8px;
+        }
+        .q-badge { 
+            background: #eee; color: #555; font-size: 0.8rem; padding: 2px 8px; 
+            border-radius: 4px; font-weight: 700; vertical-align: middle;
+        }
+        
+        .sub-desc {
+            font-size: 1rem; color: #555; background: #f8f9fa; 
+            padding: 10px; border-radius: 8px; line-height: 1.5;
+        }
+
+        /* [숨김/공개 영역] */
+        .answer-area {
+            max-height: 0; overflow: hidden; opacity: 0;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            background-color: #fafbfc; border-radius: 8px; margin-top: 10px;
+        }
+        .answer-area.revealed {
+            max-height: 600px; opacity: 1; padding: 15px; 
+            border: 1px solid #eef0f2;
+        }
+
+        /* [텍스트 스타일] */
+        .kor-mean { font-size: 1.1rem; font-weight: 700; color: var(--primary-color); margin-bottom: 5px; }
+        .eng-word { font-size: 1.8rem; font-weight: 800; color: var(--primary-color); text-align: center; display: block; margin-bottom: 10px; border-bottom: 2px solid #eee; padding-bottom: 10px;}
+        
+        .ex-box { margin-top: 10px; border-left: 3px solid #ddd; padding-left: 10px; }
+        .ex-eng { font-size: 1.05rem; font-weight: 600; color: #333; margin-bottom: 4px; letter-spacing: -0.3px; }
+        .ex-kor { font-size: 0.9rem; color: #666; margin-bottom: 8px; }
+        
+        .voca-box { font-size: 0.85rem; color: #888; background: white; padding: 8px; border-radius: 4px; display: inline-block; border: 1px solid #eee; }
+
+        /* [버튼] */
+        .toggle-btn {
+            margin-top: auto; width: 100%; padding: 12px;
+            background: #f1f3f5; border: none; border-radius: 8px;
+            color: #555; font-weight: 700; cursor: pointer; transition: 0.2s;
+        }
+        .toggle-btn:hover { background: #e9ecef; }
+        .card.active .toggle-btn { background: var(--primary-color); color: white; }
+        
+        /* 비교 카드 아이템 */
+        .compare-row { border-bottom: 1px dashed #ddd; padding-bottom: 10px; margin-bottom: 10px; }
+        .compare-row:last-child { border-bottom: none; margin-bottom: 0; }
+
+        footer { margin-top: 50px; padding: 30px; text-align: center; color: #999; font-size: 0.9rem; border-top: 1px solid #eee; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>English Prepositions Master</h1>
+        <p>이은식어학원 통합 학습 시스템</p>
+        
+        <div class="mode-switcher">
+            <button class="mode-btn active" onclick="setMode('eng')">English Version</button>
+            <button class="mode-btn" onclick="setMode('kor')">Korean Version</button>
+        </div>
+    </header>
+
+    <nav class="tabs">
+        <button class="tab-btn active" data-tab="state">1. 정지·상태</button>
+        <button class="tab-btn" data-tab="motion">2. 이동·동작</button>
+        <button class="tab-btn" data-tab="compare">3. 헷갈리는 전치사</button>
+    </nav>
+
+    <main>
+        <section id="state" class="content-section active"></section>
+        <section id="motion" class="content-section"></section>
+        <section id="compare" class="content-section"></section>
+    </main>
+
+    <footer>
+        <p>Copyright © 이은식어학원. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // [통합 데이터베이스] - 이미지의 모든 데이터 포함
+        const db = {
+            state: [
+                { w: "at", m: "있다 ~한 지점에", d: "특정한 지점(Point)을 콕 집어 말할 때", ex: "I met him at the bus stop.", t: "나는 만났다 그를 / 버스 정류장에서.", v: "▪ meet 만나다" },
+                { w: "on", m: "있다 ~위에 붙어", d: "표면(Surface)에 접촉해 있는 상태", ex: "There is a picture on the wall.", t: "있다 그림이 / 벽에 붙어서.", v: "▪ wall 벽" },
+                { w: "in", m: "있다 ~안에", d: "경계가 있는 3차원 공간(Volume) 내부", ex: "The keys are in my pocket.", t: "그 열쇠들은 있다 / 내 주머니 안에.", v: "▪ pocket 주머니" },
+                { w: "above", m: "있다 ~보다 위에", d: "표면에 닿지 않고 공중에 떠 있는 상대적 높이", ex: "The plane flew above the clouds.", t: "비행기는 날았다 / 구름들보다 위쪽에서.", v: "▪ cloud 구름" },
+                { w: "below", m: "있다 ~보다 아래에", d: "기준보다 수치나 높이가 낮은 상태 (above 반대)", ex: "The temperature is below zero.", t: "기온이 있다 / 0도보다 아래에.", v: "▪ temperature 기온" },
+                { w: "under", m: "있다 ~바로 밑에 (덮여서)", d: "수직 아래에 위치하며 대상을 덮거나 가리는 느낌", ex: "The cat is under the table.", t: "고양이가 있다 / 탁자 밑에.", v: "▪ table 탁자" },
+                { w: "behind", m: "있다 ~뒤에", d: "대상에 가려져 안 보이거나 뒤따르는 위치", ex: "He hid behind the door.", t: "그는 숨었다 / 문 뒤에.", v: "▪ hide 숨다" },
+                { w: "in front of", m: "있다 ~앞에", d: "대상의 정면이나 앞서 나와 있는 위치", ex: "There is a bus in front of the car.", t: "있다 버스가 / 그 차 앞에.", v: "" },
+                { w: "beside", m: "있다 ~옆에", d: "대상의 측면(Side)에 나란히 위치", ex: "Sit beside me.", t: "앉아라 / 내 옆에.", v: "▪ sit 앉다" },
+                { w: "by", m: "있다 ~옆에 (영향권 내)", d: "손을 뻗으면 닿을 듯한 가까운 영역", ex: "She stood by the window.", t: "그녀는 서 있었다 / 창문 옆에.", v: "▪ window 창문" },
+                { w: "near", m: "있다 ~근처에", d: "물리적 거리가 멀지 않음", ex: "Is there a bank near here?", t: "있나요 은행이 / 여기 근처에?", v: "▪ bank 은행" },
+                { w: "between", m: "있다 ~사이에 (둘)", d: "뚜렷하게 구별되는 두 대상의 중간 지점", ex: "I sat between Tom and Jane.", t: "나는 앉았다 / Tom과 Jane 사이에.", v: "" },
+                { w: "among", m: "있다 ~사이에 (셋 이상)", d: "무리나 군중 속에 섞여 있는 상태", ex: "He was among the crowd.", t: "그는 있었다 / 군중들 사이에.", v: "▪ crowd 군중" },
+                { w: "within", m: "있다 ~이내에", d: "특정 범위나 한계선을 벗어나지 않음", ex: "Finish it within an hour.", t: "끝내라 그것을 / 한 시간 이내에.", v: "▪ finish 끝내다" },
+                { w: "inside", m: "있다 ~안쪽에", d: "결과 대비되는 깊은 내부 공간 강조", ex: "Look inside the box.", t: "봐라 / 상자 안쪽을.", v: "" },
+                { w: "outside", m: "있다 ~바깥쪽에", d: "경계선이나 닫힌 공간의 외부", ex: "It is cold outside the house.", t: "춥다 / 집 바깥쪽은.", v: "" },
+                { w: "beneath", m: "있다 ~바로 밑에", d: "영향력 아래 덮여 있거나 바닥에 밀착됨", ex: "The ground beneath my feet shook.", t: "땅이 / 내 발 바로 밑의 / 흔들렸다.", v: "▪ shake 흔들리다" },
+                { w: "underneath", m: "있다 ~의 밑면에 (숨겨져)", d: "가장 아래쪽 바닥면과 닿을 듯 가깝거나 숨겨짐", ex: "I found a coin underneath the sofa.", t: "나는 찾았다 동전을 / 소파 밑면에서.", v: "▪ coin 동전" },
+                { w: "opposite", m: "있다 ~의 맞은편에", d: "서로 정면으로 마주 보고 있는 위치", ex: "The bakery is opposite the school.", t: "빵집은 있다 / 학교 맞은편에.", v: "▪ bakery 빵집" },
+                { w: "beyond", m: "있다 ~저 너머에", d: "경계를 지나 훨씬 더 멀리 떨어진 곳", ex: "The village is beyond the hill.", t: "그 마을은 있다 / 언덕 저 너머에.", v: "▪ village 마을" },
+                { w: "amid", m: "있다 ~의 한복판에", d: "어수선하거나 가득 찬 상황 속에 휩싸임", ex: "He remained calm amid the chaos.", t: "그는 침착했다 / 혼란의 한복판에서.", v: "▪ chaos 혼란" },
+                { w: "atop", m: "있다 ~의 맨 꼭대기에", d: "가장 높은 정상 지점에 우뚝 서 있음", ex: "A flag waved atop the tower.", t: "깃발이 펄럭였다 / 탑의 맨 꼭대기에서.", v: "▪ flag 깃발" },
+                { w: "alongside", m: "있다 ~와 나란히", d: "긴 대상을 따라 평행하게 위치함", ex: "The boat is alongside the dock.", t: "그 배는 있다 / 부두와 나란히.", v: "▪ dock 부두" },
+                { w: "aboard", m: "있다 ~에 탑승하여", d: "배, 비행기 등 큰 탈것의 판자(board) 위에 있음", ex: "Welcome aboard the plane.", t: "환영합니다 / 비행기에 탑승한 것을.", v: "" },
+                { w: "with", m: "있다 ~와 함께", d: "분리되지 않고 동반하거나 소유한 상태", ex: "I am with my family.", t: "나는 있다 / 내 가족과 함께.", v: "" }
+            ],
+            motion: [
+                { w: "to", m: "도달하다 ~에 (결과)", d: "이동의 최종 목적지에 도착함", ex: "He walked to the station.", t: "그는 걸어서 도달했다 / 역에.", v: "" },
+                { w: "from", m: "출발하다 ~로부터", d: "이동이 시작되는 기점/출처", ex: "I came from Korea.", t: "나는 왔다 / 한국으로부터 (출발하여).", v: "" },
+                { w: "into", m: "들어가다 ~안으로", d: "밖에서 안쪽 깊숙한 곳으로 뚫고 들어감", ex: "He jumped into the pool.", t: "그는 점프해 들어갔다 / 수영장 안으로.", v: "" },
+                { w: "out of", m: "나가다 ~밖으로", d: "안에 있던 것이 경계를 뚫고 나옴", ex: "Get out of here.", t: "나가라 / 여기 밖으로.", v: "" },
+                { w: "onto", m: "올라가다 ~위로", d: "아래에서 점프하거나 이동하여 표면 위로 착지", ex: "The cat jumped onto the shelf.", t: "고양이는 점프해 올라갔다 / 선반 위로.", v: "▪ shelf 선반" },
+                { w: "toward", m: "향하다 ~쪽으로", d: "목적지가 아닌 이동의 '방향성' 강조", ex: "He walked toward the sea.", t: "그는 걸었다 / 바다 쪽으로 (방향).", v: "" },
+                { w: "away from", m: "멀어지다 ~로부터", d: "기준점에서 물리적 거리가 벌어지도록 이동", ex: "Stay away from the fire.", t: "머물러라(떨어져라) / 불로부터 멀리.", v: "" },
+                { w: "through", m: "통과하다 ~을", d: "입체적 공간을 관통하여 지나감", ex: "We drove through the tunnel.", t: "우리는 운전했다 / 터널을 통과하여.", v: "" },
+                { w: "across", m: "가로지르다 ~을", d: "평면 공간을 횡단하여 건너감", ex: "They swam across the river.", t: "그들은 수영했다 / 강을 가로질러.", v: "" },
+                { w: "along", m: "따라가다 ~을", d: "긴 선의 흐름과 나란히 이동", ex: "We walked along the beach.", t: "우리는 걸었다 / 해변을 따라.", v: "" },
+                { w: "past", m: "지나치다 ~을", d: "멈추지 않고 대상의 옆을 스쳐 지나감", ex: "He walked past me without speaking.", t: "그는 걸어서 지나쳤다 / 나를 / 말 없이.", v: "" },
+                { w: "over", m: "넘어가다 ~을", d: "장애물을 건드리지 않고 포물선을 그리며 넘음", ex: "The ball flew over the fence.", t: "공이 날아갔다 / 울타리를 넘어서.", v: "" },
+                { w: "up", m: "올라가다 ~위로", d: "낮은 곳에서 높은 곳으로 상승 이동", ex: "Go up the stairs.", t: "가라(올라가라) / 계단 위로.", v: "▪ stairs 계단" },
+                { w: "down", m: "내려가다 ~아래로", d: "높은 곳에서 낮은 곳으로 하강 이동", ex: "Tears ran down her face.", t: "눈물이 흘러 내려갔다 / 그녀의 얼굴 아래로.", v: "▪ tears 눈물" },
+                { w: "off", m: "떨어지다 ~에서", d: "붙어 있던 표면에서 분리되어 이탈함", ex: "The button came off the shirt.", t: "단추가 떨어졌다 / 셔츠에서.", v: "" },
+                { w: "around", m: "돌다 ~주위를", d: "가장자리를 따라 둥글게 회전하거나 우회함", ex: "We walked around the park.", t: "우리는 걸었다(돌았다) / 공원 주위를.", v: "" },
+                { w: "via", m: "경유하다 ~을", d: "최종 목적지로 가기 위해 중간 지점을 거침", ex: "I flew to Paris via Dubai.", t: "나는 비행기로 갔다 파리에 / 두바이를 경유해서.", v: "" },
+                { w: "throughout", m: "훑고 지나가다 ~전역을", d: "공간 구석구석 빠짐없이 퍼지거나 이동", ex: "News spread throughout the country.", t: "뉴스가 퍼졌다 / 나라 전역을 훑고.", v: "▪ spread 퍼지다" },
+                { w: "for", m: "향해 떠나다 ~로 (의도)", d: "목적지를 향해 출발함 (도착 여부는 모름)", ex: "The train is bound for Seoul.", t: "그 기차는 묶여있다(간다) / 서울을 향해.", v: "▪ bound for ~행의" },
+                { w: "against", m: "부딪치다 ~에", d: "다가오는 힘이나 물체와 정면으로 충돌/저항", ex: "Rain beat against the window.", t: "비가 때렸다(부딪쳤다) / 창문에.", v: "▪ beat 때리다" },
+                { w: "after", m: "쫓아가다 ~를", d: "앞서가는 대상을 뒤따라 이동 (추격)", ex: "The dog ran after the ball.", t: "그 개는 달렸다(쫓아갔다) / 공을 뒤따라.", v: "" },
+                { w: "up to", m: "차오르다 ~까지", d: "수위나 움직임이 특정 지점에 도달함", ex: "The water came up to my knees.", t: "물이 왔다(차올랐다) / 내 무릎까지.", v: "▪ knee 무릎" },
+                { w: "round", m: "돌다 ~를 (코너)", d: "모퉁이나 곡선 구간을 끼고 도는 회전 동작", ex: "The car went round the corner.", t: "그 차는 갔다(돌았다) / 코너를 끼고.", v: "" },
+                { w: "back", m: "돌아가다 (제자리로)", d: "원래 있던 곳으로 되돌아가는 회귀", ex: "Put the book back on the shelf.", t: "놓아라 그 책을 / 제자리로 (돌아가게) / 선반 위에.", v: "" }
+            ],
+            compare: [
+                { 
+                    title: "점(at), 면(on), 공간(in)", 
+                    eng_title: "at vs on vs in",
+                    items: [
+                        { w: "at", m: "한 지점에", d: "지도의 한 점처럼 콕 집어 말함", ex: "at the door" },
+                        { w: "on", m: "위에 붙어", d: "표면에 접촉해 있는 상태", ex: "on the floor" },
+                        { w: "in", m: "공간 안에", d: "3차원 공간 속에 푹 들어가 있음", ex: "in the box" }
+                    ]
+                },
+                { 
+                    title: "거리감: 근처(near) vs 옆(by)", 
+                    eng_title: "near vs by",
+                    items: [
+                        { w: "near", m: "근처에", d: "물리적 거리가 멀지 않음", ex: "near the station" },
+                        { w: "by", m: "바로 옆에(영향권)", d: "손 뻗으면 닿을 듯한 바로 옆", ex: "stand by me" }
+                    ]
+                },
+                { 
+                    title: "높이: 위(above) vs 덮음(over)", 
+                    eng_title: "above vs over",
+                    items: [
+                        { w: "above", m: "~보다 위에", d: "단지 기준보다 높이가 높음 (상대적)", ex: "above average" },
+                        { w: "over", m: "~위를 덮어/넘어", d: "수직 상방에서 덮거나 움직임", ex: "clouds over the city" }
+                    ]
+                },
+                { 
+                    title: "위치: 저 너머(beyond) vs 뒤(behind)", 
+                    eng_title: "beyond vs behind",
+                    items: [
+                        { w: "beyond", m: "저 너머에", d: "한계를 지나 훨씬 먼 곳", ex: "beyond the sea" },
+                        { w: "behind", m: "~뒤에", d: "바로 뒷 공간", ex: "behind the door" }
+                    ]
+                },
+                { 
+                    title: "아래: below vs under vs beneath", 
+                    eng_title: "below vs under vs beneath",
+                    items: [
+                        { w: "below", m: "~보다 아래에", d: "수치/레벨이 낮음", ex: "below average" },
+                        { w: "under", m: "~밑에(지배)", d: "영향력 아래, 덮여 있음", ex: "under control" },
+                        { w: "beneath", m: "바로 밑면에", d: "바닥에 밀착/숨겨짐", ex: "beneath the surface" }
+                    ]
+                },
+                { 
+                    title: "도착(to) vs 방향(for)", 
+                    eng_title: "to vs for",
+                    items: [
+                        { w: "to", m: "도달하다 (결과)", d: "목적지에 도착했음", ex: "go to school" },
+                        { w: "for", m: "향해 떠나다 (의도)", d: "출발함 (도착 미지수)", ex: "leave for Seoul" }
+                    ]
+                },
+                { 
+                    title: "상태(in) vs 동작(into)", 
+                    eng_title: "in vs into",
+                    items: [
+                        { w: "in", m: "~안에 (정지)", d: "이미 내부에 있음", ex: "swim in the pool" },
+                        { w: "into", m: "~안으로 (동작)", d: "뚫고 들어가는 동작", ex: "jump into the pool" }
+                    ]
+                },
+                { 
+                    title: "이탈(out of) vs 기점(from)", 
+                    eng_title: "out of vs from",
+                    items: [
+                        { w: "out of", m: "나가다 ~밖으로", d: "공간 탈출", ex: "walk out of the room" },
+                        { w: "from", m: "출발하다 ~로부터", d: "단순 기점/출처", ex: "from London" }
+                    ]
+                },
+                { 
+                    title: "관통(through) vs 전역(throughout)", 
+                    eng_title: "through vs throughout",
+                    items: [
+                        { w: "through", m: "통과하다 ~을", d: "선형 이동", ex: "through the pipe" },
+                        { w: "throughout", m: "훑고 지나가다", d: "면적 확산/전역", ex: "throughout the year" }
+                    ]
+                },
+                { 
+                    title: "분리(off) vs 기점(from)", 
+                    eng_title: "off vs from",
+                    items: [
+                        { w: "off", m: "떨어지다 ~에서", d: "접촉 해제", ex: "fall off the bike" },
+                        { w: "from", m: "출발하다 ~로부터", d: "출처", ex: "come from home" }
+                    ]
+                }
+            ]
+        };
+
+        // 현재 모드 ('eng' or 'kor')
+        let currentMode = 'eng';
+
+        // 모드 설정 및 렌더링 함수
+        function setMode(mode) {
+            currentMode = mode;
+            
+            // 버튼 활성화 스타일
+            document.querySelectorAll('.mode-btn').forEach(btn => btn.classList.remove('active'));
+            if (mode === 'eng') document.querySelector('.mode-btn:nth-child(1)').classList.add('active');
+            else document.querySelector('.mode-btn:nth-child(2)').classList.add('active');
+
+            renderAll();
+        }
+
+        // 전체 렌더링
+        function renderAll() {
+            const stateSec = document.getElementById('state');
+            const motionSec = document.getElementById('motion');
+            const compareSec = document.getElementById('compare');
+
+            // 초기화
+            stateSec.innerHTML = '';
+            motionSec.innerHTML = '';
+            compareSec.innerHTML = '';
+
+            // 생성
+            db.state.forEach(item => stateSec.appendChild(createCard(item, 'state-card')));
+            db.motion.forEach(item => motionSec.appendChild(createCard(item, 'motion-card')));
+            db.compare.forEach(group => compareSec.appendChild(createCompareCard(group)));
+        }
+
+        // 일반 카드 생성 (State / Motion)
+        function createCard(item, themeClass) {
+            const el = document.createElement('div');
+            el.className = `card ${themeClass}`;
+            
+            let visibleContent = '';
+            let hiddenContent = '';
+
+            if (currentMode === 'eng') {
+                // English Ver: 영어 노출 -> 한국어 숨김
+                visibleContent = `
+                    <div class="question-area">
+                        <span class="q-badge">Question</span>
+                        <h3 class="main-title">${item.w}</h3>
+                        <p class="ex-eng" style="margin-top:10px;">"${item.ex}"</p>
+                    </div>
+                `;
+                hiddenContent = `
+                    <div class="answer-area">
+                        <h4 class="kor-mean">${item.m}</h4>
+                        <p class="sub-desc">${item.d}</p>
+                        <div class="ex-box">
+                            <p class="ex-kor">${item.t}</p>
+                            ${item.v ? `<span class="voca-box">${item.v}</span>` : ''}
+                        </div>
+                    </div>
+                `;
+            } else {
+                // Korean Ver: 한국어 노출 -> 영어 숨김
+                visibleContent = `
+                    <div class="question-area">
+                        <span class="q-badge">Question</span>
+                        <h3 class="main-title" style="font-size:1.3rem;">${item.m}</h3>
+                        <p class="sub-desc" style="background:transparent; padding:0; color:#666;">${item.d}</p>
+                    </div>
+                `;
+                hiddenContent = `
+                    <div class="answer-area">
+                        <span class="q-badge" style="background:var(--primary-color); color:white;">Answer</span>
+                        <strong class="eng-word">${item.w}</strong>
+                        <div class="ex-box">
+                            <p class="ex-eng">"${item.ex}"</p>
+                            <p class="ex-kor">${item.t}</p>
+                            ${item.v ? `<span class="voca-box">${item.v}</span>` : ''}
+                        </div>
+                    </div>
+                `;
+            }
+
+            el.innerHTML = visibleContent + `<button class="toggle-btn" onclick="toggleCard(this)">정답 및 해설 보기</button>` + hiddenContent;
+            return el;
+        }
+
+        // 비교 카드 생성
+        function createCompareCard(group) {
+            const el = document.createElement('div');
+            el.className = `card compare-card`;
+
+            let visibleContent = '';
+            let hiddenContent = '';
+
+            if (currentMode === 'eng') {
+                // Eng Ver: 영어 제목 보여줌 (at vs on) -> 한국어 차이점 설명 숨김
+                visibleContent = `
+                    <div class="question-area">
+                        <span class="q-badge">Compare</span>
+                        <h3 class="main-title">${group.eng_title}</h3>
+                        <p style="color:#666; font-size:0.9rem;">각 전치사의 의미 차이는 무엇일까요?</p>
+                    </div>
+                `;
+            } else {
+                // Kor Ver: 한국어 주제 보여줌 (점, 면, 공간) -> 영어 전치사 숨김
+                visibleContent = `
+                    <div class="question-area">
+                        <span class="q-badge">Compare</span>
+                        <h3 class="main-title" style="font-size:1.4rem;">${group.title}</h3>
+                        <p style="color:#666; font-size:0.9rem;">여기에 해당하는 전치사들은?</p>
+                    </div>
+                `;
+            }
+
+            let rows = '';
+            group.items.forEach(g => {
+                // 비교 카드의 정답 영역은 모드에 따라 강조점이 다름
+                if (currentMode === 'eng') {
+                    rows += `
+                        <div class="compare-row">
+                            <strong style="font-size:1.2rem; color:var(--primary-color);">${g.w}</strong>
+                            <p style="font-weight:700; color:#333;">${g.m}</p>
+                            <p style="font-size:0.9rem; color:#666;">${g.d}</p>
+                        </div>
+                    `;
+                } else {
+                    rows += `
+                        <div class="compare-row">
+                            <p style="font-weight:700; color:#333;">${g.m}</p>
+                            <strong style="font-size:1.2rem; color:var(--primary-color);">${g.w}</strong>
+                            <p style="font-size:0.9rem; color:#666;">${g.d}</p>
+                            <p style="font-size:0.85rem; color:#888; margin-top:2px;">ex) ${g.ex}</p>
+                        </div>
+                    `;
+                }
+            });
+
+            hiddenContent = `<div class="answer-area">${rows}</div>`;
+            
+            el.innerHTML = visibleContent + `<button class="toggle-btn" onclick="toggleCard(this)">비교 설명 보기</button>` + hiddenContent;
+            return el;
+        }
+
+        // 카드 토글 함수
+        function toggleCard(btn) {
+            const card = btn.parentElement;
+            const ans = card.querySelector('.answer-area');
+            card.classList.toggle('active');
+            ans.classList.toggle('revealed');
+            
+            if(card.classList.contains('active')) btn.innerText = "숨기기";
+            else btn.innerText = "정답 및 해설 보기";
+        }
+
+        // 탭 전환 핸들러
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+                document.querySelectorAll('.content-section').forEach(s => s.classList.remove('active'));
+                
+                btn.classList.add('active');
+                document.getElementById(btn.dataset.tab).classList.add('active');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+        });
+
+        // 초기 실행
+        renderAll();
+
+    </script>
+</body>
+</html>
