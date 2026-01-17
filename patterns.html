@@ -3,26 +3,25 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>성적 향상 행동 패턴 비교</title>
+<title>학습 행동 패턴 자가진단</title>
 <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.8/dist/web/static/pretendard.css" />
 <style>
     :root {
-        --primary-color: #3b82f6; /* 세련된 블루 */
+        --primary-color: #3b82f6;
+        --danger-color: #ef4444;
         --bg-color: #f8fafc;
         --card-bg: #ffffff;
         --text-main: #1e293b;
         --text-sub: #64748b;
         --border-color: #e2e8f0;
-        --positive-bg: #eff6ff;
-        --negative-bg: #fef2f2;
     }
 
     body {
-        font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
+        font-family: 'Pretendard', -apple-system, system-ui, sans-serif;
         background-color: var(--bg-color);
         color: var(--text-main);
         margin: 0;
-        padding: 40px 20px;
+        padding: 40px 20px 100px 20px; /* 하단 스코어바 공간 확보 */
         line-height: 1.6;
         display: flex;
         justify-content: center;
@@ -33,8 +32,8 @@
         width: 100%;
         background: var(--card-bg);
         border-radius: 16px;
-        box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.01);
-        overflow: hidden; /* 둥근 모서리 유지 */
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
     }
 
     header {
@@ -44,28 +43,26 @@
     }
 
     h1 {
-        margin: 0;
+        margin: 0 0 10px 0;
         font-size: 24px;
         font-weight: 700;
-        color: var(--text-main);
-        letter-spacing: -0.5px;
     }
 
     p.subtitle {
-        margin-top: 8px;
+        margin: 0;
         color: var(--text-sub);
         font-size: 14px;
     }
 
     .table-wrapper {
         width: 100%;
-        overflow-x: auto; /* 모바일 대응 */
+        overflow-x: auto;
     }
 
     table {
         width: 100%;
         border-collapse: collapse;
-        min-width: 600px; /* 모바일에서 표가 너무 찌그러지지 않게 */
+        min-width: 600px;
     }
 
     th {
@@ -74,57 +71,134 @@
         font-weight: 600;
         text-align: left;
         border-bottom: 2px solid var(--border-color);
+        position: sticky;
+        top: 0;
+        background: var(--card-bg);
+        z-index: 10;
     }
 
-    th.good {
-        color: #2563eb;
-        background-color: #f1f5f9;
-        width: 50%;
-    }
-
-    th.bad {
-        color: #ef4444;
-        background-color: #f1f5f9;
-        width: 50%;
-    }
+    th.good { color: var(--primary-color); background-color: #f0f9ff; }
+    th.bad { color: var(--danger-color); background-color: #fef2f2; }
 
     td {
-        padding: 16px 24px;
-        font-size: 15px;
         border-bottom: 1px solid var(--border-color);
         vertical-align: top;
+        padding: 0; /* padding을 label에 줌 */
+    }
+
+    /* 체크박스 영역 스타일링 */
+    .check-item {
+        display: flex;
+        align-items: flex-start;
+        padding: 16px 24px;
+        cursor: pointer;
+        transition: background-color 0.2s;
+        height: 100%;
+    }
+
+    .check-item:hover {
+        background-color: #f8fafc;
+    }
+
+    .check-item input[type="checkbox"] {
+        appearance: none;
+        min-width: 20px;
+        height: 20px;
+        border: 2px solid #cbd5e1;
+        border-radius: 6px;
+        margin-right: 12px;
+        margin-top: 3px;
+        position: relative;
+        cursor: pointer;
+        transition: all 0.2s;
+    }
+
+    /* 체크되었을 때 스타일 */
+    .check-item input[type="checkbox"]:checked {
+        border-color: transparent;
+    }
+
+    .check-item.good-type input[type="checkbox"]:checked {
+        background-color: var(--primary-color);
+    }
+    
+    .check-item.bad-type input[type="checkbox"]:checked {
+        background-color: var(--danger-color);
+    }
+
+    /* 체크 표시 아이콘 (가상요소) */
+    .check-item input[type="checkbox"]:checked::after {
+        content: '✔';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        color: white;
+        font-size: 12px;
+    }
+
+    /* 체크 시 텍스트 흐리게 처리 (선택사항) */
+    .check-item input:checked + span {
         color: var(--text-main);
-    }
-
-    /* 마지막 줄 테두리 제거 */
-    tr:last-child td {
-        border-bottom: none;
-    }
-
-    /* 행 호버 효과 */
-    tbody tr:hover {
-        background-color: #fafafa;
-        transition: background-color 0.2s ease;
-    }
-
-    /* 강조 텍스트 스타일 */
-    .highlight {
         font-weight: 600;
-        color: var(--primary-color);
     }
 
-    /* 반응형 디자인 */
-    @media (max-width: 768px) {
-        body {
-            padding: 20px 10px;
-        }
-        th, td {
-            padding: 12px 16px;
-            font-size: 14px;
-        }
-        h1 {
-            font-size: 20px;
-        }
+    /* 하단 고정 스코어보드 */
+    .score-board {
+        position: fixed;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+        padding: 15px 30px;
+        border-radius: 50px;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        display: flex;
+        gap: 40px;
+        align-items: center;
+        border: 1px solid var(--border-color);
+        z-index: 100;
+        width: max-content;
+    }
+
+    .score-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .score-label {
+        font-size: 12px;
+        color: var(--text-sub);
+        font-weight: 600;
+        margin-bottom: 2px;
+    }
+
+    .score-value {
+        font-size: 24px;
+        font-weight: 800;
+    }
+
+    .score-value.good { color: var(--primary-color); }
+    .score-value.bad { color: var(--danger-color); }
+
+    .reset-btn {
+        background: none;
+        border: 1px solid var(--border-color);
+        padding: 8px 16px;
+        border-radius: 20px;
+        cursor: pointer;
+        font-size: 12px;
+        color: var(--text-sub);
+        transition: all 0.2s;
+    }
+    .reset-btn:hover { background: #f1f5f9; color: var(--text-main); }
+
+    @media (max-width: 600px) {
+        body { padding: 20px 10px 100px 10px; }
+        .score-board { width: 85%; justify-content: space-around; gap: 10px; padding: 15px; }
+        .check-item { padding: 12px 16px; font-size: 14px; }
     }
 </style>
 </head>
@@ -132,87 +206,136 @@
 
 <div class="container">
     <header>
-        <h1>학습 행동 패턴 분석</h1>
-        <p class="subtitle">성적이 오르는 습관 vs 제자리걸음인 습관</p>
+        <h1>나의 학습 패턴 진단</h1>
+        <p class="subtitle">해당하는 항목을 체크하면 아래에 점수가 집계됩니다.</p>
     </header>
     
     <div class="table-wrapper">
         <table>
             <thead>
                 <tr>
-                    <th class="good">🚀 점수 오르는 사람들의 행동 패턴</th>
-                    <th class="bad">⚠️ 점수 오르지 않는 사람들의 행동 패턴</th>
+                    <th class="good">🚀 성적 상승 패턴</th>
+                    <th class="bad">⚠️ 정체/하락 패턴</th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody id="checklist-body">
                 <tr>
-                    <td>단어 공부할 때, <strong>문장 전체를 보면서</strong> 익힌다</td>
-                    <td>repair – 수리하다/ repair – 수리하다... (단순 반복)</td>
+                    <td><label class="check-item good-type"><input type="checkbox" class="chk-good"><span>단어 공부할 때, 문장 전체를 보면서 익힌다</span></label></td>
+                    <td><label class="check-item bad-type"><input type="checkbox" class="chk-bad"><span>repair – 수리하다 (단순 기계적 반복)</span></label></td>
                 </tr>
                 <tr>
-                    <td>아침 과제를 <strong>정성 들여</strong> 한다</td>
-                    <td>과제 제출하기에 급급하다</td>
+                    <td><label class="check-item good-type"><input type="checkbox" class="chk-good"><span>아침 과제를 정성 들여 한다</span></label></td>
+                    <td><label class="check-item bad-type"><input type="checkbox" class="chk-bad"><span>과제 제출하기에 급급하다</span></label></td>
                 </tr>
                 <tr>
-                    <td>대부분의 시간을 <strong>경기장에서 읽으면서</strong> 보낸다</td>
-                    <td>룸에서 노트 정리하느라 대부분의 시간을 보낸다</td>
+                    <td><label class="check-item good-type"><input type="checkbox" class="chk-good"><span>대부분의 시간을 경기장에서 읽으며 보낸다</span></label></td>
+                    <td><label class="check-item bad-type"><input type="checkbox" class="chk-bad"><span>룸에서 노트 정리하느라 시간을 보낸다</span></label></td>
                 </tr>
                 <tr>
-                    <td>학습한 내용을 자기 정리를 통해서 <strong>자기의 것으로 만든다</strong> (질문과 답)</td>
-                    <td>적기만 하고, 아는지 모르는지 확인 과정이 없다</td>
+                    <td><label class="check-item good-type"><input type="checkbox" class="chk-good"><span>학습 내용을 자기 정리(질문과 답)로 체화한다</span></label></td>
+                    <td><label class="check-item bad-type"><input type="checkbox" class="chk-bad"><span>적기만 하고 확인 과정이 없다</span></label></td>
                 </tr>
                 <tr>
-                    <td>RC과제에서 '의식의 문제'와 '지식의 문제'의 구별을 잘한다</td>
-                    <td>모르겠으면, '지식의 문제'라 한다</td>
+                    <td><label class="check-item good-type"><input type="checkbox" class="chk-good"><span>'의식의 문제'와 '지식의 문제'를 잘 구별한다</span></label></td>
+                    <td><label class="check-item bad-type"><input type="checkbox" class="chk-bad"><span>모르겠으면 무조건 '지식의 문제'라 한다</span></label></td>
                 </tr>
                 <tr>
-                    <td>자기의 <strong>부족한 부분이 무엇인지</strong> 명확하게 안다</td>
-                    <td>어렵다고만 한다. 무엇이 어렵냐고 질문하면 모르겠다고 한다</td>
+                    <td><label class="check-item good-type"><input type="checkbox" class="chk-good"><span>부족한 부분이 무엇인지 명확하게 안다</span></label></td>
+                    <td><label class="check-item bad-type"><input type="checkbox" class="chk-bad"><span>구체적 질문 없이 그냥 어렵다고만 한다</span></label></td>
                 </tr>
                 <tr>
-                    <td>입력 위주가 아닌 <strong>출력 위주의 학습</strong>을 한다</td>
-                    <td>입력 위주로 하며, 머리 속에 들어오면 문제에서 맞을 것으로 착각한다</td>
+                    <td><label class="check-item good-type"><input type="checkbox" class="chk-good"><span>입력보다 출력 위주의 학습을 한다</span></label></td>
+                    <td><label class="check-item bad-type"><input type="checkbox" class="chk-bad"><span>입력 위주이며, 이해하면 맞을 거라 착각한다</span></label></td>
                 </tr>
                 <tr>
-                    <td>주어를 볼 때 이들은 <strong>.......를 생각한다</strong></td>
-                    <td>주어를 볼 때, 아무 생각 없이 다음 단어를 본다</td>
+                    <td><label class="check-item good-type"><input type="checkbox" class="chk-good"><span>주어를 볼 때 .......를 생각한다</span></label></td>
+                    <td><label class="check-item bad-type"><input type="checkbox" class="chk-bad"><span>주어를 볼 때, 아무 생각 없이 다음 단어를 본다</span></label></td>
                 </tr>
                 <tr>
-                    <td>타동사를 보면 이들은 <strong>.......를 생각한다</strong></td>
-                    <td>어떤 단어가 나와도 자극이 느껴지지 않고 그냥 보기에 바쁘다</td>
+                    <td><label class="check-item good-type"><input type="checkbox" class="chk-good"><span>타동사를 보면 .......를 생각한다</span></label></td>
+                    <td><label class="check-item bad-type"><input type="checkbox" class="chk-bad"><span>어떤 단어에도 자극 없이 그냥 보기에 바쁘다</span></label></td>
                 </tr>
                 <tr>
-                    <td>영어를 보면 한국어 번역에 초점을 두지 않고, <strong>의미 실체</strong>를 보려 한다</td>
-                    <td>한국어 번역되면 이해하는 것으로 착각한다</td>
+                    <td><label class="check-item good-type"><input type="checkbox" class="chk-good"><span>한국어 번역보다 의미 실체를 보려 한다</span></label></td>
+                    <td><label class="check-item bad-type"><input type="checkbox" class="chk-bad"><span>한국어 번역되면 이해하는 것으로 착각한다</span></label></td>
                 </tr>
                 <tr>
-                    <td>모든 문제를 <strong>해석을 통해서</strong> 푼다</td>
-                    <td>해석을 해야 하는 것과 그렇지 않는 것으로 구별한다</td>
+                    <td><label class="check-item good-type"><input type="checkbox" class="chk-good"><span>모든 문제를 해석을 통해서 푼다</span></label></td>
+                    <td><label class="check-item bad-type"><input type="checkbox" class="chk-bad"><span>해석해야 할 것과 안 할 것을 구별하려 한다</span></label></td>
                 </tr>
                 <tr>
-                    <td>선생님이 이어서 다음에 <strong>무슨 말을 할 줄 안다</strong></td>
-                    <td>들은 후에 음, 그래 '맞아, 맞아' 한다</td>
+                    <td><label class="check-item good-type"><input type="checkbox" class="chk-good"><span>선생님이 다음에 무슨 말을 할 줄 안다</span></label></td>
+                    <td><label class="check-item bad-type"><input type="checkbox" class="chk-bad"><span>들은 후에 음, 그래 '맞아, 맞아' 한다</span></label></td>
                 </tr>
                 <tr>
-                    <td>모의고사 본 후에 <strong>틀린 문제에 고맙다</strong>고 생각한다</td>
-                    <td>틀린 문제를 보면 화가 나고 더 이상 보기 싫어한다</td>
+                    <td><label class="check-item good-type"><input type="checkbox" class="chk-good"><span>틀린 문제에 고맙다고 생각한다</span></label></td>
+                    <td><label class="check-item bad-type"><input type="checkbox" class="chk-bad"><span>틀린 문제를 보면 화가 나고 보기 싫어한다</span></label></td>
                 </tr>
                 <tr>
-                    <td>어떤 문장을 보더라도 항상 <strong>반복되는 패턴</strong>을 익힌다</td>
-                    <td>패턴은 필요 없고, 대충 알면 넘어간다</td>
+                    <td><label class="check-item good-type"><input type="checkbox" class="chk-good"><span>항상 반복되는 패턴을 익힌다</span></label></td>
+                    <td><label class="check-item bad-type"><input type="checkbox" class="chk-bad"><span>패턴은 필요 없고, 대충 알면 넘어간다</span></label></td>
                 </tr>
                 <tr>
-                    <td>버스에서도 <strong>무엇인가를 한다</strong></td>
-                    <td>나 피곤해....</td>
+                    <td><label class="check-item good-type"><input type="checkbox" class="chk-good"><span>버스에서도 무엇인가를 한다</span></label></td>
+                    <td><label class="check-item bad-type"><input type="checkbox" class="chk-bad"><span>"나 피곤해..." (핑계)</span></label></td>
                 </tr>
                 <tr>
-                    <td>듣기 학습 자료를 <strong>33한다</strong></td>
-                    <td>뭘 들었는데 또 들어. 다 들리는데.... (기억나는 것임)</td>
+                    <td><label class="check-item good-type"><input type="checkbox" class="chk-good"><span>듣기 학습 자료를 33한다</span></label></td>
+                    <td><label class="check-item bad-type"><input type="checkbox" class="chk-bad"><span>다 들리는데 왜 또 들어... (기억나는 것임)</span></label></td>
                 </tr>
             </tbody>
         </table>
     </div>
 </div>
+
+<div class="score-board">
+    <div class="score-item">
+        <span class="score-label">상승 패턴</span>
+        <span class="score-value good" id="score-good">0</span>
+    </div>
+    <div class="score-item">
+        <span class="score-label">하락 패턴</span>
+        <span class="score-value bad" id="score-bad">0</span>
+    </div>
+    <button class="reset-btn" onclick="resetChecks()">초기화</button>
+</div>
+
+<script>
+    // 모든 체크박스 요소 선택
+    const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+    const scoreGoodEl = document.getElementById('score-good');
+    const scoreBadEl = document.getElementById('score-bad');
+
+    // 체크박스 변경 시 점수 업데이트
+    checkboxes.forEach(box => {
+        box.addEventListener('change', calculateScore);
+    });
+
+    function calculateScore() {
+        let goodCount = 0;
+        let badCount = 0;
+
+        checkboxes.forEach(box => {
+            if (box.checked) {
+                if (box.classList.contains('chk-good')) {
+                    goodCount++;
+                } else if (box.classList.contains('chk-bad')) {
+                    badCount++;
+                }
+            }
+        });
+
+        // 숫자 애니메이션 효과 (심플하게 텍스트 교체)
+        scoreGoodEl.innerText = goodCount;
+        scoreBadEl.innerText = badCount;
+    }
+
+    // 초기화 버튼 기능
+    function resetChecks() {
+        checkboxes.forEach(box => box.checked = false);
+        calculateScore();
+    }
+</script>
 
 </body>
 </html>
