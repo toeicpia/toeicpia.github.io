@@ -1,0 +1,433 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <title></title>
+  <meta name="Generator" content="Cocoa HTML Writer">
+  <meta name="CocoaVersion" content="2685.3">
+  <style type="text/css">
+    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica}
+    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica; min-height: 14.0px}
+  </style>
+</head>
+<body>
+<p class="p1">&lt;!DOCTYPE html&gt;</p>
+<p class="p1">&lt;html lang="ko"&gt;</p>
+<p class="p1">&lt;head&gt;</p>
+<p class="p1">&lt;meta charset="UTF-8"&gt;</p>
+<p class="p1">&lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;</p>
+<p class="p1">&lt;title&gt;이은식어학원 - 헌서술어와 정동사 훈련 Vol.2&lt;/title&gt;</p>
+<p class="p1">&lt;style&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&amp;display=swap');</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>body {</p>
+<p class="p1"><span class="Apple-converted-space">        </span>font-family: 'Noto Sans KR', sans-serif;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>background-color: #f0f2f5;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>margin: 0;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>display: flex;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>justify-content: center;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>align-items: center;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>min-height: 100vh;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>user-select: none;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>.container {</p>
+<p class="p1"><span class="Apple-converted-space">        </span>width: 100%;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>max-width: 600px;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>background: white;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>border-radius: 15px;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>box-shadow: 0 10px 25px rgba(0,0,0,0.1);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>overflow: hidden;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>display: flex;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>flex-direction: column;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>height: 90vh;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>max-height: 800px;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>position: relative;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>.header {</p>
+<p class="p1"><span class="Apple-converted-space">        </span>background: #2c3e50;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>color: white;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>padding: 20px;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>text-align: center;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>flex-shrink: 0;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>.header h1 {</p>
+<p class="p1"><span class="Apple-converted-space">        </span>margin: 0;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>font-size: 2.2rem;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>font-weight: 700;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>letter-spacing: 1px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>.header h2 {</p>
+<p class="p1"><span class="Apple-converted-space">        </span>margin: 5px 0 0 0;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>font-size: 1.1rem;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>font-weight: 300;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>color: #bdc3c7;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>#content-area {</p>
+<p class="p1"><span class="Apple-converted-space">        </span>flex-grow: 1;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>padding: 20px;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>overflow-y: auto;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>display: flex;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>flex-direction: column;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>align-items: center;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>.section {</p>
+<p class="p1"><span class="Apple-converted-space">        </span>width: 100%;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>margin-bottom: 25px;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>opacity: 0;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>transform: translateY(20px);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>transition: opacity 0.4s ease, transform 0.4s ease;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>display: none; /* Hidden by default */</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>.section.active {</p>
+<p class="p1"><span class="Apple-converted-space">        </span>display: block;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>opacity: 1;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>transform: translateY(0);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>.instruction-text {</p>
+<p class="p1"><span class="Apple-converted-space">        </span>color: #7f8c8d;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>font-size: 0.95rem;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>text-align: center;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>margin: 0 0 15px 0;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>line-height: 1.6;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>word-break: keep-all;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>.vocab-box {</p>
+<p class="p1"><span class="Apple-converted-space">        </span>background: #ecf0f1;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>padding: 15px;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>border-radius: 8px;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>margin-bottom: 20px;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>text-align: left;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>font-size: 0.9rem;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>.vocab-item {</p>
+<p class="p1"><span class="Apple-converted-space">        </span>margin-bottom: 5px;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>color: #2c3e50;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>.sentence-box {</p>
+<p class="p1"><span class="Apple-converted-space">        </span>font-size: 1.3rem;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>color: #2c3e50;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>font-weight: 500;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>text-align: center;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>padding: 20px;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>border: 2px solid #4a90e2;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>border-radius: 10px;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>background-color: #fbfdff;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>margin-bottom: 15px;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>word-break: keep-all;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>.answer-box {</p>
+<p class="p1"><span class="Apple-converted-space">        </span>background-color: #e8f4fd;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>color: #2980b9;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>padding: 15px;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>border-radius: 8px;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>text-align: center;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>font-weight: 700;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>font-size: 1.1rem;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>margin-top: 10px;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>line-height: 1.5;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>.trans-box {</p>
+<p class="p1"><span class="Apple-converted-space">        </span>margin-top: 10px;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>color: #555;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>font-size: 1rem;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>text-align: center;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>line-height: 1.6;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>.btn {</p>
+<p class="p1"><span class="Apple-converted-space">        </span>background-color: #4a90e2;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>color: white;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>border: none;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>padding: 12px 25px;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>font-size: 1rem;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>border-radius: 25px;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>cursor: pointer;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>transition: background 0.3s;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>margin-top: 10px;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>width: 80%;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>max-width: 300px;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>display: block;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>margin-left: auto;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>margin-right: auto;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>.btn:hover {</p>
+<p class="p1"><span class="Apple-converted-space">        </span>background-color: #357abd;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p2"><span class="Apple-converted-space">    </span></p>
+<p class="p1"><span class="Apple-converted-space">    </span>.final-ment {</p>
+<p class="p1"><span class="Apple-converted-space">        </span>font-weight: 700;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>color: #e74c3c;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>text-align: center;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>margin-top: 20px;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>font-size: 1.1rem;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>.footer {</p>
+<p class="p1"><span class="Apple-converted-space">        </span>background: #ecf0f1;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>color: #7f8c8d;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>text-align: center;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>padding: 15px;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>font-size: 0.8rem;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>line-height: 1.4;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>flex-shrink: 0;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p2"><span class="Apple-converted-space">    </span></p>
+<p class="p1"><span class="Apple-converted-space">    </span>.progress-bar {</p>
+<p class="p1"><span class="Apple-converted-space">        </span>height: 5px;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>background: #bdc3c7;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>width: 100%;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>.progress-fill {</p>
+<p class="p1"><span class="Apple-converted-space">        </span>height: 100%;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>background: #4a90e2;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>width: 0%;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>transition: width 0.3s;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p1">&lt;/style&gt;</p>
+<p class="p1">&lt;/head&gt;</p>
+<p class="p1">&lt;body oncontextmenu="return false"&gt;</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;div class="container"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="progress-bar"&gt;&lt;div class="progress-fill" id="progress-fill"&gt;&lt;/div&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="header"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;h1 id="verb-header"&gt;verb&lt;/h1&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;h2 id="meaning-header"&gt;의미&lt;/h2&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div id="content-area"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="footer"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>ENGLISH WITH SENSE&lt;br&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>영어는 기다림과 채움의 감각으로 - 이은식어학원</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p1">&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;script&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>const quizData = [</p>
+<p class="p1"><span class="Apple-converted-space">        </span>{</p>
+<p class="p1"><span class="Apple-converted-space">            </span>verb: "deliver",</p>
+<p class="p1"><span class="Apple-converted-space">            </span>meaning: "배달하다",</p>
+<p class="p1"><span class="Apple-converted-space">            </span>vocab_list: [</p>
+<p class="p1"><span class="Apple-converted-space">                </span>{en:"package", ko:"소포"},</p>
+<p class="p1"><span class="Apple-converted-space">                </span>{en:"order", ko:"주문하다"},</p>
+<p class="p1"><span class="Apple-converted-space">                </span>{en:"online", ko:"온라인으로"},</p>
+<p class="p1"><span class="Apple-converted-space">                </span>{en:"yesterday", ko:"어제"}</p>
+<p class="p1"><span class="Apple-converted-space">            </span>],</p>
+<p class="p1"><span class="Apple-converted-space">            </span>step1_ment: "아래 문장을 읽으면서 주어와 동사의 능수관계를 밝힙니다.&lt;br&gt;능동이라면 목적어를 영어나 한국어로 명확하게 제시하고, 수동이라면 '부사어가 나옵니다'라고 말합니다.",</p>
+<p class="p1"><span class="Apple-converted-space">            </span>step1_q: "The package deliver",</p>
+<p class="p2"><span class="Apple-converted-space">            </span></p>
+<p class="p1"><span class="Apple-converted-space">            </span>step2_ment: "아래 문장은 주어와 서술어 사이에 **헌서술어(형용사구)**가 개입합니다.&lt;br&gt;주어와 헌서술어의 관계를 전생의 주술 관계로 읽어야 순해가 가능합니다.",</p>
+<p class="p1"><span class="Apple-converted-space">            </span>step2_q: "The package ordered online deliver yesterday.",</p>
+<p class="p2"><span class="Apple-converted-space">            </span></p>
+<p class="p1"><span class="Apple-converted-space">            </span>final_ans: "The package ordered online was delivered yesterday.",</p>
+<p class="p1"><span class="Apple-converted-space">            </span>trans_instruction: "한국어 해석을 하세요.",</p>
+<p class="p1"><span class="Apple-converted-space">            </span>final_trans: "그 소포는 / 주문된 온라인으로 / 배달되었습니다 / 어제.",</p>
+<p class="p1"><span class="Apple-converted-space">            </span>final_ment: "마지막으로 이제는 눈을 감고 영어 문장을 말합니다."</p>
+<p class="p1"><span class="Apple-converted-space">        </span>},</p>
+<p class="p1"><span class="Apple-converted-space">        </span>{</p>
+<p class="p1"><span class="Apple-converted-space">            </span>verb: "watch",</p>
+<p class="p1"><span class="Apple-converted-space">            </span>meaning: "지켜보다",</p>
+<p class="p1"><span class="Apple-converted-space">            </span>vocab_list: [</p>
+<p class="p1"><span class="Apple-converted-space">                </span>{en:"man", ko:"남자"},</p>
+<p class="p1"><span class="Apple-converted-space">                </span>{en:"stand", ko:"서 있다"},</p>
+<p class="p1"><span class="Apple-converted-space">                </span>{en:"window", ko:"창문"},</p>
+<p class="p1"><span class="Apple-converted-space">                </span>{en:"parade", ko:"퍼레이드"},</p>
+<p class="p1"><span class="Apple-converted-space">                </span>{en:"when the accident happened", ko:"사고가 발생했을 때"}</p>
+<p class="p1"><span class="Apple-converted-space">            </span>],</p>
+<p class="p1"><span class="Apple-converted-space">            </span>step1_ment: "아래 문장을 읽으면서 주어와 동사의 능수관계를 밝힙니다.&lt;br&gt;능동이라면 목적어를 영어나 한국어로 명확하게 제시하고, 수동이라면 '부사어가 나옵니다'라고 말합니다.",</p>
+<p class="p1"><span class="Apple-converted-space">            </span>step1_q: "The man watch",</p>
+<p class="p2"><span class="Apple-converted-space">            </span></p>
+<p class="p1"><span class="Apple-converted-space">            </span>step2_ment: "아래 문장은 주어와 서술어 사이에 **헌서술어(형용사구)**가 개입합니다.&lt;br&gt;주어와 헌서술어의 관계를 전생의 주술 관계로 읽어야 순해가 가능합니다.",</p>
+<p class="p1"><span class="Apple-converted-space">            </span>step2_q: "The man standing by the window watch the parade when the accident happened.",</p>
+<p class="p2"><span class="Apple-converted-space">            </span></p>
+<p class="p1"><span class="Apple-converted-space">            </span>final_ans: "The man standing by the window watched the parade when the accident happened.",</p>
+<p class="p1"><span class="Apple-converted-space">            </span>trans_instruction: "한국어 해석을 하세요.",</p>
+<p class="p1"><span class="Apple-converted-space">            </span>final_trans: "그 남자는 / 서 있는 창가에 / 지켜보았습니다 / 그 퍼레이드를 / 사고가 발생했을 때.",</p>
+<p class="p1"><span class="Apple-converted-space">            </span>final_ment: "마지막으로 이제는 눈을 감고 영어 문장을 말합니다."</p>
+<p class="p1"><span class="Apple-converted-space">        </span>},</p>
+<p class="p1"><span class="Apple-converted-space">        </span>{</p>
+<p class="p1"><span class="Apple-converted-space">            </span>verb: "build",</p>
+<p class="p1"><span class="Apple-converted-space">            </span>meaning: "건설하다",</p>
+<p class="p1"><span class="Apple-converted-space">            </span>vocab_list: [</p>
+<p class="p1"><span class="Apple-converted-space">                </span>{en:"bridge", ko:"다리"},</p>
+<p class="p1"><span class="Apple-converted-space">                </span>{en:"landmark", ko:"랜드마크"},</p>
+<p class="p1"><span class="Apple-converted-space">                </span>{en:"city", ko:"도시"},</p>
+<p class="p1"><span class="Apple-converted-space">                </span>{en:"in 1990", ko:"1990년에"}</p>
+<p class="p1"><span class="Apple-converted-space">            </span>],</p>
+<p class="p1"><span class="Apple-converted-space">            </span>step1_ment: "아래 문장을 읽으면서 주어와 동사의 능수관계를 밝힙니다.&lt;br&gt;능동이라면 목적어를 영어나 한국어로 명확하게 제시하고, 수동이라면 '부사어가 나옵니다'라고 말합니다.",</p>
+<p class="p1"><span class="Apple-converted-space">            </span>step1_q: "The bridge build",</p>
+<p class="p2"><span class="Apple-converted-space">            </span></p>
+<p class="p1"><span class="Apple-converted-space">            </span>step2_ment: "아래 문장은 주어와 서술어 사이에 **헌서술어(형용사구)**가 개입합니다.&lt;br&gt;주어와 헌서술어의 관계를 전생의 주술 관계로 읽어야 순해가 가능합니다.",</p>
+<p class="p1"><span class="Apple-converted-space">            </span>step2_q: "The bridge, a landmark of the city, build in 1990.",</p>
+<p class="p2"><span class="Apple-converted-space">            </span></p>
+<p class="p1"><span class="Apple-converted-space">            </span>final_ans: "The bridge, a landmark of the city, was built in 1990.",</p>
+<p class="p1"><span class="Apple-converted-space">            </span>trans_instruction: "한국어 해석을 하세요.",</p>
+<p class="p1"><span class="Apple-converted-space">            </span>final_trans: "그 다리는 / 즉 랜드마크인 그 도시의 / 건설되었습니다 / 1990년에.",</p>
+<p class="p1"><span class="Apple-converted-space">            </span>final_ment: "마지막으로 이제는 눈을 감고 영어 문장을 말합니다."</p>
+<p class="p1"><span class="Apple-converted-space">        </span>},</p>
+<p class="p1"><span class="Apple-converted-space">        </span>{</p>
+<p class="p1"><span class="Apple-converted-space">            </span>verb: "discuss",</p>
+<p class="p1"><span class="Apple-converted-space">            </span>meaning: "논의하다",</p>
+<p class="p1"><span class="Apple-converted-space">            </span>vocab_list: [</p>
+<p class="p1"><span class="Apple-converted-space">                </span>{en:"member", ko:"구성원"},</p>
+<p class="p1"><span class="Apple-converted-space">                </span>{en:"attend", ko:"참석하다"},</p>
+<p class="p1"><span class="Apple-converted-space">                </span>{en:"meeting", ko:"회의"},</p>
+<p class="p1"><span class="Apple-converted-space">                </span>{en:"issue", ko:"안건"},</p>
+<p class="p1"><span class="Apple-converted-space">                </span>{en:"next Monday", ko:"다음 주 월요일에"}</p>
+<p class="p1"><span class="Apple-converted-space">            </span>],</p>
+<p class="p1"><span class="Apple-converted-space">            </span>step1_ment: "아래 문장을 읽으면서 주어와 동사의 능수관계를 밝힙니다.&lt;br&gt;능동이라면 목적어를 영어나 한국어로 명확하게 제시하고, 수동이라면 '부사어가 나옵니다'라고 말합니다.",</p>
+<p class="p1"><span class="Apple-converted-space">            </span>step1_q: "The members discuss",</p>
+<p class="p2"><span class="Apple-converted-space">            </span></p>
+<p class="p1"><span class="Apple-converted-space">            </span>step2_ment: "아래 문장은 주어와 서술어 사이에 **헌서술어(형용사구)**가 개입합니다.&lt;br&gt;주어와 헌서술어의 관계를 전생의 주술 관계로 읽어야 순해가 가능합니다.",</p>
+<p class="p1"><span class="Apple-converted-space">            </span>step2_q: "The members attending the meeting discuss the issue next Monday.",</p>
+<p class="p2"><span class="Apple-converted-space">            </span></p>
+<p class="p1"><span class="Apple-converted-space">            </span>final_ans: "The members attending the meeting will discuss the issue next Monday.",</p>
+<p class="p1"><span class="Apple-converted-space">            </span>trans_instruction: "한국어 해석을 하세요.",</p>
+<p class="p1"><span class="Apple-converted-space">            </span>final_trans: "그 구성원들은 / 참석하는 그 회의에 / 논의할 것입니다 / 그 안건을 / 다음 주 월요일에.",</p>
+<p class="p1"><span class="Apple-converted-space">            </span>final_ment: "마지막으로 이제는 눈을 감고 영어 문장을 말합니다."</p>
+<p class="p1"><span class="Apple-converted-space">        </span>},</p>
+<p class="p1"><span class="Apple-converted-space">        </span>{</p>
+<p class="p1"><span class="Apple-converted-space">            </span>verb: "arrest",</p>
+<p class="p1"><span class="Apple-converted-space">            </span>meaning: "체포하다",</p>
+<p class="p1"><span class="Apple-converted-space">            </span>vocab_list: [</p>
+<p class="p1"><span class="Apple-converted-space">                </span>{en:"suspect", ko:"용의자"},</p>
+<p class="p1"><span class="Apple-converted-space">                </span>{en:"suit", ko:"정장"},</p>
+<p class="p1"><span class="Apple-converted-space">                </span>{en:"after the witness testified", ko:"목격자가 증언한 후에"},</p>
+<p class="p1"><span class="Apple-converted-space">                </span>{en:"testify", ko:"증언하다"}</p>
+<p class="p1"><span class="Apple-converted-space">            </span>],</p>
+<p class="p1"><span class="Apple-converted-space">            </span>step1_ment: "아래 문장을 읽으면서 주어와 동사의 능수관계를 밝힙니다.&lt;br&gt;능동이라면 목적어를 영어나 한국어로 명확하게 제시하고, 수동이라면 '부사어가 나옵니다'라고 말합니다.",</p>
+<p class="p1"><span class="Apple-converted-space">            </span>step1_q: "The suspect arrest",</p>
+<p class="p2"><span class="Apple-converted-space">            </span></p>
+<p class="p1"><span class="Apple-converted-space">            </span>step2_ment: "아래 문장은 주어와 서술어 사이에 **헌서술어(형용사구)**가 개입합니다.&lt;br&gt;주어와 헌서술어의 관계를 전생의 주술 관계로 읽어야 순해가 가능합니다.",</p>
+<p class="p1"><span class="Apple-converted-space">            </span>step2_q: "The suspect in the black suit arrest after the witness testified.",</p>
+<p class="p2"><span class="Apple-converted-space">            </span></p>
+<p class="p1"><span class="Apple-converted-space">            </span>final_ans: "The suspect in the black suit was arrested after the witness testified.",</p>
+<p class="p1"><span class="Apple-converted-space">            </span>trans_instruction: "한국어 해석을 하세요.",</p>
+<p class="p1"><span class="Apple-converted-space">            </span>final_trans: "그 용의자는 / 검은 정장을 입은 / 체포되었습니다 / 목격자가 증언한 후에.",</p>
+<p class="p1"><span class="Apple-converted-space">            </span>final_ment: "마지막으로 이제는 눈을 감고 영어 문장을 말합니다."</p>
+<p class="p1"><span class="Apple-converted-space">        </span>},</p>
+<p class="p1"><span class="Apple-converted-space">        </span>{</p>
+<p class="p1"><span class="Apple-converted-space">            </span>verb: "explain",</p>
+<p class="p1"><span class="Apple-converted-space">            </span>meaning: "설명하다",</p>
+<p class="p1"><span class="Apple-converted-space">            </span>vocab_list: [</p>
+<p class="p1"><span class="Apple-converted-space">                </span>{en:"teacher", ko:"선생님"},</p>
+<p class="p1"><span class="Apple-converted-space">                </span>{en:"responsible for", ko:"~을 담당하는"},</p>
+<p class="p1"><span class="Apple-converted-space">                </span>{en:"class", ko:"학급"},</p>
+<p class="p1"><span class="Apple-converted-space">                </span>{en:"rule", ko:"규칙"},</p>
+<p class="p1"><span class="Apple-converted-space">                </span>{en:"before the test began", ko:"시험이 시작되기 전에"}</p>
+<p class="p1"><span class="Apple-converted-space">            </span>],</p>
+<p class="p1"><span class="Apple-converted-space">            </span>step1_ment: "아래 문장을 읽으면서 주어와 동사의 능수관계를 밝힙니다.&lt;br&gt;능동이라면 목적어를 영어나 한국어로 명확하게 제시하고, 수동이라면 '부사어가 나옵니다'라고 말합니다.",</p>
+<p class="p1"><span class="Apple-converted-space">            </span>step1_q: "The teacher explain",</p>
+<p class="p2"><span class="Apple-converted-space">            </span></p>
+<p class="p1"><span class="Apple-converted-space">            </span>step2_ment: "아래 문장은 주어와 서술어 사이에 **헌서술어(형용사구)**가 개입합니다.&lt;br&gt;주어와 헌서술어의 관계를 전생의 주술 관계로 읽어야 순해가 가능합니다.",</p>
+<p class="p1"><span class="Apple-converted-space">            </span>step2_q: "The teacher responsible for the class explain the rules before the test began.",</p>
+<p class="p2"><span class="Apple-converted-space">            </span></p>
+<p class="p1"><span class="Apple-converted-space">            </span>final_ans: "The teacher responsible for the class explained the rules before the test began.",</p>
+<p class="p1"><span class="Apple-converted-space">            </span>trans_instruction: "한국어 해석을 하세요.",</p>
+<p class="p1"><span class="Apple-converted-space">            </span>final_trans: "그 선생님은 / 담당하는 그 학급을 / 설명했습니다 / 그 규칙들을 / 시험이 시작되기 전에.",</p>
+<p class="p1"><span class="Apple-converted-space">            </span>final_ment: "마지막으로 이제는 눈을 감고 영어 문장을 말합니다."</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>];</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>let currentQ = 0;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>let currentStep = 0; // 0: vocab, 1: step1, 2: step2, 3: result</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>const contentArea = document.getElementById('content-area');</p>
+<p class="p1"><span class="Apple-converted-space">    </span>const verbHeader = document.getElementById('verb-header');</p>
+<p class="p1"><span class="Apple-converted-space">    </span>const meaningHeader = document.getElementById('meaning-header');</p>
+<p class="p1"><span class="Apple-converted-space">    </span>const progressBar = document.getElementById('progress-fill');</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>function render() {</p>
+<p class="p1"><span class="Apple-converted-space">        </span>if (currentQ &gt;= quizData.length) {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>contentArea.innerHTML = '&lt;div class="section active" style="text-align:center;"&gt;&lt;h2&gt;모든 학습이 완료되었습니다.&lt;/h2&gt;&lt;p&gt;수고하셨습니다!&lt;/p&gt;&lt;button class="btn" onclick="location.reload()"&gt;다시 하기&lt;/button&gt;&lt;/div&gt;';</p>
+<p class="p1"><span class="Apple-converted-space">            </span>verbHeader.innerText = "Completed";</p>
+<p class="p1"><span class="Apple-converted-space">            </span>meaningHeader.innerText = "";</p>
+<p class="p1"><span class="Apple-converted-space">            </span>progressBar.style.width = '100%';</p>
+<p class="p1"><span class="Apple-converted-space">            </span>return;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>const data = quizData[currentQ];</p>
+<p class="p1"><span class="Apple-converted-space">        </span>verbHeader.innerText = data.verb;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>meaningHeader.innerText = data.meaning;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>progressBar.style.width = `${(currentQ / quizData.length) * 100}%`;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>let html = '';</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>// Vocab Section</p>
+<p class="p1"><span class="Apple-converted-space">        </span>if (currentStep === 0) {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>html += `&lt;div class="section active"&gt;`;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>html += `&lt;div class="instruction-text"&gt;학습 전 단어 정리 (Pre-check)&lt;/div&gt;`;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>html += `&lt;div class="vocab-box"&gt;`;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>data.vocab_list.forEach(v =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>html += `&lt;div class="vocab-item"&gt;&lt;b&gt;${v.en}&lt;/b&gt;: ${v.ko}&lt;/div&gt;`;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>});</p>
+<p class="p1"><span class="Apple-converted-space">            </span>html += `&lt;/div&gt;`;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>html += `&lt;button class="btn" onclick="nextStep()"&gt;학습 시작&lt;/button&gt;`;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>html += `&lt;/div&gt;`;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">        </span>// Step 1: Voice Check</p>
+<p class="p1"><span class="Apple-converted-space">        </span>else if (currentStep === 1) {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>html += `&lt;div class="section active"&gt;`;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>html += `&lt;div class="instruction-text"&gt;${data.step1_ment}&lt;/div&gt;`;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>html += `&lt;div class="sentence-box"&gt;${data.step1_q}&lt;/div&gt;`;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>html += `&lt;button class="btn" onclick="nextStep()"&gt;다음 단계&lt;/button&gt;`;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>html += `&lt;/div&gt;`;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>// Step 2: Modifier Check</p>
+<p class="p1"><span class="Apple-converted-space">        </span>else if (currentStep === 2) {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>html += `&lt;div class="section active"&gt;`;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>html += `&lt;div class="instruction-text"&gt;${data.step2_ment}&lt;/div&gt;`;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>html += `&lt;div class="sentence-box"&gt;${data.step2_q}&lt;/div&gt;`;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>html += `&lt;button class="btn" onclick="nextStep()"&gt;정답 확인&lt;/button&gt;`;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>html += `&lt;/div&gt;`;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>// Step 3: Result &amp; Recitation</p>
+<p class="p1"><span class="Apple-converted-space">        </span>else if (currentStep === 3) {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>html += `&lt;div class="section active"&gt;`;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>html += `&lt;div class="instruction-text"&gt;정답을 확인하고 순해합니다.&lt;/div&gt;`;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>html += `&lt;div class="answer-box"&gt;${data.final_ans}&lt;/div&gt;`;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>html += `&lt;div class="instruction-text" style="margin-top:15px;"&gt;${data.trans_instruction}&lt;/div&gt;`;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>html += `&lt;div class="trans-box"&gt;${data.final_trans}&lt;/div&gt;`;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>html += `&lt;div class="final-ment"&gt;${data.final_ment}&lt;/div&gt;`;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>html += `&lt;button class="btn" onclick="nextQuestion()"&gt;다음 문제&lt;/button&gt;`;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>html += `&lt;/div&gt;`;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>contentArea.innerHTML = html;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>function nextStep() {</p>
+<p class="p1"><span class="Apple-converted-space">        </span>currentStep++;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>render();</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>function nextQuestion() {</p>
+<p class="p1"><span class="Apple-converted-space">        </span>currentQ++;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>currentStep = 0;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>render();</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>// Initial Render</p>
+<p class="p1"><span class="Apple-converted-space">    </span>render();</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;/script&gt;</p>
+<p class="p1">&lt;/body&gt;</p>
+<p class="p1">&lt;/html&gt;</p>
+</body>
+</html>
