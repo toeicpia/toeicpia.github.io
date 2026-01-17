@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>성적 향상 행동 패턴 비교</title>
+<link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.8/dist/web/static/pretendard.css" />
+<style>
+    :root {
+        --primary-color: #3b82f6; /* 세련된 블루 */
+        --bg-color: #f8fafc;
+        --card-bg: #ffffff;
+        --text-main: #1e293b;
+        --text-sub: #64748b;
+        --border-color: #e2e8f0;
+        --positive-bg: #eff6ff;
+        --negative-bg: #fef2f2;
+    }
+
+    body {
+        font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
+        background-color: var(--bg-color);
+        color: var(--text-main);
+        margin: 0;
+        padding: 40px 20px;
+        line-height: 1.6;
+        display: flex;
+        justify-content: center;
+    }
+
+    .container {
+        max-width: 1000px;
+        width: 100%;
+        background: var(--card-bg);
+        border-radius: 16px;
+        box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.01);
+        overflow: hidden; /* 둥근 모서리 유지 */
+    }
+
+    header {
+        padding: 30px;
+        text-align: center;
+        border-bottom: 1px solid var(--border-color);
+    }
+
+    h1 {
+        margin: 0;
+        font-size: 24px;
+        font-weight: 700;
+        color: var(--text-main);
+        letter-spacing: -0.5px;
+    }
+
+    p.subtitle {
+        margin-top: 8px;
+        color: var(--text-sub);
+        font-size: 14px;
+    }
+
+    .table-wrapper {
+        width: 100%;
+        overflow-x: auto; /* 모바일 대응 */
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        min-width: 600px; /* 모바일에서 표가 너무 찌그러지지 않게 */
+    }
+
+    th {
+        padding: 16px 24px;
+        font-size: 15px;
+        font-weight: 600;
+        text-align: left;
+        border-bottom: 2px solid var(--border-color);
+    }
+
+    th.good {
+        color: #2563eb;
+        background-color: #f1f5f9;
+        width: 50%;
+    }
+
+    th.bad {
+        color: #ef4444;
+        background-color: #f1f5f9;
+        width: 50%;
+    }
+
+    td {
+        padding: 16px 24px;
+        font-size: 15px;
+        border-bottom: 1px solid var(--border-color);
+        vertical-align: top;
+        color: var(--text-main);
+    }
+
+    /* 마지막 줄 테두리 제거 */
+    tr:last-child td {
+        border-bottom: none;
+    }
+
+    /* 행 호버 효과 */
+    tbody tr:hover {
+        background-color: #fafafa;
+        transition: background-color 0.2s ease;
+    }
+
+    /* 강조 텍스트 스타일 */
+    .highlight {
+        font-weight: 600;
+        color: var(--primary-color);
+    }
+
+    /* 반응형 디자인 */
+    @media (max-width: 768px) {
+        body {
+            padding: 20px 10px;
+        }
+        th, td {
+            padding: 12px 16px;
+            font-size: 14px;
+        }
+        h1 {
+            font-size: 20px;
+        }
+    }
+</style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>학습 행동 패턴 분석</h1>
+        <p class="subtitle">성적이 오르는 습관 vs 제자리걸음인 습관</p>
+    </header>
+    
+    <div class="table-wrapper">
+        <table>
+            <thead>
+                <tr>
+                    <th class="good">🚀 점수 오르는 사람들의 행동 패턴</th>
+                    <th class="bad">⚠️ 점수 오르지 않는 사람들의 행동 패턴</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>단어 공부할 때, <strong>문장 전체를 보면서</strong> 익힌다</td>
+                    <td>repair – 수리하다/ repair – 수리하다... (단순 반복)</td>
+                </tr>
+                <tr>
+                    <td>아침 과제를 <strong>정성 들여</strong> 한다</td>
+                    <td>과제 제출하기에 급급하다</td>
+                </tr>
+                <tr>
+                    <td>대부분의 시간을 <strong>경기장에서 읽으면서</strong> 보낸다</td>
+                    <td>룸에서 노트 정리하느라 대부분의 시간을 보낸다</td>
+                </tr>
+                <tr>
+                    <td>학습한 내용을 자기 정리를 통해서 <strong>자기의 것으로 만든다</strong> (질문과 답)</td>
+                    <td>적기만 하고, 아는지 모르는지 확인 과정이 없다</td>
+                </tr>
+                <tr>
+                    <td>RC과제에서 '의식의 문제'와 '지식의 문제'의 구별을 잘한다</td>
+                    <td>모르겠으면, '지식의 문제'라 한다</td>
+                </tr>
+                <tr>
+                    <td>자기의 <strong>부족한 부분이 무엇인지</strong> 명확하게 안다</td>
+                    <td>어렵다고만 한다. 무엇이 어렵냐고 질문하면 모르겠다고 한다</td>
+                </tr>
+                <tr>
+                    <td>입력 위주가 아닌 <strong>출력 위주의 학습</strong>을 한다</td>
+                    <td>입력 위주로 하며, 머리 속에 들어오면 문제에서 맞을 것으로 착각한다</td>
+                </tr>
+                <tr>
+                    <td>주어를 볼 때 이들은 <strong>.......를 생각한다</strong></td>
+                    <td>주어를 볼 때, 아무 생각 없이 다음 단어를 본다</td>
+                </tr>
+                <tr>
+                    <td>타동사를 보면 이들은 <strong>.......를 생각한다</strong></td>
+                    <td>어떤 단어가 나와도 자극이 느껴지지 않고 그냥 보기에 바쁘다</td>
+                </tr>
+                <tr>
+                    <td>영어를 보면 한국어 번역에 초점을 두지 않고, <strong>의미 실체</strong>를 보려 한다</td>
+                    <td>한국어 번역되면 이해하는 것으로 착각한다</td>
+                </tr>
+                <tr>
+                    <td>모든 문제를 <strong>해석을 통해서</strong> 푼다</td>
+                    <td>해석을 해야 하는 것과 그렇지 않는 것으로 구별한다</td>
+                </tr>
+                <tr>
+                    <td>선생님이 이어서 다음에 <strong>무슨 말을 할 줄 안다</strong></td>
+                    <td>들은 후에 음, 그래 '맞아, 맞아' 한다</td>
+                </tr>
+                <tr>
+                    <td>모의고사 본 후에 <strong>틀린 문제에 고맙다</strong>고 생각한다</td>
+                    <td>틀린 문제를 보면 화가 나고 더 이상 보기 싫어한다</td>
+                </tr>
+                <tr>
+                    <td>어떤 문장을 보더라도 항상 <strong>반복되는 패턴</strong>을 익힌다</td>
+                    <td>패턴은 필요 없고, 대충 알면 넘어간다</td>
+                </tr>
+                <tr>
+                    <td>버스에서도 <strong>무엇인가를 한다</strong></td>
+                    <td>나 피곤해....</td>
+                </tr>
+                <tr>
+                    <td>듣기 학습 자료를 <strong>33한다</strong></td>
+                    <td>뭘 들었는데 또 들어. 다 들리는데.... (기억나는 것임)</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+</body>
+</html>
