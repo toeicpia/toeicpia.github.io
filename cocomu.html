@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>이은식어학원 :: 꼬꼬무 타동사 마스터</title>
+    <style>
+        /* Base Reset & Fonts */
+        :root {
+            --brand-navy: #1e3a8a;
+            --brand-deep-blue: #172554;
+            --brand-gray-bg: #f3f4f6;
+            --brand-text-dark: #374151;
+            --brand-border: #e5e7eb;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background-color: #f9fafb;
+            color: #333;
+            line-height: 1.6;
+            /* Security */
+            user-select: none;
+            -webkit-user-select: none;
+        }
+
+        /* Layout Container */
+        .container {
+            max-width: 1000px;
+            margin: 40px auto;
+            background: #fff;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid var(--brand-border);
+        }
+
+        /* Branding Header */
+        header {
+            background-color: var(--brand-navy);
+            color: white;
+            padding: 20px 40px;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        header span {
+            display: block;
+            font-size: 0.9rem;
+            font-weight: 300;
+            margin-top: 5px;
+            opacity: 0.9;
+        }
+
+        /* Content Area */
+        .content-wrapper {
+            padding: 40px;
+        }
+
+        /* Item Block */
+        .item-block {
+            margin-bottom: 60px;
+        }
+        
+        .item-block:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Top Section: Vocabulary */
+        .vocab-section {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 25px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .vocab-pill {
+            background-color: var(--brand-gray-bg);
+            color: var(--brand-text-dark);
+            padding: 5px 12px;
+            border-radius: 999px;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        /* Main Flexbox */
+        .sentence-builder {
+            display: flex;
+            align-items: stretch;
+        }
+
+        /* Left Column: Subject + Verb */
+        .left-col {
+            flex: 0 0 auto;
+            text-align: right;
+            padding-right: 40px;
+            border-right: 2px dashed #ccc;
+            
+            /* Typography */
+            font-weight: 700;
+            color: var(--brand-navy);
+            font-size: 1.1rem;
+            white-space: nowrap;
+            
+            /* Vertical Alignment Helper */
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            padding-top: 5px; /* Visual alignment with first button */
+        }
+
+        /* Right Column: Objects */
+        .right-col {
+            flex: 1;
+            padding-left: 40px;
+        }
+
+        .object-list {
+            list-style: none;
+        }
+
+        .object-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            min-height: 36px; /* Ensure height consistency */
+        }
+
+        /* Interaction Buttons */
+        .play-btn {
+            flex: 0 0 32px;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background-color: var(--brand-deep-blue);
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            transition: transform 0.2s ease, background-color 0.2s;
+            outline: none;
+        }
+
+        .play-btn:hover {
+            transform: scale(1.1);
+            background-color: var(--brand-navy);
+        }
+
+        .play-btn::after {
+            content: '';
+            display: block;
+            width: 0;
+            height: 0;
+            border-left: 10px solid white;
+            border-top: 6px solid transparent;
+            border-bottom: 6px solid transparent;
+            margin-left: 3px; /* Optical center correction */
+        }
+
+        /* Hidden Text Animation */
+        .object-text {
+            font-size: 1.05rem;
+            color: #111;
+            opacity: 0;
+            transform: translateX(-10px);
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            pointer-events: none;
+        }
+
+        .object-text.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        /* Footer */
+        footer {
+            background-color: #f1f1f1;
+            color: #666;
+            text-align: center;
+            padding: 20px;
+            font-size: 0.85rem;
+            border-top: 1px solid #ddd;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .sentence-builder {
+                flex-direction: column;
+            }
+            .left-col {
+                text-align: left;
+                padding-right: 0;
+                padding-bottom: 15px;
+                border-right: none;
+                border-bottom: 2px dashed #ccc;
+                margin-bottom: 20px;
+            }
+            .right-col {
+                padding-left: 0;
+            }
+        }
+    </style>
+</head>
+<body oncontextmenu="return false">
+
+    <div class="container">
+        <header>
+            <h1>꼬꼬무 타동사 Training</h1>
+            <span>이은식어학원 TOEIC Intensive Course</span>
+        </header>
+
+        <div class="content-wrapper" id="content-area">
+            </div>
+
+        <footer>
+            영어는 기다림과 채움의 감각으로 - 이은식어학원
+        </footer>
+    </div>
+
+    <script>
+        // Phase 1 Data
+        const toiecData = [
+            {
+                vocab: ["CEO 최고경영자", "seriously 진지하게", "consider 고려하다", "expansion 확장", "overseas 해외의", "market 시장", "relocate 이전하다", "headquarters 본사", "viable 실행가능한", "option 선택권"],
+                sv: "The CEO seriously considered",
+                objects: [
+                    "whether to expand into the overseas market",
+                    "relocating the headquarters to Seoul",
+                    "a viable option for cost reduction",
+                    "that the proposal might be too risky"
+                ]
+            },
+            {
+                vocab: ["audit team 감사팀", "carefully 신중하게", "verify 확인하다", "transaction 거래", "record 기록", "compliance 준수", "regulation 규정", "accuracy 정확성", "report 보고서"],
+                sv: "The audit team carefully verified",
+                objects: [
+                    "that all transaction records were accurate",
+                    "the compliance with new regulations",
+                    "to check the figures one more time",
+                    "why the error occurred in the system"
+                ]
+            },
+            {
+                vocab: ["consultant 컨설턴트", "strongly 강력하게", "recommend 권장하다", "implement 시행하다", "strategy 전략", "efficiency 효율성", "client 고객", "upgrade 업그레이드하다", "software 소프트웨어"],
+                sv: "The consultant strongly recommended",
+                objects: [
+                    "upgrading the security software immediately",
+                    "which strategy would fit the client best",
+                    "a comprehensive marketing plan",
+                    "that the company should adopt remote work"
+                ]
+            },
+            {
+                vocab: ["board member 이사회 멤버", "formally 공식적으로", "announce 발표하다", "retirement 은퇴", "successor 후임자", "appoint 임명하다", "quarterly 분기의", "earning 수익", "result 결과"],
+                sv: "The board of directors formally announced",
+                objects: [
+                    "who will be appointed as the new chairperson",
+                    "to reduce the budget for next year",
+                    "the quarterly earnings results",
+                    "that the CEO plans to retire soon"
+                ]
+            },
+            {
+                vocab: ["manufacturer 제조사", "confidentially 자신있게", "guarantee 보장하다", "quality 품질", "product 제품", "satisfaction 만족", "durability 내구성", "period 기간", "refund 환불"],
+                sv: "The manufacturer confidentially guarantees",
+                objects: [
+                    "that the product will last for ten years",
+                    "to refund your money within 30 days",
+                    "complete customer satisfaction",
+                    "how the device performs under pressure"
+                ]
+            },
+            {
+                vocab: ["management 경영진", "deeply 깊이", "regret 유감으로생각하다", "inform 알리다", "applicant 지원자", "rejection 거절", "decision 결정", "inconvenience 불편", "cause 야기하다"],
+                sv: "The management deeply regrets",
+                objects: [
+                    "to inform you of the rejection",
+                    "that the event has been cancelled",
+                    "causing any inconvenience to the visitors",
+                    "the sudden decision to close the branch"
+                ]
+            },
+            {
+                vocab: ["analyst 분석가", "optimistic 낙관적인", "expect 예상하다", "rise 상승", "stock 주가", "value 가치", "quarter 분기", "exceed 초과하다", "projection 예상치", "profit 수익"],
+                sv: "The market analysts expected",
+                objects: [
+                    "when the interest rates would stabilize",
+                    "a significant rise in stock value",
+                    "to exceed the sales projections this quarter",
+                    "that the profits will double by next year"
+                ]
+            },
+            {
+                vocab: ["technician 기술자", "clearly 명확하게", "explain 설명하다", "malfunction 오작동", "cause 원인", "mechanism 메커니즘", "operate 작동하다", "detail 세부사항", "procedure 절차"],
+                sv: "The head technician clearly explained",
+                objects: [
+                    "why the machine malfunctioned suddenly",
+                    "the complex mechanism of the engine",
+                    "that the procedure requires safety gear",
+                    "how to operate the control panel"
+                ]
+            },
+            {
+                vocab: ["investigation 조사", "report 보고서", "finally 마침내", "reveal 밝히다", "hidden 숨겨진", "asset 자산", "corruption 부패", "source 원천", "fund 자금", "evidence 증거"],
+                sv: "The investigation report finally revealed",
+                objects: [
+                    "where the hidden assets were stored",
+                    "that the data had been manipulated",
+                    "to be the source of the corruption",
+                    "crucial evidence against the suspect"
+                ]
+            },
+            {
+                vocab: ["survey 설문조사", "result 결과", "indicate 나타내다", "suggest 제안하다", "preference 선호도", "consumer 소비자", "shift 이동", "trend 경향", "modify 수정하다", "line 라인"],
+                sv: "The recent survey results suggested",
+                objects: [
+                    "modifying the product design slightly",
+                    "what consumers actually prefer these days",
+                    "that we focus more on digital marketing",
+                    "a shift in global market trends"
+                ]
+            },
+            {
+                vocab: ["committee 위원회", "meet 만나다", "determine 결정하다", "eligibility 자격", "candidate 후보자", "factor 요소", "influence 영향", "outcome 결과", "budget 예산", "allocation 할당"],
+                sv: "The hiring committee must determine",
+                objects: [
+                    "who is the most eligible candidate",
+                    "the final budget allocation for the project",
+                    "to proceed with the second interview",
+                    "whether the factors influence the outcome"
+                ]
+            },
+            {
+                vocab: ["customer 고객", "generally 일반적으로", "prefer 선호하다", "online 온라인", "purchase 구매", "physical 물리적인", "store 상점", "delivery 배송", "option 선택", "convenience 편리함"],
+                sv: "Most younger customers generally prefer",
+                objects: [
+                    "shopping online rather than in stores",
+                    "that the delivery is free of charge",
+                    "to pay with a mobile application",
+                    "the convenience of same-day shipping"
+                ]
+            },
+            {
+                vocab: ["recipient 수령인", "promptly 즉시", "acknowledge 알리다/인정하다", "receipt 수령", "document 문서", "mistake 실수", "official 공식적인", "letter 편지", "contribution 기여"],
+                sv: "The recipient promptly acknowledged",
+                objects: [
+                    "receipt of the official documents",
+                    "that there was a mistake in the invoice",
+                    "receiving the package this morning",
+                    "who made the significant contribution"
+                ]
+            },
+            {
+                vocab: ["architect 건축가", "innovative 혁신적인", "propose 제안하다", "renovation 개조", "blueprint 청사진", "eco-friendly 친환경적인", "material 재료", "reduce 줄이다", "cost 비용"],
+                sv: "The lead architect proposed",
+                objects: [
+                    "using eco-friendly materials for the wall",
+                    "that the building design be modernized",
+                    "a complete renovation of the lobby",
+                    "how to reduce construction costs effectively"
+                ]
+            },
+            {
+                vocab: ["suspect 용의자", "firm 확고한", "deny 부인하다", "allegation 혐의", "involvement 연루", "crime 범죄", "access 접근", "unauthorized 승인되지않은", "request 요청"],
+                sv: "The suspect firmly denied",
+                objects: [
+                    "any involvement in the crime",
+                    "having accessed the unauthorized files",
+                    "that he was present at the scene",
+                    "why he refused to answer the questions"
+                ]
+            },
+            {
+                vocab: ["dashboard 계기판", "light 불빛", "indicate 나타내다", "pressure 압력", "low 낮은", "level 수준", "maintenance 유지보수", "require 필요하다", "engine 엔진", "immediate 즉각적인"],
+                sv: "The warning light on the dashboard indicated",
+                objects: [
+                    "that the oil pressure was critically low",
+                    "the need for immediate engine maintenance",
+                    "which part of the system was failing",
+                    "to be a sign of a battery problem"
+                ]
+            },
+            {
+                vocab: ["employee 직원", "fully 완전히", "understand 이해하다", "complexity 복잡성", "task 업무", "instruction 지시", "manual 매뉴얼", "procedure 절차", "implication 영향"],
+                sv: "The new employees fully understood",
+                objects: [
+                    "how to use the internal network",
+                    "the complexity of the assigned task",
+                    "that safety comes before speed",
+                    "following the instructions precisely"
+                ]
+            },
+            {
+                vocab: ["passenger 승객", "baggage 수하물", "claim 주장하다/청구하다", "damage 손상", "compensation 보상", "airline 항공사", "flight 비행", "delay 지연", "loss 분실"],
+                sv: "The passenger claimed",
+                objects: [
+                    "compensation for the lost baggage",
+                    "to have seen the incident happen",
+                    "that the flight was delayed by two hours",
+                    "what rightfully belonged to him"
+                ]
+            },
+            {
+                vocab: ["witness 목격자", "vividly 생생하게", "recall 상기하다", "accident 사고", "detail 세부사항", "moment 순간", "happen 발생하다", "memory 기억", "scene 현장"],
+                sv: "The witness vividly recalled",
+                objects: [
+                    "seeing the car speed through the light",
+                    "exactly what happened at that moment",
+                    "the details of the accident scene",
+                    "that the driver was on the phone"
+                ]
+            },
+            {
+                vocab: ["editor 편집자", "thoroughly 철저하게", "review 검토하다", "manuscript 원고", "error 오류", "content 내용", "publication 출판", "grammar 문법", "revision 수정"],
+                sv: "The senior editor thoroughly reviewed",
+                objects: [
+                    "whether the content was suitable for publication",
+                    "every manuscript submitted this month",
+                    "to ensure there were no grammatical errors",
+                    "how the author structured the arguments"
+                ]
+            }
+        ];
+
+        // Render Function
+        const contentArea = document.getElementById('content-area');
+
+        toiecData.forEach((item, index) => {
+            // Create Item Block
+            const block = document.createElement('div');
+            block.className = 'item-block';
+
+            // 1. Vocabulary Section
+            let vocabHtml = `<div class="vocab-section">`;
+            item.vocab.forEach(word => {
+                vocabHtml += `<span class="vocab-pill">${word}</span>`;
+            });
+            vocabHtml += `</div>`;
+
+            // 2. Main Builder
+            let objectRowsHtml = '';
+            item.objects.forEach(obj => {
+                objectRowsHtml += `
+                    <li class="object-item">
+                        <button class="play-btn" onclick="revealText(this)"></button>
+                        <span class="object-text">${obj}</span>
+                    </li>
+                `;
+            });
+
+            const builderHtml = `
+                <div class="sentence-builder">
+                    <div class="left-col">
+                        ${item.sv}
+                    </div>
+                    <div class="right-col">
+                        <ul class="object-list">
+                            ${objectRowsHtml}
+                        </ul>
+                    </div>
+                </div>
+            `;
+
+            block.innerHTML = vocabHtml + builderHtml;
+            contentArea.appendChild(block);
+        });
+
+        // Interaction Function
+        function revealText(btn) {
+            const textSpan = btn.nextElementSibling;
+            
+            // Toggle visibility (Simple reveal as requested: click -> show)
+            // If you want toggle on/off, use this: textSpan.classList.toggle('visible');
+            // But for a learning flow, reveal is usually permanent or reset manually.
+            // Let's stick to reveal.
+            if (!textSpan.classList.contains('visible')) {
+                textSpan.classList.add('visible');
+            }
+        }
+    </script>
+</body>
+</html>
