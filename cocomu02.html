@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>타동사 꼬꼬무 - 이은식어학원</title>
+    <style>
+        :root {
+            --brand-navy: #1e3a8a;
+            --brand-deep: #172554;
+            --brand-bg: #f8fafc;
+            --text-dark: #374151;
+            --vocab-bg: #f3f4f6;
+            --accent-gray: #ccc;
+        }
+
+        body {
+            font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #fff;
+            color: var(--text-dark);
+            /* Security */
+            user-select: none;
+            -webkit-user-select: none;
+        }
+
+        /* Container */
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        /* Branding Header */
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            border-bottom: 2px solid var(--brand-navy);
+            padding-bottom: 20px;
+        }
+
+        h1 {
+            color: var(--brand-navy);
+            font-size: 2rem;
+            margin: 0;
+            letter-spacing: -0.5px;
+        }
+
+        .subtitle {
+            font-size: 1rem;
+            color: #6b7280;
+            margin-top: 10px;
+        }
+
+        /* Item Wrapper */
+        .item-wrapper {
+            margin-bottom: 60px;
+            border-bottom: 1px solid #e5e7eb;
+            padding-bottom: 40px;
+        }
+
+        /* Top Section: Vocab */
+        .vocab-section {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 25px;
+            padding: 15px;
+            background-color: var(--vocab-bg);
+            border-radius: 12px;
+        }
+
+        .vocab-pill {
+            font-size: 0.85rem;
+            color: var(--text-dark);
+            background: #fff;
+            padding: 6px 12px;
+            border-radius: 20px;
+            border: 1px solid #e5e7eb;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+        }
+
+        .vocab-eng {
+            font-weight: 700;
+            color: var(--brand-navy);
+        }
+
+        /* Main Flexbox */
+        .sentence-builder {
+            display: flex;
+            align-items: stretch;
+        }
+
+        /* Left Column */
+        .subject-verb-col {
+            flex: 0 0 auto;
+            white-space: nowrap;
+            text-align: right;
+            padding-right: 40px;
+            border-right: 2px dashed var(--accent-gray);
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--brand-navy);
+            display: flex;
+            align-items: flex-start; /* Top align */
+            padding-top: 5px; /* Align with first button */
+        }
+
+        /* Right Column */
+        .objects-col {
+            flex: 1;
+            padding-left: 40px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        /* Object Row */
+        .obj-row {
+            display: flex;
+            align-items: center;
+            min-height: 40px;
+        }
+
+        .play-btn {
+            background-color: var(--brand-deep);
+            color: white;
+            border: none;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            flex-shrink: 0;
+            transition: transform 0.2s, background-color 0.2s;
+            font-size: 12px;
+        }
+
+        .play-btn:hover {
+            background-color: var(--brand-navy);
+            transform: scale(1.1);
+        }
+
+        .play-btn:active {
+            transform: scale(0.95);
+        }
+
+        .obj-text {
+            font-size: 1.05rem;
+            color: #1f2937;
+            opacity: 0;
+            transform: translateX(-10px);
+            transition: all 0.4s ease-out;
+            visibility: hidden;
+        }
+
+        .obj-text.revealed {
+            opacity: 1;
+            transform: translateX(0);
+            visibility: visible;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            margin-top: 60px;
+            padding: 30px 0;
+            color: #9ca3af;
+            font-size: 0.9rem;
+            border-top: 1px solid #eee;
+        }
+
+        /* Responsive for mobile (Stacking if needed, but per request keeps nowrap on SV) */
+        @media (max-width: 768px) {
+            .sentence-builder {
+                flex-direction: column;
+            }
+            .subject-verb-col {
+                border-right: none;
+                border-bottom: 2px dashed var(--accent-gray);
+                padding-right: 0;
+                padding-bottom: 20px;
+                margin-bottom: 20px;
+                white-space: normal; /* Allow wrap on mobile only for usability */
+                text-align: left;
+            }
+            .objects-col {
+                padding-left: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>TOEIC Transitive Verbs</h1>
+        <div class="subtitle">이은식어학원 - 꼬리에 꼬리를 무는 타동사 구문 훈련</div>
+    </header>
+
+    <div id="content-area">
+        </div>
+
+    <footer>
+        영어는 기다림과 채움의 감각으로 - 이은식어학원
+    </footer>
+</div>
+
+<script>
+    // Data Source
+    const practiceData = [
+        {
+            vocab: "market analyst 시장 분석가, cautiously 조심스럽게, anticipate 예상하다, quarterly earnings 분기 수익, significant 상당한, decline 하락, fluctuation 변동, outcome 결과",
+            sv: "The senior market analyst cautiously anticipated",
+            objects: [
+                "lowering the interest rates next month",
+                "that the quarterly earnings would drop significantly",
+                "a gradual recovery in the housing sector",
+                "how the stock market would react to the news"
+            ]
+        },
+        {
+            vocab: "investigation team 조사팀, conclusively 결정적으로, determine 알아내다, cause 원인, system failure 시스템 오류, liability 법적 책임, proceed 진행하다",
+            sv: "The internal investigation team conclusively determined",
+            objects: [
+                "to launch a full-scale audit of the department",
+                "who was responsible for the security breach",
+                "the exact cause of the sudden power outage",
+                "that the software glitch was unintentional"
+            ]
+        },
+        {
+            vocab: "manufacturer 제조업체, explicitly 명시적으로, guarantee 보장하다, durability 내구성, product 제품, satisfaction 만족, replacement 교환, defect 결함",
+            sv: "The electronics manufacturer explicitly guarantees",
+            objects: [
+                "to replace any defective items within one year",
+                "that the battery will last for at least ten hours",
+                "what the warranty covers in detail",
+                "complete customer satisfaction with every purchase"
+            ]
+        },
+        {
+            vocab: "witness 목격자, vividly 생생하게, recall 기억하다, incident 사건, details 세부사항, suspect 용의자, appearance 외모, vehicle 차량, license plate 번호판",
+            sv: "The key witness vividly recalled",
+            objects: [
+                "seeing the suspect leave the building in a hurry",
+                "that the traffic light was red at the time",
+                "where the stolen vehicle was parked",
+                "the specific sequence of events during the accident"
+            ]
+        },
+        {
+            vocab: "urban planner 도시 계획가, innovative 혁신적인, propose 제안하다, solution 해결책, congestion 혼잡, infrastructure 기반시설, expansion 확장, eco-friendly 친환경적인",
+            sv: "The renowned urban planner has proposed",
+            objects: [
+                "expanding the subway line to the suburbs",
+                "that the city center be designated as a car-free zone",
+                "a comprehensive strategy for waste management",
+                "how the new funds should be allocated"
+            ]
+        },
+        {
+            vocab: "pharmaceutical firm 제약 회사, boldly 대담하게, claim 주장하다, effectiveness 효능, medication 약물, trial 임상 실험, breakthrough 획기적 발견, patent 특허",
+            sv: "The pharmaceutical firm boldly claimed",
+            objects: [
+                "to have discovered a cure for the rare disease",
+                "that their new drug has zero side effects",
+                "why their product is superior to competitors",
+                "ownership of the patent rights"
+            ]
+        },
+        {
+            vocab: "board of directors 이사회, unanimously 만장일치로, decide 결정하다, acquisition 인수, venture 벤처, strategy 전략, withdrawal 철수, investment 투자",
+            sv: "The board of directors unanimously decided",
+            objects: [
+                "to withdraw all investments from the volatile market",
+                "what the next strategic move should be",
+                "that a merger is the best option for growth",
+                "the date for the annual shareholders' meeting"
+            ]
+        },
+        {
+            vocab: "medical expert 의료 전문가, strongly 강력하게, recommend 권장하다, intake 섭취, nutrition 영양, guideline 지침, prevention 예방, chronic 만성적인",
+            sv: "The panel of medical experts strongly recommends",
+            objects: [
+                "reducing sugar intake for better health",
+                "that patients undergo regular check-ups",
+                "which vitamins are essential for the elderly",
+                "a balanced diet rich in vegetables and proteins"
+            ]
+        },
+        {
+            vocab: "project manager 프로젝트 매니저, successfully 성공적으로, manage 관리하다, funding 자금, schedule 일정, conflict 충돌, distribute 배분하다, renovation 개조",
+            sv: "The project manager successfully managed",
+            objects: [
+                "to secure additional funding for the project",
+                "the complex scheduling conflicts",
+                "how the resources were distributed",
+                "the entire renovation process"
+            ]
+        },
+        {
+            vocab: "airline representative 항공사 대표, sincerely 진심으로, regret 유감스러워하다, inconvenience 불편, cancellation 취소, flight 항공편, notify 통지하다, circumstances 상황",
+            sv: "The airline representative sincerely regrets",
+            objects: [
+                "informing you of the flight cancellation",
+                "that we cannot offer a full refund at this time",
+                "the inconvenience caused to all passengers",
+                "what happened during the baggage handling process"
+            ]
+        }
+    ];
+
+    const contentArea = document.getElementById('content-area');
+
+    // Function to render items
+    function renderItems() {
+        practiceData.forEach((item, index) => {
+            // Create Wrapper
+            const wrapper = document.createElement('div');
+            wrapper.className = 'item-wrapper';
+
+            // 1. Vocab Section
+            const vocabDiv = document.createElement('div');
+            vocabDiv.className = 'vocab-section';
+            
+            // Split vocab string and create pills
+            const vocabList = item.vocab.split(', ');
+            vocabList.forEach(wordPair => {
+                const parts = wordPair.trim().split(' ');
+                const kor = parts.pop(); // Last part is Korean
+                const eng = parts.join(' '); // Rest is English
+                
+                const pill = document.createElement('span');
+                pill.className = 'vocab-pill';
+                pill.innerHTML = `<span class="vocab-eng">${eng}</span> ${kor}`;
+                vocabDiv.appendChild(pill);
+            });
+
+            // 2. Sentence Builder Section
+            const builderDiv = document.createElement('div');
+            builderDiv.className = 'sentence-builder';
+
+            // Left Col (Subject + Verb)
+            const leftCol = document.createElement('div');
+            leftCol.className = 'subject-verb-col';
+            leftCol.textContent = item.sv;
+
+            // Right Col (Objects)
+            const rightCol = document.createElement('div');
+            rightCol.className = 'objects-col';
+
+            // Create Rows
+            item.objects.forEach((objText) => {
+                const row = document.createElement('div');
+                row.className = 'obj-row';
+
+                const btn = document.createElement('button');
+                btn.className = 'play-btn';
+                btn.innerHTML = '▶'; // Play icon
+                
+                const textSpan = document.createElement('span');
+                textSpan.className = 'obj-text';
+                textSpan.textContent = objText;
+
+                // Interaction Logic
+                btn.addEventListener('click', function() {
+                    // Check if already revealed
+                    if (textSpan.classList.contains('revealed')) {
+                        // Optional: Hide again? Requirement says "click to reveal". 
+                        // Let's keep it visible or toggle. Let's toggle for fun.
+                        textSpan.classList.remove('revealed');
+                    } else {
+                        textSpan.classList.add('revealed');
+                    }
+                });
+
+                row.appendChild(btn);
+                row.appendChild(textSpan);
+                rightCol.appendChild(row);
+            });
+
+            builderDiv.appendChild(leftCol);
+            builderDiv.appendChild(rightCol);
+
+            // Assemble
+            wrapper.appendChild(vocabDiv);
+            wrapper.appendChild(builderDiv);
+            contentArea.appendChild(wrapper);
+        });
+    }
+
+    // Initialize
+    renderItems();
+
+    // Security: Prevent Context Menu
+    document.addEventListener('contextmenu', event => event.preventDefault());
+
+</script>
+
+</body>
+</html>
