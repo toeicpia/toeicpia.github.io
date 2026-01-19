@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>이은식어학원 - 행타 + [ 행위자 + 행위 ] Toggle & Context Vocab</title>
+    <style>
+        /* [Global Reset] */
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+            background-color: #f8fafc;
+            color: #334155;
+            line-height: 1.6;
+            min-width: 900px; /* Layout Safety */
+            user-select: none;
+            -webkit-user-select: none;
+        }
+
+        /* [Header Branding] */
+        header {
+            background: linear-gradient(135deg, #1e1b4b 0%, #312e81 100%); /* Indigo Deep */
+            color: white;
+            padding: 35px 0;
+            text-align: center;
+            border-bottom: 5px solid #6366f1;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+        header h1 { 
+            font-size: 2.2rem; 
+            font-weight: 800; 
+            letter-spacing: -1px; 
+            margin-bottom: 8px; 
+            color: #fff;
+        }
+        header p { 
+            font-size: 1rem; 
+            color: #c7d2fe; 
+            font-weight: 500; 
+        }
+
+        /* [Main Container] */
+        .container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            overflow: hidden;
+        }
+
+        /* [Item Layout] */
+        .item-block {
+            border-bottom: 1px solid #e2e8f0;
+            padding: 50px 40px;
+        }
+        .item-block:last-child { border-bottom: none; }
+
+        /* [Vocabulary Section] */
+        .vocab-area {
+            margin-bottom: 25px;
+        }
+        .vocab-header {
+            display: flex;
+            align-items: baseline;
+            gap: 12px;
+            margin-bottom: 15px;
+        }
+        .vocab-word {
+            font-size: 1.6rem;
+            font-weight: 900;
+            color: #312e81; /* Indigo */
+            text-transform: uppercase;
+        }
+        .vocab-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        .vocab-tag {
+            background-color: #eef2ff;
+            color: #4338ca;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            border: 1px solid #e0e7ff;
+            transition: all 0.2s;
+        }
+        .vocab-tag:hover {
+            background-color: #c7d2fe;
+            color: #312e81;
+            border-color: #a5b4fc;
+        }
+
+        /* [Structure Builder - Defensive Flexbox] */
+        .structure-box {
+            display: flex;
+            align-items: stretch;
+            background-color: #f8fafc;
+            border-radius: 16px;
+            border: 1px solid #cbd5e1;
+            overflow: hidden;
+        }
+
+        /* [Left Column: 행위자 (Agent)] */
+        .col-agent {
+            flex: 0 0 35%; /* Fixed width ratio */
+            min-width: 340px;
+            background-color: #f1f5f9; /* Slate 100 */
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding: 30px 40px;
+            border-right: 2px dashed #94a3b8; /* Visual Separation */
+            text-align: right;
+            font-weight: 700;
+            font-size: 1.15rem;
+            color: #1e293b;
+            line-height: 1.4;
+            word-break: keep-all; 
+        }
+
+        /* [Right Column: 행위 (Action/Result)] */
+        .col-action {
+            flex: 1;
+            padding: 30px 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 16px;
+            background-color: white;
+        }
+
+        /* [Interaction Rows] */
+        .action-row {
+            display: flex;
+            align-items: flex-start;
+            padding: 4px 0;
+        }
+        
+        /* [Play Button] */
+        .btn-play {
+            background-color: #4f46e5; /* Indigo 600 */
+            color: white;
+            border: none;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            cursor: pointer;
+            margin-right: 18px;
+            margin-top: 3px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            flex-shrink: 0;
+            transition: transform 0.2s, background 0.2s;
+            box-shadow: 0 2px 4px rgba(79, 70, 229, 0.3);
+        }
+        .btn-play:hover { transform: scale(1.1); background-color: #4338ca; }
+        .btn-play:active { transform: scale(0.95); }
+
+        /* [Text Content] */
+        .text-wrapper {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            opacity: 0;
+            transform: translateX(-15px);
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            pointer-events: none; /* Prevent selection when hidden */
+        }
+        
+        .eng-text {
+            font-size: 1.1rem;
+            color: #334155;
+            font-weight: 600;
+        }
+        
+        /* Grammar Tag */
+        .tag-grammar {
+            display: inline-flex;
+            align-items: center;
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: #fff;
+            padding: 2px 8px;
+            border-radius: 6px;
+            margin-left: 10px;
+            vertical-align: middle;
+            text-transform: uppercase;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+            letter-spacing: 0.5px;
+        }
+        /* Tag Colors per type */
+        .tag-Noun { background-color: #ea580c; } /* Orange */
+        .tag-Adj { background-color: #059669; } /* Green */
+        .tag-Base { background-color: #7c3aed; } /* Violet */
+        .tag-To-v { background-color: #db2777; } /* Pink */
+        .tag-Ing { background-color: #0891b2; } /* Cyan */
+        .tag-pp { background-color: #475569; } /* Slate */
+
+        .kor-text {
+            font-size: 0.95rem;
+            color: #94a3b8;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        /* [Active States - Revealed] */
+        .revealed .text-wrapper { 
+            opacity: 1; 
+            transform: translateX(0);
+            pointer-events: auto;
+        }
+        
+        /* Translation State */
+        .revealed-trans .kor-text { opacity: 1; }
+
+        /* Button Visual State when Active (Optional but good for UX) */
+        .revealed .btn-play {
+            background-color: #312e81; /* Darker when open */
+            transform: rotate(90deg); /* Visual cue */
+        }
+
+        /* [Global Button] */
+        .control-panel {
+            text-align: center;
+            margin: 40px 0;
+        }
+        .btn-show-all {
+            background-color: #fff;
+            border: 2px solid #e2e8f0;
+            color: #64748b;
+            padding: 12px 30px;
+            border-radius: 50px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 1rem;
+        }
+        .btn-show-all:hover {
+            border-color: #6366f1;
+            color: #6366f1;
+            background-color: #eef2ff;
+            box-shadow: 0 4px 6px -1px rgba(99, 102, 241, 0.1);
+        }
+
+        /* [Footer] */
+        footer {
+            text-align: center;
+            padding: 40px;
+            color: #94a3b8;
+            font-size: 0.9rem;
+            border-top: 1px solid #e2e8f0;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body oncontextmenu="return false;">
+
+    <header>
+        <h1>행타 + [ 행위자 + 행위 ]</h1>
+        <p>Interactive Toggle : 클릭하여 문장 확인하기</p>
+    </header>
+
+    <div class="container" id="app">
+        </div>
+
+    <div class="control-panel">
+        <button class="btn-show-all" onclick="showAllTranslations()">전체 해석 보기</button>
+    </div>
+
+    <footer>
+        영어는 기다림과 채움의 감각으로 - 이은식어학원
+    </footer>
+
+    <script>
+        // Data: 5th Form Verbs (Updated with Context Vocab Only)
+        const contentData = [
+            {
+                id: 1,
+                verb: "Make",
+                agent: "The strict safety regulation makes",
+                vocab: ["regulation 규정", "priority 우선순위", "mandatory 의무적인", "inspection 점검"],
+                actions: [
+                    { type: "Noun", eng: "wearing helmets a top priority", kor: "헬멧 착용을 최우선 사항으로" },
+                    { type: "Adj", eng: "regular inspections mandatory", kor: "정기 점검을 의무적인 상태로" },
+                    { type: "Base", eng: "all employees follow the rules", kor: "모든 직원이 규칙을 따르도록" },
+                    { type: "p.p.", eng: "the danger known to everyone", kor: "그 위험이 모두에게 알려지도록" }
+                ]
+            },
+            {
+                id: 2,
+                verb: "Find",
+                agent: "The meticulous audit team found",
+                vocab: ["audit 감사", "accurate 정확한", "discrepancy 불일치", "minor 사소한"],
+                actions: [
+                    { type: "Adj", eng: "the financial report accurate", kor: "재정 보고서가 정확하다는 것을" },
+                    { type: "Ing", eng: "some data missing from the file", kor: "파일에서 일부 데이터가 누락된 것을" },
+                    { type: "p.p.", eng: "the hidden funds transferred", kor: "숨겨진 자금이 이체된 것을" },
+                    { type: "To-v", eng: "the discrepancy to be minor", kor: "그 불일치가 사소한 것이라고" }
+                ]
+            },
+            {
+                id: 3,
+                verb: "Keep",
+                agent: "The diligent museum curator keeps",
+                vocab: ["curator 큐레이터", "constant 일정한", "artifact 유물", "ventilation 환기"],
+                actions: [
+                    { type: "Adj", eng: "the storage temperature constant", kor: "보관 온도를 일정하게" },
+                    { type: "p.p.", eng: "valuable artifacts locked", kor: "귀중한 유물들을 잠긴 상태로" },
+                    { type: "Ing", eng: "fans running for ventilation", kor: "환기를 위해 팬이 계속 돌아가게" }
+                ]
+            },
+            {
+                id: 4,
+                verb: "Leave",
+                agent: "The irresponsible tenant left",
+                vocab: ["tenant 세입자", "faucet 수도꼭지", "damage 손상시키다", "landlord 집주인", "mess 엉망진창"],
+                actions: [
+                    { type: "Adj", eng: "the front door wide open", kor: "현관문을 활짝 열린 채로" },
+                    { type: "Ing", eng: "the water faucet running", kor: "수도꼭지 물이 계속 흐르는 채로" },
+                    { type: "p.p.", eng: "the kitchen walls damaged", kor: "부엌 벽들을 손상된 채로" },
+                    { type: "To-v", eng: "the landlord to clean the mess", kor: "집주인이 엉망진창인 것을 치우도록" }
+                ]
+            },
+            {
+                id: 5,
+                verb: "Have",
+                agent: "The production supervisor had",
+                vocab: ["supervisor 관리자", "defective 결함있는", "replace 교체하다", "operate 작동하다"],
+                actions: [
+                    { type: "Base", eng: "the workers stop the line", kor: "직원들이 라인을 멈추도록" },
+                    { type: "p.p.", eng: "the defective parts replaced", kor: "불량 부품들이 교체되도록" },
+                    { type: "Ing", eng: "the machine operating in minutes", kor: "기계를 몇 분 만에 다시 작동하게" }
+                ]
+            },
+            {
+                id: 6,
+                verb: "Get",
+                agent: "The skilled mechanic got",
+                vocab: ["mechanic 정비공", "cooling fan 냉각팬", "fix 수리하다"],
+                actions: [
+                    { type: "To-v", eng: "the old engine to start", kor: "오래된 엔진이 시동 걸리도록" },
+                    { type: "p.p.", eng: "the broken brake fixed", kor: "고장 난 브레이크가 고쳐지도록" },
+                    { type: "Ing", eng: "the cooling fan turning again", kor: "냉각 팬이 다시 돌아가도록" }
+                ]
+            },
+            {
+                id: 7,
+                verb: "Consider",
+                agent: "The hiring committee considers",
+                vocab: ["committee 위원회", "applicant 지원자", "candidate 후보자", "sufficient 충분한"],
+                actions: [
+                    { type: "Noun", eng: "the applicant a strong candidate", kor: "그 지원자를 강력한 후보자로" },
+                    { type: "Adj", eng: "his communication skills excellent", kor: "그의 의사소통 능력이 훌륭하다고" },
+                    { type: "To-v", eng: "her experience to be sufficient", kor: "그녀의 경력이 충분하다고" }
+                ]
+            }
+        ];
+
+        const appRoot = document.getElementById('app');
+
+        contentData.forEach(item => {
+            // Generate Vocab Tags
+            const vocabHtml = item.vocab.map(v => `<span class="vocab-tag">${v}</span>`).join('');
+            
+            // Generate Actions Rows
+            let actionsHtml = '';
+            item.actions.forEach((act, idx) => {
+                const uniqueId = `act-${item.id}-${idx}`;
+                // Determine Tag Class
+                let tagClass = `tag-${act.type}`;
+                if (act.type === 'p.p.') tagClass = 'tag-pp';
+                if (act.type === 'To-v') tagClass = 'tag-To-v';
+
+                // **중요**: onclick 이벤트를 toggleAction 함수로 변경
+                actionsHtml += `
+                    <div class="action-row" id="${uniqueId}">
+                        <button class="btn-play" onclick="toggleAction('${uniqueId}')">▶</button>
+                        <div class="text-wrapper">
+                            <span class="eng-text">
+                                ${act.eng}
+                                <span class="tag-grammar ${tagClass}">${act.type}</span>
+                            </span>
+                            <span class="kor-text">${act.kor}</span>
+                        </div>
+                    </div>
+                `;
+            });
+
+            // Assemble Block
+            const html = `
+                <div class="item-block">
+                    <div class="vocab-area">
+                        <div class="vocab-header">
+                            <span class="vocab-word">${item.verb}</span>
+                        </div>
+                        <div class="vocab-list">${vocabHtml}</div>
+                    </div>
+                    <div class="structure-box">
+                        <div class="col-agent">${item.agent}</div>
+                        <div class="col-action">${actionsHtml}</div>
+                    </div>
+                </div>
+            `;
+            appRoot.insertAdjacentHTML('beforeend', html);
+        });
+
+        // **핵심 기능**: Toggle Logic 구현
+        function toggleAction(id) {
+            const row = document.getElementById(id);
+            // 'revealed' 클래스를 토글 (있으면 제거, 없으면 추가)
+            row.classList.toggle('revealed');
+        }
+
+        // 전체 해석 보기 (기존 유지)
+        function showAllTranslations() {
+            const allRows = document.querySelectorAll('.action-row');
+            allRows.forEach(row => {
+                row.classList.add('revealed-trans');
+            });
+        }
+    </script>
+</body>
+</html>
